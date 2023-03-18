@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <link rel="stylesheet" href="/css/board.css">
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="/css/reset2.css">
+  <link rel="stylesheet" href="/css/footer.css">
+  <link rel="stylesheet" href="/css/header.css">
+</head>
+<body>
+
+<div id="container">
+
+    <header th:replace="header :: header"></header>
+    <main class="board_main_con">
+        <span class="main_tag"> 태그 이름</span>
+
+        <div class="board_main_box">
+            <div class="board_content">
+                <div class="board_con_left">
+                    <span class="context_textname">제목</span>
+                    <div class="board_content_text">
+                        <p>간단한 내용</p>
+                        <div class="board_context_hit">
+                            <span>작성일자</span>
+                            <span>조회수</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="board_con_right">
+                    <img src="#"/>
+                </div>
+            </div>
+        </div>
+        <a href="#">게시글 등록</a>
+    </main>
+
+    <footer th:replace="footer :: footer"></footer>
+
+</div>
+</body>
+</html>

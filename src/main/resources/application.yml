@@ -1,0 +1,65 @@
+spring:
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: kmkemail1021@gmail.com
+    password: wkkrlmvrgidndoxy
+  messages:
+    basename: messages
+  jpa:
+    properties:
+      hibernate:
+        default_batch_fetch_size: '1000'
+        format_sql: 'true'
+        use_sql_comments: 'true'
+    generate-ddl: 'false'
+    hibernate:
+      ddl-auto: none
+    database-platform: org.hibernate.dialect.MySQL5Dialect
+    database: mysql
+    show-sql: 'true'
+    open-in-view: 'true'
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: 'true'
+  thymeleaf:
+    cache: 'false'
+    prefix: classpath:/templates/
+    mode: HTML
+    encoding: UTF-8
+    enabled: 'true'
+  devtools:
+    restart:
+      enabled: 'true'
+    livereload:
+      enabled: 'true'
+  servlet:
+    multipart:
+      enabled: 'true'
+      max-file-size: 10MB
+      max-request-size: 30MB
+  datasource:
+    hikari:
+      password: '1111'
+      username: root
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      jdbc-url: jdbc:mysql://localhost:3306/blog?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true
+      connection-test-query: SELECT NOW() FROM dual
+  output:
+    ansi:
+      enabled: always
+server:
+  port: '8091'
+logging:
+  level:
+    org:
+      springframework:
+        web: DEBUG
+      hibernate: DEBUG
+      #com:
+      # zaxxer:
+      #  hikari: DEBUG
+file:
+  Upfolder: file:///ImgList/MyBlog
+  Upimg: C:/ImgList/MyBlog
