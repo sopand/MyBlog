@@ -9,9 +9,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/boards")
 public class BoardController {
 
-    @GetMapping
+    @GetMapping("")
     public String BoardList(){
 
         return "board";
+    }
+
+    @GetMapping("/newpost")
+    public String addBoardForm(){
+
+        return "boardadd";
     }
 }

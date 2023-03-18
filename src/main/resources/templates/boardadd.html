@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/css/boardadd.css">
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/reset2.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <script src="https://cdn.ckeditor.com/ckeditor5/31.1.0/classic/ckeditor.js"></script>
+    <script src="/js/UploadAdapter.js"></script>
+</head>
+<body>
+
+<div id="container">
+
+    <header th:replace="header :: header"></header>
+    <main class="boardadd_main_con">
+        <span class="main_tag"> 태그 이름</span>
+
+        <form class="boardadd_main_box">
+            <label class="add_tag1">
+                <span>제목</span>
+                <input name="boardName" placeholder="게시글 제목입력">
+            </label>
+            <label class="add_tag1">
+                <span>카테고리</span>
+                <select name="boardCategory">
+                        <option value="">카테고리 선택</option>
+                        <option value="Spring">Spring</option>
+                        <option value="Java">Java</option>
+                        <option value="Portfolio">Portfolio</option>
+                        <option value="Project">Project</option>
+                        <option value="Junit">Junit</option>
+                        <option value="CS">CS</option>
+                        <option value="JPA">JPA</option>
+                        <option value="MyBatis">MyBatis</option>
+                </select>
+            </label>
+            <textarea name="contents" id="editor">
+
+            </textarea>
+
+            <button type="submit" class="boardAddbtn">등록</button>
+        </form>
+
+    </main>
+
+    <footer th:replace="footer :: footer"></footer>
+    <script>
+        function MyCustomUploadAdapterPlugin( editor ) {
+            editor.plugins.get( 'FileRepository' ).createUploadAdapter = ( loader ) => {
+                // Configure the URL to the upload script in your back-end here!
+                // 결국엔 내가 구현해 주어야 할 것은,
+                // FileRepository가 어떤 업로드 어댑터를 사용하게 하느냐만 설정해주면 된다.
+                // 나머지 이미지 업로드 플러그인, 파일 로더, FileRepository등등은 이미 만들어져 있다.
+                return new MyUploadAdapter( loader );
+            };
+        }
+        ClassicEditor
+            .create( document.querySelector( '#editor' ), {
+                extraPlugins: [ MyCustomUploadAdapterPlugin ],
+            } )
+            .catch( error => {
+                console.log( error );
+            } );
+    </script>
+</div>
+</body>
+</html>
