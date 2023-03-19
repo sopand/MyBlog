@@ -4,6 +4,8 @@ $(function (){
     $(".boardAddbtn").click(function (){
         $("input[name=boardThumbnail]").val(UploadURL);
         $(".boardadd_main_box").submit();
+
+
     });
 });
 class MyUploadAdapter {
@@ -19,7 +21,6 @@ class MyUploadAdapter {
                 this._sendRequest(file);
             }));
     }
-
     abort() {
         if (this.xhr) {
             this.xhr.abort();

@@ -16,8 +16,11 @@ public class BoardResponse {
 
     private String boardCategory;
 
+    private String boardThumbnail;
+
 
     public BoardResponse(Board entity){
+        this.boardThumbnail=entity.getBoardThumbnail();
         this.boardName=entity.getBoardName();
         this.boardHit=entity.getBoardHit();
         this.boardContent=entity.getBoardContent();

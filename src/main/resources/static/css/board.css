@@ -33,9 +33,12 @@
     justify-content: center;
     padding-top: 50px;
     padding-bottom: 50px;
+    flex-direction: column;
 }
 
 .board_content {
+    margin-bottom:40px;
+
     width: 1000px;
     display: flex;
     align-items: center;
@@ -46,7 +49,7 @@
 }
 
 .board_con_left {
-    width: 1000px;
+    width: 750px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -54,7 +57,7 @@
 }
 
 .context_textname {
-    width: 1000px;
+    width: 750px;
     height: 50px;
     display: flex;
     align-items: center;
@@ -65,7 +68,7 @@
 }
 
 .board_content_text {
-    width: 1000px;
+    width: 750px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -74,9 +77,17 @@
 
 
 
+
+.board_context_hit {
+    width: 750px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
 .board_context_hit span {
     width: 50%;
-    height: 50px;
+    height: 100px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -85,13 +96,6 @@
     color: gray;
 }
 
-.board_context_hit {
-    width: 1000px;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-
-}
 .boardadd_btn{
     width:200px;
     height: 50px;
@@ -104,8 +108,26 @@
     justify-content: center;
     border-radius: 10px;
     margin-left:800px;
-
-
+}
+.board_con_right{
+    width:250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.board_con_right img{
+    width:250px;
+    height: 200px;
+}
+.board_con_right span{
+    width:250px;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: bold;
+    color:gray;
 }
 
 
