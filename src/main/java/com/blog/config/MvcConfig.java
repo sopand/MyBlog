@@ -14,7 +14,7 @@ public class MvcConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/myblog/**") 	//리소스 등록 및 핸들러를 관리하는 객체인 ResourceHandlerRegistry를 통해 리소스 위치와 이 리소스와 매칭될 url을 등록합니다.
-                .addResourceLocations(folder); 		 	//stsimg로 시작하는url로 요청을 할경우
+                .addResourceLocations(folder); 		 	//myblog로 시작하는url로 요청을 할경우
     }
 
 }

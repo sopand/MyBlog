@@ -61,5 +61,5 @@ logging:
       # zaxxer:
       #  hikari: DEBUG
 file:
-  Upfolder: file:///ImgList/MyBlog
-  Upimg: C:/ImgList/MyBlog
+  Upfolder: file:///ImgList/MyBlog/
+  Upimg: C:/ImgList/MyBlog/

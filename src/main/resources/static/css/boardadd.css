@@ -7,9 +7,91 @@
 }
 
 .boardadd_main_con{
-
+    padding-top: 100px;
+    padding-bottom: 100px;
     width:100%;
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
+}
+.main_tag{
+    width:200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: bold;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+.boardadd_main_box{
+    width:1000px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.add_tag1{
+    margin-bottom:10px;
+    width:1000px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+.add_tag1 span{
+    width: 250px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 20px;
+    font-size: 20px;
+    font-weight: bold;
+}
+.add_tag1 input{
+    width: 500px;
+    height: 50px;
+    margin-left: 20px;
+    border:1px solid #e2e2e2;
+    font-size: 24px;
+    font-weight: bold;
+    padding-left: 10px;
+}
+.add_tag1 select{
+    width:300px;
+    height: 40px;
+    padding-left: 10px;
+    font-size: 22px;
+    font-weight: bold;
+    border:1px solid #e2e2e2;
+    margin-left:20px;
+}
+
+.editorBox{
+    margin-top:20px;
+}
+
+
+.boardAddbtn{
+    width:350px;
+    height: 50px;
+    border-radius: 10px;
+    background-color: darkslateblue;
+    font-size: 20px;
+    font-weight: bold;
+    color:white;
+    margin-top:20px;
+}
+
+.ck-editor__editable[role="textbox"] {
+    /* editing area */
+    width:1000px;
+    height: 600px;
+
+}
+.ck-content .image {
+    /* block images */
+    max-width: 80%;
+    margin: 20px auto;
 }

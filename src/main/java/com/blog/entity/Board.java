@@ -40,6 +40,7 @@ public class Board {
     @Builder
     public Board(Long boardId,String boardName,int boardHit,String boardCategory,String boardContent){
         this.boardId=boardId;
+        this.boardName=boardName;
         this.boardDate=new Date();
         this.boardHit=boardHit;
         this.boardCategory=boardCategory;
