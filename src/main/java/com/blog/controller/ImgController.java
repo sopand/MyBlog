@@ -20,7 +20,6 @@ public class ImgController {
     @PostMapping("/boards/img")
     public ModelAndView createBoardImg(MultipartHttpServletRequest request) throws  Exception{
         ModelAndView mv=imgService.createBoardImg(request.getFile("upload"));
-        System.out.println(mv);
         return mv;
     }
 }
