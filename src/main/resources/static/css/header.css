@@ -3,7 +3,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border:1px solid blue;
+    border-bottom:1px solid #e2e2e2;
     flex-direction: column;
 }
 .index_hed_text{

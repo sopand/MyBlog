@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-  <link rel="stylesheet" href="/css/board.css">
-  <link rel="stylesheet" href="/css/reset.css">
-  <link rel="stylesheet" href="/css/reset2.css">
-  <link rel="stylesheet" href="/css/footer.css">
-  <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/board.css">
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/reset2.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <link rel="stylesheet" href="/css/header.css">
 </head>
 <body>
 
@@ -15,26 +15,29 @@
 
     <header th:replace="header :: header"></header>
     <main class="board_main_con">
-        <span class="main_tag"> 태그 이름</span>
+        <span class="main_tag">전체 게시물 조회</span>
 
         <div class="board_main_box">
-            <div class="board_content">
+            <div class="board_content" th:each="board :${boardMap['findBoards']}">
                 <div class="board_con_left">
-                    <span class="context_textname">제목</span>
+                    <span class="context_textname" th:text="|제목 : ${board.boardName}|" }>제목</span>
                     <div class="board_content_text">
-                        <p>간단한 내용</p>
                         <div class="board_context_hit">
-                            <span>작성일자</span>
-                            <span>조회수</span>
+                            <span th:text="|작성 일자 : ${board.boardDate}|">작성일자</span>
+                            <span th:text="|조회수 :${board.boardHit} |">조회수</span>
                         </div>
                     </div>
                 </div>
-                <div class="board_con_right">
-                    <img src="#"/>
-                </div>
+
             </div>
         </div>
-        <a href="#">게시글 등록</a>
+        <a href="/boards/newpost" class="boardadd_btn">게시글 등록</a>
+        <div class="btnbox">
+            <th:block th:each="page : ${#numbers.sequence(boardMap['startPage'], boardMap['endPage'])}">
+                <a th:if="${page != boardMap['nowPage']}" th:href="@{/boards/list(page = ${page - 1})}" th:text="${page}"></a>
+                <strong th:if="${page == boardMap['nowPage']}" th:text="${page}" style="color : red;font-weight:bold;font-size: 18px"></strong>
+            </th:block>
+        </div>
     </main>
 
     <footer th:replace="footer :: footer"></footer>

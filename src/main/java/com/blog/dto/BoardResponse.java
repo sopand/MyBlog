@@ -16,6 +16,7 @@ public class BoardResponse {
 
     private String boardCategory;
 
+
     public BoardResponse(Board entity){
         this.boardName=entity.getBoardName();
         this.boardHit=entity.getBoardHit();
