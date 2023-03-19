@@ -59,13 +59,20 @@
     padding-left: 10px;
 }
 .add_tag1 select{
-    width:300px;
-    height: 40px;
+    width: 500px;
+    height: 50px;
     padding-left: 10px;
     font-size: 22px;
     font-weight: bold;
     border:1px solid #e2e2e2;
     margin-left:20px;
+    color:gray;
+}
+.add_tag1 select option
+{
+    font-size: 22px;
+    color:gray;
+    font-weight: bold;
 }
 
 .editorBox{

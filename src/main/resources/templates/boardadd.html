@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="/css/header.css">
     <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
     <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/super-build/ckeditor.js"></script>
+    <script
+            src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
 
@@ -20,6 +22,7 @@
         <span class="main_tag"> 태그 이름</span>
 
         <form class="boardadd_main_box" action="/boards/newpost" method="post">
+            <input type="hidden" name="boardThumbnail">
             <label class="add_tag1">
                 <span>제목</span>
                 <input name="boardName" placeholder="게시글 제목입력">
@@ -44,7 +47,7 @@
             </textarea>
             </div>
 
-            <button type="submit" class="boardAddbtn">등록</button>
+            <button type="button" class="boardAddbtn">등록</button>
         </form>
 
     </main>

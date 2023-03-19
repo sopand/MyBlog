@@ -36,10 +36,13 @@ public class Board {
     @Column(name="board_content")
     private String boardContent;
 
+    @Column(name="board_thumbnail")
+    private String boardThumbnail;
 
     @Builder
-    public Board(Long boardId,String boardName,int boardHit,String boardCategory,String boardContent){
+    public Board(Long boardId,String boardName,int boardHit,String boardCategory,String boardContent,String boardThumbnail){
         this.boardId=boardId;
+        this.boardThumbnail=boardThumbnail;
         this.boardName=boardName;
         this.boardDate=new Date();
         this.boardHit=boardHit;

@@ -1,3 +1,11 @@
+let UploadURL="";
+
+$(function (){
+    $(".boardAddbtn").click(function (){
+        $("input[name=boardThumbnail]").val(UploadURL);
+        $(".boardadd_main_box").submit();
+    });
+});
 class MyUploadAdapter {
     constructor(loader) {
         this.loader = loader;
@@ -36,7 +44,7 @@ class MyUploadAdapter {
             const response = xhr.response;
             // 이 예제에서는 XHR서버에서의 response 객체가 error와 함께 올 수 있다고 가정한다. 이 에러는
             // 메세지를 가지며 이 메세지는 업로드 프로미스의 매개변수로 넘어갈 수 있다.
-
+            console.log(response);
             if (!response || response.error) {
                 return reject(response && response.error ? response.error.message : genericErrorText);
             }
@@ -45,7 +53,11 @@ class MyUploadAdapter {
             // 이 URL은 서버에 업로드된 이미지를 가리키며, 컨텐츠에 이미지를 표시하기 위해 사용된다.
             resolve({
                 default: response.url
+
             });
+            if(UploadURL==""){
+                UploadURL=response.url;
+            }
         });
 
         // 파일로더는 uploadTotal과 upload properties라는 속성 두개를 갖는다.

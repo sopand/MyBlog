@@ -13,8 +13,9 @@ public class BoardRequest {
 
     private String boardCategory;
 
+    private String boardThumbnail;
     public Board toEntity(){
-        return Board.builder().boardName(boardName).boardCategory(boardCategory).boardContent(boardContent).build();
+        return Board.builder().boardThumbnail(boardThumbnail).boardName(boardName).boardThumbnail(boardThumbnail).boardCategory(boardCategory).boardContent(boardContent).build();
     }
 
 
