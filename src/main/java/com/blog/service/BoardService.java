@@ -51,4 +51,10 @@ public class BoardService {
     }
 
 
+    public BoardResponse findBoard(Long boardId){
+        Board boardPS=boardRepository.findByBoardId(boardId);
+        return new BoardResponse(boardPS);
+    }
+
+
 }

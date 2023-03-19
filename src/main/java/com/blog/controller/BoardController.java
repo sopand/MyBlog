@@ -12,6 +12,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,16 +29,28 @@ public class BoardController {
 
     private final BoardService boardService;
     @GetMapping("")
-    public String BoardList(Model model, @PageableDefault(page = 0, size = 10, sort = "boardId", direction = Sort.Direction.DESC) Pageable pageable) {
+    public String findBoardList(Model model, @PageableDefault(page = 0, size = 10, sort = "boardId", direction = Sort.Direction.DESC) Pageable pageable) {
         Map<String,Object> boardMap=boardService.findBoards(pageable);
         model.addAttribute("boardMap",boardMap);
+        return "board";
+    }
+
+    @GetMapping("/{category}")
+    public String findBoardKeywordList(Model model,@PageableDefault(page = 0, size = 10, sort = "boardId", direction = Sort.Direction.DESC) Pageable pageable){
+
 
         return "board";
     }
 
+    @GetMapping("/detail/{boardId}")
+    public String findBoard(Model model, @PathVariable Long boardId){
+        BoardResponse board=boardService.findBoard(boardId);
+        model.addAttribute("board",board);
+        return "boarddetail";
+    }
+
     @GetMapping("/newpost")
     public String createBoardForm() {
-
         return "boardadd";
     }
 

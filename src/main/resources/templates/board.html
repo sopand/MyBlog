@@ -20,7 +20,8 @@
         <div class="board_main_box">
             <div class="board_content" th:each="board :${boardMap['findBoards']}">
                 <div class="board_con_left">
-                    <span class="context_textname" th:text="|제목 : ${board.boardName}|" }>제목</span>
+
+                    <a th:href="|/boards/detail/${board.boardId}|" class="textname_href"><span class="context_textname" th:text="|제목 : ${board.boardName}|"></span></a>
                     <div class="board_content_text">
                         <div class="board_context_hit">
                             <span th:text="|작성 일자 : ${board.boardDate}|">작성일자</span>
