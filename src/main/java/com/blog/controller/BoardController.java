@@ -35,10 +35,10 @@ public class BoardController {
         return "board";
     }
 
-    @GetMapping("/{category}")
-    public String findBoardKeywordList(Model model,@PageableDefault(page = 0, size = 10, sort = "boardId", direction = Sort.Direction.DESC) Pageable pageable){
-
-
+    @GetMapping("/{boardCategory}")
+    public String findBoardByCateogry(Model model,@PageableDefault(page = 0, size = 10, sort = "boardId", direction = Sort.Direction.DESC) Pageable pageable,@PathVariable String boardCategory){
+        Map<String,Object> boardMap=boardService.findBoardByCateogry(pageable,boardCategory);
+        model.addAttribute("boardMap",boardMap);
         return "board";
     }
 

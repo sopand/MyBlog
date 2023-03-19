@@ -21,9 +21,9 @@ class BoardRepositoryTest {
     private BoardRepository repository;
     @Test
     void findAll() {
-
-        //when
+        //given
         PageRequest pageRequest=PageRequest.of(0,5, Sort.by(Sort.DEFAULT_DIRECTION.DESC,"boardId"));
+        //when
         Page<Board> board=repository.findAll(pageRequest);
         //then
         assertThat(board.getContent().get(0).getBoardId()).isEqualTo(1);

@@ -41,6 +41,13 @@ public class BoardService {
         pagingMap.put("findBoards",findBoards);
         return pagingMap;
     }
+    public Map<String,Object> findBoardByCateogry(Pageable page , String boardCateogry){
+        Page<Board> pagingBoards=boardRepository.findByBoardCategory(boardCateogry,page);
+        List<BoardResponse> findBoards=pagingBoards.stream().map(BoardResponse::new).toList();
+        Map<String, Object> pagingMap = findPaging(pagingBoards);
+        pagingMap.put("findBoards",findBoards);
+        return pagingMap;
+    }
 
 
     @Transactional

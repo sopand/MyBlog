@@ -38,7 +38,8 @@
         </div>
         <a href="/boards/newpost" class="boardadd_btn">게시글 등록</a>
         <div class="btnbox">
-            <th:block th:each="page : ${#numbers.sequence(boardMap['startPage'], boardMap['endPage'])}">
+            <div></div>
+            <th:block th:each="page : ${#numbers.sequence(boardMap['startPage'], boardMap['endPage'])}" th:if="${boardMap['findBoards'].size()}!=0">
                 <a th:if="${page != boardMap['nowPage']}" th:href="@{/boards/list(page = ${page - 1})}" th:text="${page}"></a>
                 <strong th:if="${page == boardMap['nowPage']}" th:text="${page}" style="color : red;font-weight:bold;font-size: 18px"></strong>
             </th:block>
