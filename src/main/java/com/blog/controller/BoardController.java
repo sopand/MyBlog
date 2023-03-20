@@ -27,8 +27,8 @@ public class BoardController {
     private final BoardService boardService;
 
     @GetMapping("")
-    public String findBoardList(Model model, @PageableDefault(page = 0, size = 10, sort = "boardId", direction = Sort.Direction.DESC) Pageable pageable) {
-        Map<String, Object> boardMap = boardService.findBoards(pageable);
+    public String findBoardAll(Model model, @PageableDefault(page = 0, size = 10, sort = "boardId", direction = Sort.Direction.DESC) Pageable pageable) {
+        Map<String, Object> boardMap = boardService.findBoardAll(pageable);
         model.addAttribute("boardMap", boardMap);
         return "board";
     }
@@ -43,13 +43,8 @@ public class BoardController {
 
     @GetMapping("/detail/{boardId}")
     public String findBoard(Model model, @PathVariable Long boardId) {
-        int hit = boardService.modifyBoardHit(boardId);
-        if (hit != 0) {
-            BoardResponse board = boardService.findBoard(boardId);
-            model.addAttribute("board", board);
-        }else{
-            throw new IllegalStateException("선택한 번호의 게시글은 존재하지 않아요");
-        }
+        BoardResponse board = boardService.findBoard(boardId);
+        model.addAttribute("board", board);
         return "boarddetail";
     }
 

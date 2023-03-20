@@ -1,12 +1,9 @@
 spring:
+  profiles:
+    include: config
   test:
     database:
       replace: NONE
-  mail:
-    host: smtp.gmail.com
-    port: 587
-    username: kmkemail1021@gmail.com
-    password: wkkrlmvrgidndoxy
   messages:
     basename: messages
   jpa:
@@ -42,13 +39,6 @@ spring:
       enabled: 'true'
       max-file-size: 10MB
       max-request-size: 30MB
-  datasource:
-    hikari:
-      password: '1111'
-      username: root
-      driver-class-name: com.mysql.cj.jdbc.Driver
-      jdbc-url: jdbc:mysql://localhost:3306/blog?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true
-      connection-test-query: SELECT NOW() FROM dual
   output:
     ansi:
       enabled: always

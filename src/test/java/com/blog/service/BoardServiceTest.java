@@ -33,7 +33,7 @@ class BoardServiceTest {
         //given
         PageRequest pageRequest=PageRequest.of(0,5, Sort.by(Sort.DEFAULT_DIRECTION.DESC,"boardId"));
         //when
-        Map<String,Object> boardMap=service.findBoards(pageRequest);
+        Map<String,Object> boardMap=service.findBoardAll(pageRequest);
         //then
         List<BoardResponse> board= (List<BoardResponse>) boardMap.get("findBoards");
         assertThat(board).isNotNull();

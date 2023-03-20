@@ -34,7 +34,7 @@ public class BoardService {
         return pagingMap;
     }
 
-    public Map<String,Object> findBoards(Pageable page){
+    public Map<String,Object> findBoardAll(Pageable page){
         Page<Board> pagingBoards=boardRepository.findAll(page);
         List<BoardResponse> findBoards=pagingBoards.stream().map(BoardResponse::new).toList();
         Map<String, Object> pagingMap = findPaging(pagingBoards);
@@ -58,15 +58,20 @@ public class BoardService {
     }
 
 
+    @Transactional
     public BoardResponse findBoard(Long boardId){
-        Board boardPS=boardRepository.findByBoardId(boardId);
-        return new BoardResponse(boardPS);
+        int hit=modifyBoardHit(boardId);
+        if(hit ==1) {
+            Board boardPS = boardRepository.findByBoardId(boardId);
+            return new BoardResponse(boardPS);
+        }else{
+            throw new IllegalStateException("찾는 게시글이 존재하지 않아요");
+        }
     }
 
     @Transactional
     public int modifyBoardHit(Long boardId){
         return boardRepository.modifyBoardHit(boardId);
-
     }
 
     @Transactional
