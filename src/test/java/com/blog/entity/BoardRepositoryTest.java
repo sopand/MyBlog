@@ -46,4 +46,15 @@ class BoardRepositoryTest {
         //then
         assertThat(chk).isEqualTo(1);
     }
+
+    @Test
+    void deleteByBoardId(){
+        //given
+        Long boardId=3L;
+        //when
+        repository.deleteByBoardId(boardId);
+        Board board=repository.findByBoardId(boardId);
+        //then
+        assertThat(board).isNull();
+    }
 }

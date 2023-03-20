@@ -8,12 +8,13 @@
 }
 
 .detail_main_con {
-    padding-top:100px;
+    padding-top: 100px;
     padding-bottom: 100px;
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
 }
 
 .detail_main_box {
@@ -25,16 +26,18 @@
     padding-top: 50px;
     padding-bottom: 50px;
 }
-.detail_tag{
-    width:900px;
+
+.detail_tag {
+    width: 900px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border:1px solid #e2e2e2;
+    border: 1px solid #e2e2e2;
 }
-.tag1{
 
-    width:200px;
+.tag1 {
+
+    width: 200px;
     height: 60px;
     display: flex;
     align-items: center;
@@ -44,8 +47,9 @@
     padding-right: 15px;
     border-right: 1px solid #e2e2e2;
 }
-.tag2{
-    width:700px;
+
+.tag2 {
+    width: 700px;
     display: flex;
     align-items: center;
     padding-left: 20px;
@@ -53,14 +57,15 @@
     font-weight: bold;
 }
 
-.detail_tag2{
-    width:900px;
+.detail_tag2 {
+    width: 900px;
     display: flex;
     align-items: center;
     justify-content: space-around;
-    border:1px solid #e2e2e2;
+    border: 1px solid #e2e2e2;
 }
-.detail_tag2 span{
+
+.detail_tag2 span {
     width: 50%;
     height: 60px;
     display: flex;
@@ -68,20 +73,21 @@
     justify-content: center;
     font-size: 18px;
     font-weight: bold;
-    color:gray;
+    color: gray;
 
 }
-.detail_tag3{
-    width:900px;
+
+.detail_tag3 {
+    width: 900px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border:1px solid #e2e2e2;
+    border: 1px solid #e2e2e2;
     flex-direction: column;
     margin-top: 50px;
 }
 
-.text_tag2{
+.text_tag2 {
     width: 900px;
     min-height: 400px;
     padding-left: 30px;
@@ -90,4 +96,20 @@
 
 
 }
+
+/*-------------------------------------------------------*/
+
+.review_box {
+    width: 1000px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+
+
+
+
+
 

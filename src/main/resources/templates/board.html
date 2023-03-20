@@ -15,7 +15,8 @@
 
     <header th:replace="header :: header"></header>
     <main class="board_main_con">
-        <span class="main_tag">전체 게시물 조회</span>
+        <span class="main_tag" th:if="${boardCategory==null}" th:text="#{board.head}">전체 게시물 조회</span>
+        <span class="main_tag" th:if="${boardCategory!=null}" th:text="${boardCategory}"></span>
 
 
         </form>
@@ -23,22 +24,22 @@
             <div class="board_content" th:each="board :${boardMap['findBoards']}">
                 <div class="board_con_left">
 
-                    <a th:href="|/boards/detail/${board.boardId}|" class="textname_href"><span class="context_textname" th:text="|제목 : ${board.boardName}|"></span></a>
+                    <a th:href="|/boards/detail/${board.boardId}|" class="textname_href"><span class="context_textname" th:text="|#{board.name}${board.boardName}|"></span></a>
                     <div class="board_content_text">
                         <div class="board_context_hit">
-                            <span th:text="|작성 일자 : ${board.boardDate}|">작성일자</span>
-                            <span th:text="|조회수 :${board.boardHit} |">조회수</span>
+                            <span th:text="|#{board.date}${board.boardDate}|"></span>
+                            <span th:text="|#{board.hit}${board.boardHit} |"></span>
                         </div>
                     </div>
                 </div>
                 <div class="board_con_right">
                     <img th:src="${board.boardThumbnail}" th:if="${board.boardThumbnail!=null} and ${board.boardThumbnail!=''}">
-                    <span th:if="${board.boardThumbnail}==''">썸네일 사진이 없어요!!</span>
+                    <span th:if="${board.boardThumbnail}==''" th:text="#{board.img}"></span>
                 </div>
 
             </div>
         </div>
-        <a href="/boards/newpost" class="boardadd_btn">게시글 등록</a>
+        <a href="/boards/newpost" class="boardadd_btn" th:text="#{board.addbtn}"></a>
         <div class="btnbox">
             <div></div>
             <th:block th:each="page : ${#numbers.sequence(boardMap['startPage'], boardMap['endPage'])}" th:if="${boardMap['findBoards'].size()}!=0">

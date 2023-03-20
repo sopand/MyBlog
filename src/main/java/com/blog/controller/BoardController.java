@@ -11,10 +11,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -40,6 +37,7 @@ public class BoardController {
     public String findBoardByCateogry(Model model, @PageableDefault(page = 0, size = 10, sort = "boardId", direction = Sort.Direction.DESC) Pageable pageable, @PathVariable String boardCategory) {
         Map<String, Object> boardMap = boardService.findBoardByCateogry(pageable, boardCategory);
         model.addAttribute("boardMap", boardMap);
+        model.addAttribute("boardCategory",boardCategory);
         return "board";
     }
 
@@ -68,5 +66,11 @@ public class BoardController {
         } else {
             throw new IllegalStateException("게시글 등록 실패");
         }
+    }
+
+    @DeleteMapping
+    public String deleteBoard(Long boardId){
+        boardService.deleteBoard(boardId);
+        return "redirect:/boards";
     }
 }
