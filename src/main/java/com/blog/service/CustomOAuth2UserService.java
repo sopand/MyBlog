@@ -26,7 +26,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         OAuth2User oAuth2User = delegate.loadUser(userRequest);
 
         /* OAuth2 서비스 id 구분코드 ( 구글, 카카오, 네이버 ) */
-        String registrationId = userRequest.getClientRegistration().getRegistrationId();
+        String registrationId = userRequest.getClientRegistration().getRegistrationId(); //google
 
         /* OAuth2 로그인 진행시 키가 되는 필드 값 (PK) (구글의 기본 코드는 "sub") */
         String userNameAttributeName = userRequest.getClientRegistration().getProviderDetails()
@@ -46,10 +46,9 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
     /* 소셜로그인시 기존 회원이 존재하면 수정날짜 정보만 업데이트해 기존의 데이터는 그대로 보존 */
     private User saveOrUpdate(OAuthAttributes attributes) {
-        User user = userRepository.findByEmail(attributes.getEmail());
-            if(user==null){
-                attributes.toEntity();
-            }
+        User user = userRepository.findByEmail(attributes.getEmail())
+                .filter(entity-> entity!=null).orElse(attributes.toEntity());
+
 
         return userRepository.save(user);
     }

@@ -40,7 +40,10 @@ public class SecurityConfig {
         http.authorizeHttpRequests()
                 .requestMatchers("/**")
                 .permitAll();
-        http.oauth2Login().userInfoEndpoint().userService(customOAuth2UserService);
+        http.oauth2Login().loginPage("/users")
+                .defaultSuccessUrl("/index",true)
+                .userInfoEndpoint()
+                .userService(customOAuth2UserService);
         return http.build();
     }
 

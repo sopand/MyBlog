@@ -2,10 +2,9 @@ package com.blog.service;
 
 import com.blog.dto.Role;
 import com.blog.entity.User;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.Map;
 
@@ -14,6 +13,7 @@ import java.util.Map;
 @Builder
 @Getter
 public class OAuthAttributes {
+
     private Map<String, Object> attributes;
     private String nameAttributeKey;
     private String email;
@@ -37,10 +37,11 @@ public class OAuthAttributes {
     }
 
     public User toEntity() {
+        BCryptPasswordEncoder passwordEncoder=new BCryptPasswordEncoder();
         return User.builder()
                 .email(email)
-                .pwd("비밀번호 아무거나 할라고")
-                .role(Role.USER)
+                .pwd(passwordEncoder.encode("아무비밀번호"))
+                .role(Role.USER.getValue())
                 .build();
     }
 }

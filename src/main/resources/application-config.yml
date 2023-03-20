@@ -18,7 +18,6 @@ spring:
           google:
             client-id: 922405067379-s6hqmtorgvp0cibhs0t7gbvg257irbah.apps.googleusercontent.com
             client-secret: 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
-            scope:
-              - profile,email
+            scope: profile,email
 #scope 기본값은 email, profile, openid 인데 profile, email만 입력한 이유는  
 #※ openid가 있으면 OpenId Provider로 인식하기 때문인데, 이렇게 되면 OpenId Provider인 서비스와 그렇지 않은 서비스(네이버/카카오 등)로 나눠서 각각 OAuth2Service를 만들어야 한다.

@@ -14,11 +14,15 @@
     padding-bottom: 150px;
 }
 .login_main_box{
+    padding-top:80px;
+    padding-bottom: 80px;
     width: 800px;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    border-radius: 15px;
+    box-shadow:10px 10px 25px 5px darkslateblue;
 }
 .login_main_box span{
     width: 800px;
