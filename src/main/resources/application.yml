@@ -1,4 +1,7 @@
 spring:
+  test:
+    database:
+      replace: NONE
   mail:
     host: smtp.gmail.com
     port: 587

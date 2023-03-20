@@ -63,5 +63,11 @@ public class BoardService {
         return new BoardResponse(boardPS);
     }
 
+    @Transactional
+    public int modifyBoardHit(Long boardId){
+        return boardRepository.modifyBoardHit(boardId);
+
+    }
+
 
 }

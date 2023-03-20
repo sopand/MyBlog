@@ -28,24 +28,30 @@ public class BoardController {
 
 
     private final BoardService boardService;
+
     @GetMapping("")
     public String findBoardList(Model model, @PageableDefault(page = 0, size = 10, sort = "boardId", direction = Sort.Direction.DESC) Pageable pageable) {
-        Map<String,Object> boardMap=boardService.findBoards(pageable);
-        model.addAttribute("boardMap",boardMap);
+        Map<String, Object> boardMap = boardService.findBoards(pageable);
+        model.addAttribute("boardMap", boardMap);
         return "board";
     }
 
     @GetMapping("/{boardCategory}")
-    public String findBoardByCateogry(Model model,@PageableDefault(page = 0, size = 10, sort = "boardId", direction = Sort.Direction.DESC) Pageable pageable,@PathVariable String boardCategory){
-        Map<String,Object> boardMap=boardService.findBoardByCateogry(pageable,boardCategory);
-        model.addAttribute("boardMap",boardMap);
+    public String findBoardByCateogry(Model model, @PageableDefault(page = 0, size = 10, sort = "boardId", direction = Sort.Direction.DESC) Pageable pageable, @PathVariable String boardCategory) {
+        Map<String, Object> boardMap = boardService.findBoardByCateogry(pageable, boardCategory);
+        model.addAttribute("boardMap", boardMap);
         return "board";
     }
 
     @GetMapping("/detail/{boardId}")
-    public String findBoard(Model model, @PathVariable Long boardId){
-        BoardResponse board=boardService.findBoard(boardId);
-        model.addAttribute("board",board);
+    public String findBoard(Model model, @PathVariable Long boardId) {
+        int hit = boardService.modifyBoardHit(boardId);
+        if (hit != 0) {
+            BoardResponse board = boardService.findBoard(boardId);
+            model.addAttribute("board", board);
+        }else{
+            throw new IllegalStateException("선택한 번호의 게시글은 존재하지 않아요");
+        }
         return "boarddetail";
     }
 
@@ -56,10 +62,10 @@ public class BoardController {
 
     @PostMapping("/newpost")
     public String createBoard(BoardRequest boardRequest) {
-        BoardResponse board=boardService.createBoard(boardRequest);
-        if(board!=null){
+        BoardResponse board = boardService.createBoard(boardRequest);
+        if (board != null) {
             return "redirect:/index";
-        }else{
+        } else {
             throw new IllegalStateException("게시글 등록 실패");
         }
     }

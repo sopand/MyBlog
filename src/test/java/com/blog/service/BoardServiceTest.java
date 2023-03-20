@@ -51,4 +51,13 @@ class BoardServiceTest {
     @Test
     void findBoard() {
     }
+
+    @Test
+    void modifyBoardHit(){
+        //given
+        Long boardId=3L;
+        //when
+
+        //then
+    }
 }
