@@ -20,7 +20,7 @@ public class Board {
     @Id
     private Long boardId;
 
-    @Column(name="board_name")
+    @Column(name="board_name" , length = 40,nullable = false)
     private String boardName;
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -30,13 +30,13 @@ public class Board {
     @Column(name = "board_hit")
     private int boardHit;
 
-    @Column(name="board_category")
+    @Column(name="board_category",length = 10,nullable = false)
     private String boardCategory;
 
-    @Column(name="board_content")
+    @Column(name="board_content",nullable = false,length = 1000)
     private String boardContent;
 
-    @Column(name="board_thumbnail")
+    @Column(name="board_thumbnail" ,length = 100)
     private String boardThumbnail;
 
     @Builder
