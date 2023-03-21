@@ -58,3 +58,14 @@
 .loginbtn2:active{
     background-image: url("../img/NaverPress.png");
 }
+.loginbtn3{
+    background-image: url("../img/kakao_login_large_narrow.png");
+    width: 382px;
+    height: 92px;
+    background-size: cover;
+    margin-top:20px;
+    border-radius: 10px;
+}
+.loginbtn3:active{
+    border:2px solid #ff4c00;
+}

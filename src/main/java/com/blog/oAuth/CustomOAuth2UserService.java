@@ -25,28 +25,37 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService  {
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
-        OAuth2UserService<OAuth2UserRequest, OAuth2User> delegate = new DefaultOAuth2UserService();
-        OAuth2User oAuth2User = delegate.loadUser(userRequest);
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        OAuth2User oAuth2User = super.loadUser(userRequest);
 
-        String registrationId = userRequest.getClientRegistration().getRegistrationId();
-        String userNameAttributeName = userRequest.getClientRegistration().getProviderDetails().getUserInfoEndpoint().getUserNameAttributeName();
+        OAuth2UserInfo oAuth2UserInfo = null;	//추가
+        String provider = userRequest.getClientRegistration().getRegistrationId();
 
-        OAuthAttributes attributes = OAuthAttributes.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
+        //추가
+        if(provider.equals("google")){
+            oAuth2UserInfo = new GoogleUserInfo(oAuth2User.getAttributes());
+        }
+        else if(provider.equals("naver")){
+            oAuth2UserInfo = new NaverUserInfo(oAuth2User.getAttributes());
+        }else if(provider.equals("kakao")){
+            oAuth2UserInfo = new KakaoUserInfo(oAuth2User.getAttributes());
+        }
 
-        User user = saveOrUpdate(attributes);
+        String username = oAuth2UserInfo.getName();
 
-        return new DefaultOAuth2User(
-                Collections.singleton(new SimpleGrantedAuthority(user.getRoleKey())),
-                attributes.getAttributes(),
-                attributes.getNameAttributeKey()
-        );
-    }
+        String uuid = UUID.randomUUID().toString().substring(0, 6);
+        String pwd = passwordEncoder.encode("패스워드"+uuid);
 
-    private User saveOrUpdate(OAuthAttributes attributes) {
-        User user = userRepository.findByEmail(attributes.getEmail())
-                .map(entity -> entity.update(attributes.getName()))
-                .orElse(attributes.toEntity());
+        String email = oAuth2UserInfo.getEmail();	//수정
+        Role role = Role.ROLE_USER;
 
-        return userRepository.save(user);
+        User byUsername = userRepository.findByEmail(email);
+        //DB에 없는 사용자라면 회원가입처리
+        if(byUsername == null){
+            byUsername=User.builder().name(username).pwd(pwd).email(email).role(role).build();
+            userRepository.save(byUsername);
+        }
+
+        return new PrincipalDetails(byUsername, oAuth2UserInfo);	//수정
     }
 }
