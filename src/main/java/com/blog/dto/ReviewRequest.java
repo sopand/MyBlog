@@ -1,5 +1,6 @@
 package com.blog.dto;
 
+import com.blog.entity.Board;
 import com.blog.entity.Review;
 import lombok.Data;
 
@@ -9,9 +10,12 @@ public class ReviewRequest {
     private String reviewName;
     private String reviewContent;
 
+    private Long boardId;
+
+    private Board board;
 
     public Review toEntity(){
-        return Review.builder().reviewName(reviewName).reviewContent(reviewContent).build();
+        return Review.builder().board(board).reviewName(reviewName).reviewContent(reviewContent).build();
 
     }
 }

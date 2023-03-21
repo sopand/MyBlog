@@ -18,7 +18,7 @@ public class Review {
     @Column(name = "review_id")
     private Long reviewId;
 
-    @Column(name="review_parent")
+    @Column(name = "review_parent")
     private Long reviewParent;
 
     @Column(name = "review_deep")
@@ -34,18 +34,23 @@ public class Review {
     @Column(name = "review_content")
     private String reviewContent;
 
-    @Column(name="review_groupno")
+    @Column(name = "review_groupno")
     private int reviewGroupNo;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "board_id")
+    private Board board;
+
     @Builder
-    public Review(Long reviewId,Long reviewParent,int reviewDeep,String reviewName,String reviewContent,int reviewGroupNo){
-    this.reviewId=reviewId;
-    this.reviewParent=reviewParent;
-    this.reviewName=reviewName;
-    this.reviewDate=new Date();
-    this.reviewContent=reviewContent;
-    this.reviewGroupNo=reviewGroupNo;
-    this.reviewDeep=reviewDeep;
+    public Review(Board board, Long reviewId, Long reviewParent, int reviewDeep, String reviewName, String reviewContent, int reviewGroupNo) {
+        this.board = board;
+        this.reviewId = reviewId;
+        this.reviewParent = reviewParent;
+        this.reviewName = reviewName;
+        this.reviewDate = new Date();
+        this.reviewContent = reviewContent;
+        this.reviewGroupNo = reviewGroupNo;
+        this.reviewDeep = reviewDeep;
 
     }
 

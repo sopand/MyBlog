@@ -1,6 +1,7 @@
 package com.blog.service;
 
 import com.blog.dto.ReviewRequest;
+import com.blog.entity.Board;
 import com.blog.entity.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,8 @@ public class ReviewService {
 
     @Transactional
     public void createReview(ReviewRequest reviewRequest){
+        Board boardId=Board.builder().boardId(reviewRequest.getBoardId()).build();
+        reviewRequest.setBoard(boardId);
         reviewRepository.save(reviewRequest.toEntity());
     }
 }

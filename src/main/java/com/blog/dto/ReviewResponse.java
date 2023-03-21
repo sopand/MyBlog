@@ -1,5 +1,6 @@
 package com.blog.dto;
 
+import com.blog.entity.Board;
 import com.blog.entity.Review;
 import lombok.Getter;
 
@@ -14,6 +15,9 @@ public class ReviewResponse {
     private String reviewName;
     private String reviewContent;
     private int reviewGroupNo;
+    
+    private Long boardId;
+
 
     public ReviewResponse(Review entity){
         this.reviewId=entity.getReviewId();
@@ -23,6 +27,7 @@ public class ReviewResponse {
         this.reviewName=entity.getReviewName();
         this.reviewContent=entity.getReviewContent();
         this.reviewGroupNo=entity.getReviewGroupNo();
+        this.boardId=entity.getBoard().getBoardId();
     }
 
 }

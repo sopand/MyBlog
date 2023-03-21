@@ -39,7 +39,10 @@
 
         </div>
         <form class="review_form">
-            <input type="hidden" th:value="${#authentication.name}" name="reviewName" sec:authorize="isAuthenticated()">
+
+        <input type="hidden" th:value="${#authentication.name}" name="reviewName" sec:authorize="isAuthenticated()">
+        <input type="hidden" th:value="${board.boardId}" name="boardId" sec:authorize="isAuthenticated()">
+
                 <textarea name="reviewContent" class="review_area">
 
                 </textarea>
