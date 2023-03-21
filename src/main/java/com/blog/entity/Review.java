@@ -21,7 +21,6 @@ public class Review {
     @Column(name="review_parent")
     private Long reviewParent;
 
-
     @Column(name = "review_deep")
     private int reviewDeep;
 

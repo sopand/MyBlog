@@ -9,8 +9,7 @@ import java.security.Principal;
 public class FormController {
 
     @GetMapping("/index")
-    public String IndexForm(Principal principal){
-
+    public String IndexForm(){
         return "index";
     }
 
