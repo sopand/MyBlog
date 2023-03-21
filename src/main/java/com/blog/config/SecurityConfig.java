@@ -1,13 +1,10 @@
 package com.blog.config;
 
 
-import com.blog.service.CustomOAuth2UserService;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
+import com.blog.oAuth.CustomOAuth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.configuration.EnableGlobalAuthentication;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
@@ -25,7 +22,7 @@ public class SecurityConfig {
             "/error", "/css/js/**"};
 
     @Bean
-    public BCryptPasswordEncoder passwordEncoder(){
+    public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
@@ -40,8 +37,9 @@ public class SecurityConfig {
         http.authorizeHttpRequests()
                 .requestMatchers("/**")
                 .permitAll();
-        http.oauth2Login().loginPage("/users")
-                .defaultSuccessUrl("/index",true)
+        http.formLogin().disable()
+                .oauth2Login().loginPage("/users")
+                .defaultSuccessUrl("/index", true)
                 .userInfoEndpoint()
                 .userService(customOAuth2UserService);
         return http.build();

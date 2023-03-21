@@ -15,6 +15,12 @@
     padding-top: 25px;
     background-color: darkslateblue;
 }
+.hed_login_box{
+    width:100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
 .index_hed_text a:hover{
     color: #ff001e;
 }

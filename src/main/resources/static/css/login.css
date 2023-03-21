@@ -46,3 +46,15 @@
 .loginbtn:active{
     background-image: url("../img/pressbutton.png");
 }
+
+.loginbtn2{
+    background-image: url("../img/NaverBtn.png");
+    width: 382px;
+    height: 92px;
+    background-size: cover;
+    margin-top:20px;
+    border-radius: 10px;
+}
+.loginbtn2:active{
+    background-image: url("../img/NaverPress.png");
+}
