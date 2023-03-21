@@ -1,4 +1,19 @@
 $(function(){
+    let boardId=$("input[name=boardId]").val();
+    $.ajax({
+        url:"/boards/review",
+        method:"GET",
+        data:{
+            boardId:boardId,
+        },
+        success : function (data){
+            alert(data);
+        },
+        error : function (){
+            alert("리뷰 생성 실패");
+        }
+    });
+
     $(".review_add_btn").click(function (){
         let reviewName=$("input[name=reviewName]").val();
         let boardId=$("input[name=boardId]").val();

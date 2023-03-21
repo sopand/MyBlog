@@ -15,7 +15,7 @@ public class ReviewResponse {
     private String reviewName;
     private String reviewContent;
     private int reviewGroupNo;
-    
+
     private Long boardId;
 
 
@@ -28,6 +28,17 @@ public class ReviewResponse {
         this.reviewContent=entity.getReviewContent();
         this.reviewGroupNo=entity.getReviewGroupNo();
         this.boardId=entity.getBoard().getBoardId();
+    }
+
+    public ReviewResponse(Long reviewId,Long reviewParent,int reviewDeep,Date reviewDate,String reviewName,String reviewContent,int reviewGroupNo,Long boardId){
+        this.reviewId=reviewId;
+        this.reviewParent=reviewParent;
+        this.reviewDeep=reviewDeep;
+        this.reviewDate=reviewDate;
+        this.reviewName=reviewName;
+        this.reviewContent=reviewContent;
+        this.reviewGroupNo=reviewGroupNo;
+        this.boardId=boardId;
     }
 
 }
