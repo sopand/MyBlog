@@ -26,7 +26,7 @@ public class ReviewService {
     }
 
     public List<ReviewResponse> findReview(Long boardId, Pageable pageable){
-        List<ReviewResponse> review=reviewRepository.findReview(boardId,pageable).toList();
+        List<ReviewResponse> review=reviewRepository.findReview(boardId,pageable).map(ReviewResponse::new).toList();
 
         return review;
     }

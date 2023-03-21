@@ -8,7 +8,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -38,6 +40,9 @@ public class Board {
 
     @Column(name="board_thumbnail" ,length = 100)
     private String boardThumbnail;
+
+    @OneToMany(mappedBy = "board")
+    private List<Review> review=new ArrayList<>();
 
     @Builder
     public Board(Long boardId,String boardName,int boardHit,String boardCategory,String boardContent,String boardThumbnail){
