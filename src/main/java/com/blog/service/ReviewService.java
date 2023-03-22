@@ -22,14 +22,26 @@ public class ReviewService {
 
     @Transactional
     public void createReview(ReviewRequest reviewRequest) {
-        Board boardId = Board.builder().boardId(reviewRequest.getBoardId()).build();
-        reviewRequest.setBoard(boardId);
-        reviewRepository.save(reviewRequest.toEntity());
+        Board boardId = Board.builder().boardId(reviewRequest.getBoardId()).build();  // 댓글을 저장할 게시글의 고유번호
+        reviewRequest.setBoard(boardId); // ReviewEntity로 변경하기위해 Board를 set
+        Review review=null;
+        if(reviewRequest.getReviewParent()!=null){
+            review=reviewRepository.findByReviewId(reviewRequest.getReviewParent()); //review가 대댓글인지 댓글이지 여부를 확인하기 위함
+        }
+        if(review==null&&reviewRequest.getReviewParent()==null){ //null이라면 일반 댓글 등록
+            reviewRepository.save(reviewRequest.noParent()); //Parent가 존재하지 않을때 Review Entity 변환 메서드
+        }else { // 존재 한다면 Parent= 부모의 고유번호
+            reviewRequest.setReviewDeep(review.getReviewDeep()+1); // 대댓글의 대댓글인지 그냥 대댓글인지 확인
+            reviewRepository.save(reviewRequest.onParent()); // Parent가 존재할때의 Review Entity변환 메서드
+            reviewRepository.modifyReviewGroupNo(review.getReviewId()); //저장시 부모의 대댓글 그룹의 숫자를 +1
+
+        }
+
     }
 
-    public ReviewList findReview(Long boardId, Pageable pageable) {
+    public ReviewList findReviewList(Long boardId, Pageable pageable) {
 
-        Page<Review> pagingReview = reviewRepository.findReview(boardId, pageable);
+        Page<Review> pagingReview = reviewRepository.findReviewList(boardId, pageable);
         int nowPage = pagingReview.getPageable().getPageNumber() + 1;
         int startPage = Math.max(nowPage - 4, 1);
         int endPage = Math.min(nowPage + 5, pagingReview.getTotalPages());

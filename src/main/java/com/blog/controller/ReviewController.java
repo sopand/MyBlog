@@ -28,7 +28,7 @@ public class ReviewController {
     @ResponseBody
     @GetMapping("/boards/review")
     public ReviewList findReview(Long boardId, @PageableDefault(page = 0, size = 7, sort = "reviewId", direction = Sort.Direction.ASC) Pageable pageable){
-        return reviewService.findReview(boardId,pageable);
+        return reviewService.findReviewList(boardId,pageable);
     }
     @ResponseBody
     @DeleteMapping("/boards/review")

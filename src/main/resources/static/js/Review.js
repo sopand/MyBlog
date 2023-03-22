@@ -49,10 +49,9 @@ $(function () {
         if ($(this).text() == '대댓글') {
             $(this).text("대댓글입력중");
             let html = `
-            <form class="re_review_form ${chk}">
-                <input name="reviewParent" type="hidden" value="${chk}">
-                <textarea name="reviewContent" class="re_review_area"></textarea>
-                <button type="button" class="re_review_add_btn">대댓글 등록</button>
+            <form class="re_review_form ${chk}">                
+                <textarea name="reviewContent" class="re_review_area area${chk}"></textarea>
+                <button type="button" class="re_review_add_btn" value="${chk}">대댓글 등록</button>
             </form>
         `;
             $("#" + chk).after(html);
@@ -60,9 +59,32 @@ $(function () {
             $("."+chk).remove();
             $(this).text("대댓글");
         }
-
     });
     $(document).on('click', '.re_review_add_btn', function () {
+        let reviewParent =$(this).val();
+        if (reviewName == null) {
+            alert("로그인을 하셔야 작성할수 있어용!!");
+            return false;
+        }
+        let boardId = $("input[name=boardId]").val();
+        let reviewContent = $(".area"+reviewParent).val();
+        $.ajax({
+            url: "/boards/review",
+            method: "POST",
+            data: {
+                boardId: boardId,
+                reviewName: reviewName,
+                reviewContent: reviewContent,
+                reviewParent:reviewParent
+            },
+            success: function (data) {
+                alert(data);
+            },
+            error: function () {
+                alert("리뷰 생성 실패");
+            }
+        });
+
     });
 
     $(document).on('click', '.review_delete', function () {

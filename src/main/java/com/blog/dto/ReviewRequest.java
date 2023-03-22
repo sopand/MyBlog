@@ -11,12 +11,15 @@ public class ReviewRequest {
     private String reviewContent;
 
     private Long reviewParent;
+    private int reviewDeep;
     private Long boardId;
 
     private Board board;
 
-    public Review toEntity(){
+    public Review onParent(){
+        return Review.builder().reviewDeep(reviewDeep).reviewParent(reviewParent).board(board).reviewName(reviewName).reviewContent(reviewContent).build();
+    }
+    public Review noParent(){
         return Review.builder().board(board).reviewName(reviewName).reviewContent(reviewContent).build();
-
     }
 }
