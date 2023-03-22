@@ -30,4 +30,9 @@ public class ReviewService {
 
         return review;
     }
+
+    @Transactional
+    public void deleteReview(Long reviewId){
+        reviewRepository.deleteByReviewId(reviewId);
+    }
 }

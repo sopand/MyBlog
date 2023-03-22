@@ -28,5 +28,11 @@ public class ReviewController {
     public List<ReviewResponse> findReview(Long boardId,@PageableDefault(page = 0, size = 10, sort = "reviewId", direction = Sort.Direction.ASC) Pageable pageable){
         return reviewService.findReview(boardId,pageable);
     }
+    @ResponseBody
+    @DeleteMapping("/boards/review")
+    public String deleteReview(Long reviewId){
+        reviewService.deleteReview(reviewId);
+        return "삭제 완료";
+    }
 
 }

@@ -117,7 +117,8 @@
     border-radius: 10px;
     padding-bottom: 10px;
     padding-top: 15px;
-    box-shadow: 10px 10px 20px 5px #ddddff;
+    margin-bottom: 20px;
+    box-shadow: 5px 5px 20px 5px #ddddff;
 }
 .review_top{
     width:900px;
@@ -168,11 +169,14 @@
     align-items: center;
     justify-content: flex-start;
 }
-.review_bot span{
-    width: 150px;
+.review_bot button{
+    width: 100px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
+    padding-left: 20px;
+    font-size: 12px;
+    color:darkslateblue;
     font-weight: bold;
 }
 
