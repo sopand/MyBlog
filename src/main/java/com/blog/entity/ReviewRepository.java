@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
+
 public interface ReviewRepository extends JpaRepository<Review,Long> {
 
 
@@ -22,6 +24,8 @@ public interface ReviewRepository extends JpaRepository<Review,Long> {
      Review findByReviewId(Long reviewId);
 
     @Modifying(clearAutomatically = true) // Update가 실행된후에 영속성 컨텍스트를 Clear, 지워버려서 기존의 Find한 객체의 값을 리셋 시킨다.
-    @Query(value = "UPDATE Review re SET re.reviewGroupNo=re.reviewGroupNo+1 WHERE re.reviewId = :reviewId")
-    int modifyReviewGroupNo(@Param("reviewId") Long reviewId);
+    @Query(value = "UPDATE Review re SET re.reviewGroupNo = :reviewGroupNo WHERE re.reviewId = :reviewId")
+    int modifyReviewGroupNo(@Param("reviewId") Long reviewId,@Param("reviewGroupNo")int reviewGroupNo);
+
+    List<Review> findByReviewParent(Long reviewParent);
 }

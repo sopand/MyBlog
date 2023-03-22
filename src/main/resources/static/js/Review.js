@@ -146,7 +146,7 @@ $(function () {
                                 <button type="button" class="review_delete" value="${item.reviewId}">삭제</button>                   
                     `;
                 if (item.reviewGroupNo != 0) {
-                    html += `<span>더보기(${item.reviewGroupNo})</span>`;
+                    html += `<span class="re_reviewList">댓글 더 보기...(${item.reviewGroupNo})</span>`;
                 }
                 html += "</div></div>";
             }

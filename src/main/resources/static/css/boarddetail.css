@@ -276,3 +276,13 @@
     font-weight: bold;
 }
 
+.re_reviewList{
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: bold;
+    color: gray;
+}
+.re_reviewList:hover{
+    color: #4949ff;
+    font-size: 14px;
+}

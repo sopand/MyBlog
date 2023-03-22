@@ -24,16 +24,16 @@ public class ReviewService {
     public void createReview(ReviewRequest reviewRequest) {
         Board boardId = Board.builder().boardId(reviewRequest.getBoardId()).build();  // 댓글을 저장할 게시글의 고유번호
         reviewRequest.setBoard(boardId); // ReviewEntity로 변경하기위해 Board를 set
-        Review review=null;
-        if(reviewRequest.getReviewParent()!=null){
-            review=reviewRepository.findByReviewId(reviewRequest.getReviewParent()); //review가 대댓글인지 댓글이지 여부를 확인하기 위함
+        Review review = null;
+        if (reviewRequest.getReviewParent() != null) {
+            review = reviewRepository.findByReviewId(reviewRequest.getReviewParent()); //review가 대댓글인지 댓글이지 여부를 확인하기 위함
         }
-        if(review==null&&reviewRequest.getReviewParent()==null){ //null이라면 일반 댓글 등록
+        if (review == null && reviewRequest.getReviewParent() == null) { //null이라면 일반 댓글 등록
             reviewRepository.save(reviewRequest.noParent()); //Parent가 존재하지 않을때 Review Entity 변환 메서드
-        }else { // 존재 한다면 Parent= 부모의 고유번호
-            reviewRequest.setReviewDeep(review.getReviewDeep()+1); // 대댓글의 대댓글인지 그냥 대댓글인지 확인
+        } else { // 존재 한다면 Parent= 부모의 고유번호
+            reviewRequest.setReviewDeep(review.getReviewDeep() + 1); // 대댓글의 대댓글인지 그냥 대댓글인지 확인
             reviewRepository.save(reviewRequest.onParent()); // Parent가 존재할때의 Review Entity변환 메서드
-            reviewRepository.modifyReviewGroupNo(review.getReviewId()); //저장시 부모의 대댓글 그룹의 숫자를 +1
+            reviewRepository.modifyReviewGroupNo(review.getReviewId(), review.getReviewGroupNo() + 1); //저장시 부모의 대댓글 그룹의 숫자를 +1
 
         }
 
@@ -52,6 +52,20 @@ public class ReviewService {
 
     @Transactional
     public void deleteReview(Long reviewId) {
-        reviewRepository.deleteByReviewId(reviewId);
+        Review review = reviewRepository.findByReviewId(reviewId); //review가 대댓글인지 댓글인지 여부를 확인하기 위함
+        if (review.getReviewParent() == null) { // 상위의 댓글이 존재하고 하위에는 없을 경우 ( 그냥 대댓글일 경우 )
+            deleteReviewParent(review);
+        } else {
+            reviewRepository.modifyReviewGroupNo(review.getReviewParent(), review.getReviewGroupNo() - 1);
+            deleteReviewParent(review);
+        }
+    }
+
+    @Transactional
+    public void deleteReviewParent(Review review) {
+        if (review.getReviewGroupNo() != 0) {
+            reviewRepository.findByReviewParent(review.getReviewId()).forEach(entity -> reviewRepository.deleteByReviewId(entity.getReviewId()));
+        }
+        reviewRepository.deleteByReviewId(review.getReviewId());
     }
 }
