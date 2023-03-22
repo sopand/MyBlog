@@ -10,6 +10,7 @@ public class ReviewRequest {
     private String reviewName;
     private String reviewContent;
 
+    private Long reviewParent;
     private Long boardId;
 
     private Board board;

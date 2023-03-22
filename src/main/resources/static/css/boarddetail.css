@@ -203,14 +203,14 @@
 
 /*-------------------------------------------*/
 
-.review_form{
+.review_form,.re_review_form{
     padding-top: 50px;
     padding-bottom: 50px;
     width: 900px;
     display: flex;
     align-items: center;
 }
-.review_area{
+.review_area,.re_review_area{
     width:700px;
     display: flex;
     align-items: center;
@@ -218,11 +218,20 @@
     padding-top: 10px;
     height: 75px;
     resize: none;
-    border:2px solid darkslateblue;
+
     border-radius: 5px;
+}
+.review_area{
+    border:2px solid darkslateblue;
+}
+.re_review_area{
+    border:2px solid #4949ff;
 }
 
 .review_add_btn{
+    background-color: darkslateblue;
+}
+.review_add_btn,.re_review_add_btn{
     width:150px;
     display: flex;
     align-items: center;
@@ -232,8 +241,10 @@
     font-size: 20px;
     font-weight: bold;
     color: white;
-    background-color: darkslateblue;
     border-radius: 5px;
+}
+.re_review_add_btn{
+        background-color: #4949ff;
 }
 
 .review_add_btn:hover{
@@ -264,6 +275,4 @@
     justify-content: center;
     font-weight: bold;
 }
-
-
 

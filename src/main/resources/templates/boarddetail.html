@@ -43,9 +43,7 @@
             <input type="hidden" th:value="${#authentication.name}" name="reviewName" sec:authorize="isAuthenticated()">
 
 
-            <textarea name="reviewContent" class="review_area">
-
-                </textarea>
+            <textarea name="reviewContent" class="review_area"></textarea>
             <button type="button" class="review_add_btn">등록</button>
         </form>
         <div class="review_box">

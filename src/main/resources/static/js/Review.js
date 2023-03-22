@@ -9,9 +9,9 @@ $(function () {
         },
         success: function (data) {
             const list = data.review;
-            const nowPage=data.nowPage;
-            const endPage=data.endPage;
-            let html=findReview(list,nowPage,endPage);
+            const nowPage = data.nowPage;
+            const endPage = data.endPage;
+            let html = findReview(list, nowPage, endPage);
             $(".review_box").html(html);
         },
         error: function () {
@@ -45,7 +45,24 @@ $(function () {
     });
 
     $(document).on('click', '.re_review', function () {
-        alert("asdsad");
+        const chk = $(this).val();
+        if ($(this).text() == '대댓글') {
+            $(this).text("대댓글입력중");
+            let html = `
+            <form class="re_review_form ${chk}">
+                <input name="reviewParent" type="hidden" value="${chk}">
+                <textarea name="reviewContent" class="re_review_area"></textarea>
+                <button type="button" class="re_review_add_btn">대댓글 등록</button>
+            </form>
+        `;
+            $("#" + chk).after(html);
+        } else {
+            $("."+chk).remove();
+            $(this).text("대댓글");
+        }
+
+    });
+    $(document).on('click', '.re_review_add_btn', function () {
     });
 
     $(document).on('click', '.review_delete', function () {
@@ -66,31 +83,31 @@ $(function () {
         });
     });
     $(document).on('click', '.nextPage', function () {
-        let page = $(this).text()-1;
+        let page = $(this).text() - 1;
         $.ajax({
             url: "/boards/review",
             method: "GET",
             data: {
                 boardId: boardId,
-                page:page
+                page: page
             },
             success: function (data) {
                 const list = data.review;
-                const nowPage=data.nowPage;
-                const endPage=data.endPage;
-                let html=findReview(list,nowPage,endPage);
+                const nowPage = data.nowPage;
+                const endPage = data.endPage;
+                let html = findReview(list, nowPage, endPage);
                 $(".review_box").html(html);
 
             },
             error: function () {
-                alert("다음 페이지 불러오기에 실패!!");
+                alert("다음 페이지 불러오기 실패!!");
             }
         });
     });
 
 
-    function findReview(list,nowPage,endPage){
-        let html="";
+    function findReview(list, nowPage, endPage) {
+        let html = "";
         $(list).each(function (index, item) {
             if (item.reviewParent == null) {
                 html += `
@@ -113,11 +130,11 @@ $(function () {
             }
         });
         html += `<div class="btnbox">  `;
-        for(let i=1;i<=endPage;i++){
-            if(i==nowPage){
-                html+=`<p class="nowPage">${i}</p>`;
-            }else{
-                html+=`<a href="javascript:void(0)" class="nextPage">${i}</a>`;
+        for (let i = 1; i <= endPage; i++) {
+            if (i == nowPage) {
+                html += `<p class="nowPage">${i}</p>`;
+            } else {
+                html += `<a href="javascript:void(0)" class="nextPage">${i}</a>`;
             }
         }
         html += "</div>";
