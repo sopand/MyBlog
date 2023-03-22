@@ -23,8 +23,9 @@ public class ReviewController {
         reviewService.createReview(reviewRequest);
         return "리뷰 등록 완료";
     }
+    @ResponseBody
     @GetMapping("/boards/review")
-    public List<ReviewResponse> findReview(Long boardId,@PageableDefault(page = 0, size = 10, sort = "reviewId", direction = Sort.Direction.DESC) Pageable pageable){
+    public List<ReviewResponse> findReview(Long boardId,@PageableDefault(page = 0, size = 10, sort = "reviewId", direction = Sort.Direction.ASC) Pageable pageable){
         return reviewService.findReview(boardId,pageable);
     }
 

@@ -25,7 +25,7 @@
 
             </div>
             <div class="detail_tag">
-                <span class="tag1" >제목</span>
+                <span class="tag1">제목</span>
                 <span class="tag2" th:text="${board.boardName}">제목쓰는곳</span>
             </div>
             <div class="detail_tag">
@@ -39,36 +39,20 @@
 
         </div>
         <form class="review_form">
+            <input type="hidden" th:value="${board.boardId}" name="boardId">
+            <input type="hidden" th:value="${#authentication.name}" name="reviewName" sec:authorize="isAuthenticated()">
 
-        <input type="hidden" th:value="${#authentication.name}" name="reviewName" sec:authorize="isAuthenticated()">
-        <input type="hidden" th:value="${board.boardId}" name="boardId">
 
-                <textarea name="reviewContent" class="review_area">
+            <textarea name="reviewContent" class="review_area">
 
                 </textarea>
             <button type="button" class="review_add_btn">등록</button>
         </form>
         <div class="review_box">
-            <div class="review_content">
-                <div class="review_top">
-                    <span class="review_name">사람이름</span>
-                    <span class="review_date">날짜</span>
-                </div>
-                <div class="review_center">
-                    <span class="review_content">내용작성</span>
-                </div>
-                <div class="review_bot">
-                    <span>삭제/댓글달기</span>
-                    <span>더보기</span>
-                </div>
-            </div>
+
 
         </div>
     </main>
-
-
-
-
 
 
     <footer th:replace="footer :: footer"></footer>
