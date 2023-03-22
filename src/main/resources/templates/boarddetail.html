@@ -40,6 +40,7 @@
         </div>
         <form class="review_form">
             <input type="hidden" th:value="${board.boardId}" name="boardId">
+            <input type="hidden" th:value="${#authentication.name}" name="boardName">
             <input type="hidden" th:value="${#authentication.name}" name="reviewName" sec:authorize="isAuthenticated()">
 
 

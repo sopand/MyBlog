@@ -1,5 +1,6 @@
 $(function () {
     let reviewName = $("input[name=reviewName]").val();
+    let loginId=$("input[name=boardName]").val();
     let boardId = $("input[name=boardId]").val();
     $.ajax({
         url: "/boards/review",
@@ -102,11 +103,12 @@ $(function () {
                     reviewParent: reviewParent
                 },
                 success: function (data) {
+
                     let list = data;
                     let html = "";
                     $(list).each(function (index, item) {
                         html += `
-                        <div class="review_content2 ${reviewParent}" id="${item.reviewId}">
+                        <div class="review_content2 ${reviewParent}re" id="${item.reviewId}">
                             <div class="review_top2">
                                 <span class="review_name2">작성자 : ${item.reviewName}</span>
                                 <span class="review_date2">작성 날짜 : ${item.reviewDate}</span>
@@ -116,8 +118,10 @@ $(function () {
                             </div>
                             <div class="review_bot2">
                                 <button type="button" class="re_review" value="${item.reviewId}">대댓글</button>                   
-                                <button type="button" class="review_delete" value="${item.reviewId}">삭제</button>                   
                     `;
+                        if(item.reviewName==loginId){
+                            html+=`<button type="button" className="review_delete" value="${item.reviewId}">삭제</button>`;
+                        }
                         if (item.reviewGroupNo != 0) {
                             html += `<button class="re_reviewList" value="${item.reviewId}">댓글 더 보기...(${item.reviewGroupNo})</button>`;
                         }
@@ -131,8 +135,8 @@ $(function () {
                 }
             });
         }else{
-            let listlength=$("."+reviewParent).length;
-            $("."+reviewParent).remove();
+            let listlength=$("."+reviewParent+"re").length;
+            $("."+reviewParent+"re").remove();
             $(this).text("댓글 더 보기...("+listlength+")");
 
         }
@@ -194,9 +198,12 @@ $(function () {
                                 <span class="review_text">${item.reviewContent}</span>
                             </div>
                             <div class="review_bot">
-                                <button type="button" class="re_review" value="${item.reviewId}">대댓글</button>                   
-                                <button type="button" class="review_delete" value="${item.reviewId}">삭제</button>                   
+                                <button type="button" class="re_review" value="${item.reviewId}">대댓글</button>                                                              
                     `;
+
+                if(item.reviewName==loginId){
+                    html+=`<button type="button" className="review_delete" value="${item.reviewId}">삭제</button>`;
+                }
                 if (item.reviewGroupNo != 0) {
                     html += `<button class="re_reviewList" value="${item.reviewId}">댓글 더 보기...(${item.reviewGroupNo})</button>`;
                 }
