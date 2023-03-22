@@ -241,5 +241,29 @@
 }
 
 
+.btnbox{
+    width:900px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nowPage{
+    color:red;
+    width:30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+.nextPage{
+    cursor: pointer;
+    width:30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
 
 

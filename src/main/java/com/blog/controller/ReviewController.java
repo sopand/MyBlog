@@ -1,5 +1,6 @@
 package com.blog.controller;
 
+import com.blog.dto.ReviewList;
 import com.blog.dto.ReviewRequest;
 import com.blog.dto.ReviewResponse;
 import com.blog.service.ReviewService;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -25,7 +27,7 @@ public class ReviewController {
     }
     @ResponseBody
     @GetMapping("/boards/review")
-    public List<ReviewResponse> findReview(Long boardId,@PageableDefault(page = 0, size = 10, sort = "reviewId", direction = Sort.Direction.ASC) Pageable pageable){
+    public ReviewList findReview(Long boardId, @PageableDefault(page = 0, size = 10, sort = "reviewId", direction = Sort.Direction.DESC) Pageable pageable){
         return reviewService.findReview(boardId,pageable);
     }
     @ResponseBody

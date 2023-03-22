@@ -1,8 +1,10 @@
 package com.blog.service;
 
+import com.blog.dto.ReviewList;
 import com.blog.dto.ReviewRequest;
 import com.blog.dto.ReviewResponse;
 import com.blog.entity.Board;
+import com.blog.entity.Review;
 import com.blog.entity.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -19,20 +21,25 @@ public class ReviewService {
     private final ReviewRepository reviewRepository;
 
     @Transactional
-    public void createReview(ReviewRequest reviewRequest){
-        Board boardId=Board.builder().boardId(reviewRequest.getBoardId()).build();
+    public void createReview(ReviewRequest reviewRequest) {
+        Board boardId = Board.builder().boardId(reviewRequest.getBoardId()).build();
         reviewRequest.setBoard(boardId);
         reviewRepository.save(reviewRequest.toEntity());
     }
 
-    public List<ReviewResponse> findReview(Long boardId, Pageable pageable){
-        List<ReviewResponse> review=reviewRepository.findReview(boardId,pageable).map(ReviewResponse::new).toList();
+    public ReviewList findReview(Long boardId, Pageable pageable) {
 
-        return review;
+        Page<Review> pagingReview = reviewRepository.findReview(boardId, pageable);
+        int nowPage = pagingReview.getPageable().getPageNumber() + 1;
+        int startPage = Math.max(nowPage - 4, 1);
+        int endPage = Math.min(nowPage + 5, pagingReview.getTotalPages());
+        List<ReviewResponse> review = pagingReview.getContent().stream().map(ReviewResponse::new).toList();
+        ReviewList reviewList = ReviewList.builder().review(review).nowPage(nowPage).startPage(startPage).endPage(endPage).build();
+        return reviewList;
     }
 
     @Transactional
-    public void deleteReview(Long reviewId){
+    public void deleteReview(Long reviewId) {
         reviewRepository.deleteByReviewId(reviewId);
     }
 }

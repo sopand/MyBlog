@@ -13,7 +13,7 @@ public interface ReviewRepository extends JpaRepository<Review,Long> {
 
 
     @Query(value = "select re from Review re left join fetch re.board bo where re.board.boardId = :boardId GROUP BY re.reviewId",
-            countQuery = "select count(re.reviewId) from Review re WHERE re.board = :boardId")
+            countQuery = "select count(re.reviewId) from Review re WHERE re.board.boardId = :boardId")
     Page<Review> findReview(@Param("boardId")Long boardId, Pageable pageable);
 
      void deleteByReviewId(Long reviewId);
