@@ -36,6 +36,7 @@ $(function () {
             },
             success: function (data) {
                 alert(data);
+                location.reload();
             },
             error: function () {
                 alert("리뷰 생성 실패");
@@ -79,11 +80,62 @@ $(function () {
             },
             success: function (data) {
                 alert(data);
+                location.reload();
+
             },
             error: function () {
                 alert("리뷰 생성 실패");
             }
         });
+
+    });
+
+    $(document).on('click', '.re_reviewList', function () {
+        let reviewParent=$(this).val();
+        let listopenChk=$(this).text();
+        if(listopenChk!='댓글 축소') {
+            $(this).text("댓글 축소");
+            $.ajax({
+                url: "/boards/review/parent",
+                method: "GET",
+                data: {
+                    reviewParent: reviewParent
+                },
+                success: function (data) {
+                    let list = data;
+                    let html = "";
+                    $(list).each(function (index, item) {
+                        html += `
+                        <div class="review_content2 ${reviewParent}" id="${item.reviewId}">
+                            <div class="review_top2">
+                                <span class="review_name2">작성자 : ${item.reviewName}</span>
+                                <span class="review_date2">작성 날짜 : ${item.reviewDate}</span>
+                            </div>
+                            <div class="review_center2">
+                                <span class="review_text2">${item.reviewContent}</span>
+                            </div>
+                            <div class="review_bot2">
+                                <button type="button" class="re_review" value="${item.reviewId}">대댓글</button>                   
+                                <button type="button" class="review_delete" value="${item.reviewId}">삭제</button>                   
+                    `;
+                        if (item.reviewGroupNo != 0) {
+                            html += `<button class="re_reviewList" value="${item.reviewId}">댓글 더 보기...(${item.reviewGroupNo})</button>`;
+                        }
+                        html += "</div></div>";
+                    });
+                    $("#" + reviewParent).after(html);
+                },
+                error: function () {
+
+                    alert("삭제에 실패했어요!@!");
+                }
+            });
+        }else{
+            let listlength=$("."+reviewParent).length;
+            $("."+reviewParent).remove();
+            $(this).text("댓글 더 보기...("+listlength+")");
+
+        }
 
     });
 
@@ -146,11 +198,12 @@ $(function () {
                                 <button type="button" class="review_delete" value="${item.reviewId}">삭제</button>                   
                     `;
                 if (item.reviewGroupNo != 0) {
-                    html += `<span class="re_reviewList">댓글 더 보기...(${item.reviewGroupNo})</span>`;
+                    html += `<button class="re_reviewList" value="${item.reviewId}">댓글 더 보기...(${item.reviewGroupNo})</button>`;
                 }
                 html += "</div></div>";
             }
         });
+
         html += `<div class="btnbox">  `;
         for (let i = 1; i <= endPage; i++) {
             if (i == nowPage) {

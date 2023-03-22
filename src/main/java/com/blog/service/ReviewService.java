@@ -68,4 +68,10 @@ public class ReviewService {
         }
         reviewRepository.deleteByReviewId(review.getReviewId());
     }
+
+    public List<ReviewResponse> findParentReview(Long reviewParent){
+        return reviewRepository.findByReviewParent(reviewParent).stream().map(ReviewResponse::new).toList();
+
+    }
+
 }

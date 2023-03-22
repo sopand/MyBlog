@@ -28,4 +28,6 @@ public interface ReviewRepository extends JpaRepository<Review,Long> {
     int modifyReviewGroupNo(@Param("reviewId") Long reviewId,@Param("reviewGroupNo")int reviewGroupNo);
 
     List<Review> findByReviewParent(Long reviewParent);
+
+
 }
