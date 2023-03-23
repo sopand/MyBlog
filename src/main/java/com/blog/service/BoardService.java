@@ -34,6 +34,7 @@ public class BoardService {
         return pagingMap;
     }
 
+    @Transactional(readOnly = true)
     public Map<String,Object> findBoardAll(Pageable page){
         Page<Board> pagingBoards=boardRepository.findAll(page);
         List<BoardResponse> findBoards=pagingBoards.stream().map(BoardResponse::new).toList();
@@ -41,6 +42,7 @@ public class BoardService {
         pagingMap.put("findBoards",findBoards);
         return pagingMap;
     }
+    @Transactional(readOnly = true)
     public Map<String,Object> findBoardByCateogry(Pageable page , String boardCateogry){
         Page<Board> pagingBoards=boardRepository.findByBoardCategory(boardCateogry,page);
         List<BoardResponse> findBoards=pagingBoards.stream().map(BoardResponse::new).toList();
