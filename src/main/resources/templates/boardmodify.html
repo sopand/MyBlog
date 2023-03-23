@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="/css/boardadd.css">
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="/css/reset2.css">
+  <link rel="stylesheet" href="/css/footer.css">
+  <link rel="stylesheet" href="/css/header.css">
+  <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
+  <script
+          src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script th:inline="javascript">
+    /*<![CDATA[*/
+    const board = /*[[${board}]]*/"";
+    /*]]>*/
+  </script>
+
+</head>
+<body>
+
+<div id="container">
+
+  <header th:replace="header :: header"></header>
+  <main class="boardadd_main_con">
+    <span class="main_tag"> 게시글 수정</span>
+
+    <form class="boardadd_main_box" th:action="|/boards/repost|" th:method="PUT">
+      <input type="hidden" name="boardThumbnail">
+      <input type="hidden" name="boardId" th:value="${board.boardId}">
+      <label class="add_tag1">
+        <span>제목</span>
+        <input name="boardName" placeholder="게시글 제목입력" th:value="${board.boardName}">
+      </label>
+      <label class="add_tag1">
+        <span>작성자</span>
+        <input name="boardWriter" th:value="${board.boardWriter}" readonly>
+      </label>
+      <label class="add_tag1">
+        <span>카테고리</span>
+        <select name="boardCategory">
+          <option value="">카테고리 선택</option>
+          <option value="Spring">Spring</option>
+          <option value="Java">Java</option>
+          <option value="Portfolio">Portfolio</option>
+          <option value="Project">Project</option>
+          <option value="Junit">Junit</option>
+          <option value="CS">CS</option>
+          <option value="JPA">JPA</option>
+          <option value="MyBatis">MyBatis</option>
+        </select>
+      </label>
+
+      <div class="editorBox">
+                <textarea name="boardContent" id="editor">
+                </textarea>
+      </div>
+
+      <button type="button" class="boardModifyBtn">수정완료</button>
+    </form>
+
+  </main>
+
+  <footer th:replace="footer :: footer"></footer>
+  <script src="/js/UploadAdapter.js">
+  </script>
+  <script src="/js/ModifyReview.js">
+  </script>
+</div>
+</body>
+</html>

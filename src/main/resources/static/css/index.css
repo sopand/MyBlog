@@ -29,6 +29,8 @@
 .main_git_box img,.main_tistory_box img{
     width:350px;
     height: 200px;
+    border-top-left-radius:10px ;
+    border-bottom-left-radius:10px ;
 }
 .main_text_box{
     width:450px;

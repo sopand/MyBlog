@@ -12,6 +12,7 @@
     <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/super-build/ckeditor.js"></script>
     <script
             src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 </head>
 <body>
 
@@ -23,9 +24,14 @@
 
         <form class="boardadd_main_box" action="/boards/newpost" method="post">
             <input type="hidden" name="boardThumbnail">
+
             <label class="add_tag1">
                 <span>제목</span>
                 <input name="boardName" placeholder="게시글 제목입력">
+            </label>
+            <label class="add_tag1">
+                <span>작성자</span>
+                <input name="boardWriter" th:value="${#authentication.name}" readonly>
             </label>
             <label class="add_tag1">
                 <span>카테고리</span>

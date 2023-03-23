@@ -54,7 +54,6 @@ public class BoardService {
 
     @Transactional
     public BoardResponse createBoard(BoardRequest boardRequest){
-        System.out.println(boardRequest.getBoardContent());
         Board board=boardRepository.save(boardRequest.toEntity());
         return new BoardResponse(board);
     }
@@ -81,5 +80,11 @@ public class BoardService {
         boardRepository.deleteByBoardId(boardId);
     }
 
+
+    @Transactional
+    public void modifyBoard(BoardRequest boardRequest){
+        Board board=boardRepository.findByBoardId(boardRequest.getBoardId());
+        board.modifyBoard(boardRequest.getBoardName(),boardRequest.getBoardContent(),boardRequest.getBoardCategory());
+    }
 
 }

@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="/css/header.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="text/javascript" th:src="@{/js/Review.js}"></script>
+
 </head>
 <body>
 
@@ -36,6 +37,9 @@
             <div class="detail_tag3">
                 <div class="text_tag2" th:utext="${board.boardContent}"></div>
             </div>
+
+            <a th:href="|/boards/repost/${board.boardId}|">게시글 수정</a>
+
 
         </div>
         <form class="review_form">

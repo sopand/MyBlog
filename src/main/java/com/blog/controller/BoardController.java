@@ -68,4 +68,17 @@ public class BoardController {
         boardService.deleteBoard(boardId);
         return "redirect:/boards";
     }
+
+    @GetMapping("/repost/{boardId}")
+    public String modifyBoardForm(@PathVariable("boardId")Long boardId,Model model){
+        BoardResponse board=boardService.findBoard(boardId);
+        model.addAttribute("board",board);
+        return "boardmodify";
+    }
+
+    @PutMapping("/repost")
+    public String modifyBoard(BoardRequest boardRequest){
+        boardService.modifyBoard(boardRequest);
+        return "redirect:/boards";
+    }
 }

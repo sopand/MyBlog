@@ -17,6 +17,7 @@ public class BoardResponse {
     private String boardCategory;
 
     private String boardThumbnail;
+    private String boardWriter;
 
 
     public BoardResponse(Board entity){
@@ -27,6 +28,7 @@ public class BoardResponse {
         this.boardCategory=entity.getBoardCategory();
         this.boardId=entity.getBoardId();
         this.boardDate=entity.getBoardDate();
+        this.boardWriter=entity.getBoardWriter();
     }
 
 }

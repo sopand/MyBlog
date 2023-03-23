@@ -1,13 +1,12 @@
-let UploadURL="";
-
-$(function (){
-    $(".boardAddbtn").click(function (){
+let UploadURL = "";
+let simpleEdit;
+$(function () {
+    $(".boardAddbtn").click(function () {
         $("input[name=boardThumbnail]").val(UploadURL);
         $(".boardadd_main_box").submit();
-
-
     });
 });
+
 class MyUploadAdapter {
     constructor(loader) {
         this.loader = loader;
@@ -21,6 +20,7 @@ class MyUploadAdapter {
                 this._sendRequest(file);
             }));
     }
+
     abort() {
         if (this.xhr) {
             this.xhr.abort();
@@ -54,10 +54,9 @@ class MyUploadAdapter {
             // 이 URL은 서버에 업로드된 이미지를 가리키며, 컨텐츠에 이미지를 표시하기 위해 사용된다.
             resolve({
                 default: response.url
-
             });
-            if(UploadURL==""){
-                UploadURL=response.url;
+            if (UploadURL == "") {
+                UploadURL = response.url;
             }
         });
 
@@ -92,68 +91,46 @@ function MyCustomUploadAdapterPlugin(editor) {
         // FileRepository가 어떤 업로드 어댑터를 사용하게 하느냐만 설정해주면 된다.
         // 나머지 이미지 업로드 플러그인, 파일 로더, FileRepository등등은 이미 만들어져 있다.
         return new MyUploadAdapter(loader);
-    };
+    }
 }
 
 ClassicEditor
     .create(document.querySelector('#editor'), {
-
-    extraPlugins: [MyCustomUploadAdapterPlugin],   // 커스텀 플러그인 클래스 추가
-    // 미디어 기능
-    mediaEmbed: {
-        previewsInData: true
-    },
-    // Source Editor 속성 허용 범위
-    htmlSupport: {
-        allow: [
-            {
-                name: /.*/,
-                attributes: true,
-                classes: true,
-                styles: true
-            }
-        ]
-    },
-    htmlEmbed: {
-        showPreviews: true
-    },
+        extraPlugins: [MyCustomUploadAdapterPlugin],   // 커스텀 플러그인 클래스 추가
+        // 미디어 기능
 
 
-    toolbar: {
-        items: [
-            'bold', 'italic', 'strikethrough', 'underline', 'code', 'subscript', 'superscript', 'removeFormat', '|',
-            'bulletedList', 'numberedList', 'todoList', '|',
-            'outdent', 'indent', '|',
-            'undo', 'redo',
-            'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', 'highlight', '|',
-            'alignment', '|',
-            'link', 'insertImage', 'blockQuote', 'insertTable', 'mediaEmbed', 'codeBlock', 'htmlEmbed', '|',
-        ],
-        shouldNotGroupWhenFull: true
-    },
+        toolbar: {
+            items: [
+                'bold', 'italic', 'strikethrough', 'underline', 'code', 'subscript', 'superscript', 'removeFormat', '|',
+                'bulletedList', 'numberedList', 'todoList', '|',
+                'outdent', 'indent', '|',
+                'undo', 'redo',
+                'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', 'highlight', '|',
+                'alignment', '|',
+                'link', 'insertImage', 'blockQuote', 'insertTable', 'mediaEmbed', 'codeBlock', 'htmlEmbed', '|',
+            ],
+            shouldNotGroupWhenFull: true
+        },
+        image: {
+            resizeUnit: 'px',
 
+            toolbar: [
 
-    placeholder: '게시판 글 작성하기!@!@!@!@',
-    image: {
-        resizeUnit: 'px',
+                'imageTextAlternative',
 
-        toolbar: [
+                'imageStyle:alignLeft',
 
-            'imageTextAlternative',
+                'imageStyle:full',
 
-            'imageStyle:alignLeft',
+                'imageStyle:side'
 
-            'imageStyle:full',
-
-            'imageStyle:side'
-
-        ],
-        styles: ['full', 'alignLeft', 'alignRight', 'side']
-    },
-}).then(
-    newEditor => {
-        ckeditor = newEditor;
-    }
-).catch(error => {
-    console.error(error);
-});
+            ],
+            styles: ['full', 'alignLeft', 'alignRight', 'side']
+        },
+    }).then(newEditor => {
+    simpleEdit = newEditor;
+})
+    .catch(error => {
+        console.error(error);
+    });

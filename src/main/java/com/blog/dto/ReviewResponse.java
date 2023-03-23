@@ -15,6 +15,8 @@ public class ReviewResponse {
     private int reviewGroupNo;
 
 
+
+
     private Long boardId;
 
 

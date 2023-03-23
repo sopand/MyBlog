@@ -41,11 +41,15 @@ public class Board {
     @Column(name="board_thumbnail" ,length = 100)
     private String boardThumbnail;
 
+    @Column(name="board_writer")
+    private String boardWriter;
+
     @OneToMany(mappedBy = "board")
     private List<Review> review=new ArrayList<>();
 
     @Builder
-    public Board(Long boardId,String boardName,int boardHit,String boardCategory,String boardContent,String boardThumbnail){
+    public Board(String boardWriter,Long boardId,String boardName,int boardHit,String boardCategory,String boardContent,String boardThumbnail){
+        this.boardWriter=boardWriter;
         this.boardId=boardId;
         this.boardThumbnail=boardThumbnail;
         this.boardName=boardName;
@@ -55,4 +59,9 @@ public class Board {
         this.boardContent=boardContent;
     }
 
+    public void modifyBoard(String boardName,String boardContent,String boardCategory){
+        this.boardName=boardName;
+        this.boardContent=boardContent;
+        this.boardCategory=boardCategory;
+    }
 }
