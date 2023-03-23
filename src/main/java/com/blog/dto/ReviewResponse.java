@@ -14,6 +14,7 @@ public class ReviewResponse {
     private String reviewContent;
     private int reviewGroupNo;
 
+
     private Long boardId;
 
 
