@@ -56,6 +56,12 @@ public class ReviewService {
         reviewRepository.deleteByReviewId(review.getReviewId());
     }
 
+    @Transactional
+    public int modifyReviewContent(ReviewRequest reviewRequest){
+
+        return reviewRepository.modifyReviewContent(reviewRequest.getReviewId(),reviewRequest.getReviewContent());
+    }
+
 
     @Transactional(readOnly = true)
     public List<ReviewResponse> findParentReview(Long reviewParent){

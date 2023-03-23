@@ -45,9 +45,9 @@ public class ReviewController {
 
 
     @PutMapping("/boards/review")
-    public int modifyReview(ReviewRequest reviewRequest){
-
-        return 0;
+    public int modifyReviewContent(ReviewRequest reviewRequest){
+        System.out.println(reviewRequest);
+        return reviewService.modifyReviewContent(reviewRequest);
     }
 
 

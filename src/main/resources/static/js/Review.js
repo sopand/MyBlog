@@ -241,7 +241,6 @@ $(function () {
                 }else{
                     alert("댓글 수정 이상발생");
                 }
-
             },
             error: function () {
                 alert("내부 서버에서 이상이 발생했어요@!!!");

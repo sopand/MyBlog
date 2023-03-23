@@ -31,6 +31,10 @@ public interface ReviewRepository extends JpaRepository<Review,Long> {
     @Query(value = "UPDATE Review re SET re.reviewGroupNo =re.reviewGroupNo-1 WHERE re.reviewId = :parent")
     int modifyReviewGroupNoMinor(@Param("parent") Long parent);
 
+    @Modifying(clearAutomatically = true)
+    @Query(value ="UPDATE Review re SET re.reviewContent = :reviewContent WHERE re.reviewId = :reviewId")
+    int modifyReviewContent(@Param("reviewId")Long reviewId,@Param("reviewContent") String reviewContent);
+
     List<Review> findByReviewParent(Long reviewParent);
 
 

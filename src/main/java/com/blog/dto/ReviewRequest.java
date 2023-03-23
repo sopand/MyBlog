@@ -11,6 +11,8 @@ public class ReviewRequest {
     private String reviewContent;
 
     private Long reviewParent;
+
+    private Long reviewId;
     private int reviewDeep;
     private Long boardId;
 
