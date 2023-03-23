@@ -64,4 +64,10 @@ public class Board {
         this.boardContent=boardContent;
         this.boardCategory=boardCategory;
     }
+    public void modifyBoardAndImg(String boardName,String boardContent,String boardCategory,String boardThumbnail){
+        this.boardName=boardName;
+        this.boardContent=boardContent;
+        this.boardCategory=boardCategory;
+        this.boardThumbnail=boardThumbnail;
+    }
 }

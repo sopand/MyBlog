@@ -98,7 +98,23 @@ ClassicEditor
     .create(document.querySelector('#editor'), {
         extraPlugins: [MyCustomUploadAdapterPlugin],   // 커스텀 플러그인 클래스 추가
         // 미디어 기능
-
+        mediaEmbed: {
+            previewsInData: true
+        },
+        // Source Editor 속성 허용 범위
+        htmlSupport: {
+            allow: [
+                {
+                    name: /.*/,
+                    attributes: true,
+                    classes: true,
+                    styles: true
+                }
+            ]
+        },
+        htmlEmbed: {
+            showPreviews: true
+        },
 
         toolbar: {
             items: [

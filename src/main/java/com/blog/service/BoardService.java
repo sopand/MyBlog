@@ -84,7 +84,12 @@ public class BoardService {
     @Transactional
     public void modifyBoard(BoardRequest boardRequest){
         Board board=boardRepository.findByBoardId(boardRequest.getBoardId());
-        board.modifyBoard(boardRequest.getBoardName(),boardRequest.getBoardContent(),boardRequest.getBoardCategory());
+        if(boardRequest.getBoardThumbnail()!=null){
+            board.modifyBoardAndImg(boardRequest.getBoardName(),boardRequest.getBoardContent(),boardRequest.getBoardCategory(),boardRequest.getBoardThumbnail());
+        }else{
+            board.modifyBoard(boardRequest.getBoardName(),boardRequest.getBoardContent(),boardRequest.getBoardCategory());
+
+        }
     }
 
 }
