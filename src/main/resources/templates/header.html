@@ -8,10 +8,10 @@
 <body>
 <header class="index_hed_con" th:fragment="header">
   <div class="index_hed_text">
-    <a href="/index">붓싼의 <span class="text_1">T</span>ech <span class="text_2">B</span>log</a>
+    <a href="/index" class="logo_href">붓싼의 <span class="text_1">T</span>ech <span class="text_2">B</span>log</a>
     <div class="hed_login_box">
-      <a href="/users">Login</a>
-      <span sec:authorize="isAuthenticated()" th:text="|${#authentication.name}님 입장|"></span>
+      <a href="/users" class="login_href">Login</a>
+      <span sec:authorize="isAuthenticated()" th:text="|${#authentication.name}님 입장|" class="login_id"></span>
     </div>
   </div>
   <div class="index_hed_box">

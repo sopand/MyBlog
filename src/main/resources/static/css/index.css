@@ -5,3 +5,49 @@
     justify-content: center;
     flex-direction: column;
 }
+.index_main_con{
+    width:100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding-top: 100px;
+    padding-bottom: 100px;
+
+}
+.main_git_box,.main_tistory_box{
+
+    border-radius: 20px;
+    box-shadow: 10px 10px 20px 5px #e2e2e2;
+    margin-bottom: 10px;
+    width:800px;
+    display: flex;
+    align-items:center;
+    justify-content: flex-start;
+
+}
+.main_git_box img,.main_tistory_box img{
+    width:350px;
+    height: 200px;
+}
+.main_text_box{
+    width:450px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.main_text_box a{
+    color:blue;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+.main_text_box span{
+    font-weight: bold;
+    margin-top:5px;
+
+}
+
+
+
