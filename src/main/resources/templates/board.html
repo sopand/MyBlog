@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -39,7 +40,7 @@
 
             </div>
         </div>
-        <a href="/boards/newpost" class="boardadd_btn" th:text="#{board.addbtn}"></a>
+        <a sec:authorize="hasRole('ROLE_ADMIN')" href="/boards/newpost" class="boardadd_btn" th:text="#{board.addbtn}"></a>
         <div class="btnbox">
             <div></div>
             <th:block th:each="page : ${#numbers.sequence(boardMap['startPage'], boardMap['endPage'])}" th:if="${boardMap['findBoards'].size()}!=0">

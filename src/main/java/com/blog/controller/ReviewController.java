@@ -3,11 +3,14 @@ package com.blog.controller;
 import com.blog.dto.ReviewList;
 import com.blog.dto.ReviewRequest;
 import com.blog.dto.ReviewResponse;
+import com.blog.exception.ErrorCode;
+import com.blog.exception.RestApiException;
 import com.blog.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,6 +42,10 @@ public class ReviewController {
         return reviewService.findParentReview(reviewParent);
     }
 
+    @GetMapping("/test")
+    public ResponseEntity<?> test() {
+        throw new RestApiException(ErrorCode.BAD_REQUEST);
+    }
 
 
 }
