@@ -8,8 +8,8 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(RestApiException.class)
-    protected ResponseEntity<ErrorResponse> handleCustomException(RestApiException ex){
+    @ExceptionHandler(CustomException.class)
+    protected ResponseEntity<ErrorResponse> handleCustomException(CustomException ex){
         ErrorCode errorCode=ex.getErrorCode();
         return handleExceptionInternal(errorCode);
     }

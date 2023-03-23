@@ -20,21 +20,21 @@
     <main class="detail_main_con">
         <div class="detail_main_box">
             <div class="detail_tag2">
-                <span th:text="|카테고리 : ${board.boardCategory}|">카테고리</span>
-                <span th:text="|조회수 : ${board.boardHit}|">조회수</span>
+                <span th:text="|카테고리 : ${board.boardCategory}|"></span>
+                <span th:text="|조회수 : ${board.boardHit}|"></span>
 
             </div>
             <div class="detail_tag">
                 <span class="tag1">제목</span>
-                <span class="tag2" th:text="${board.boardName}">제목쓰는곳</span>
+                <span class="tag2" th:text="${board.boardName}"></span>
             </div>
             <div class="detail_tag">
                 <span class="tag1">작성일</span>
-                <span class="tag2" th:text="${board.boardDate}">제목쓰는곳</span>
+                <span class="tag2" th:text="${board.boardDate}"></span>
             </div>
 
             <div class="detail_tag3">
-                <div class="text_tag2" th:utext="${board.boardContent}">제목쓰는곳</div>
+                <div class="text_tag2" th:utext="${board.boardContent}"></div>
             </div>
 
         </div>

@@ -7,6 +7,6 @@ import lombok.RequiredArgsConstructor;
 // RuntimeException을 상속받아 언체크 예외로 활용한다.
 @Getter
 @RequiredArgsConstructor
-public class RestApiException extends RuntimeException{
+public class CustomException extends RuntimeException{
     private final ErrorCode errorCode;
 }

@@ -206,6 +206,48 @@ $(function () {
             }
         });
     });
+    $(document).on('click', '.modifyReview', function () {
+        const chk = $(this).val();
+        if ($(this).text() == '수정') {
+            $(this).text("수정진행중");
+            let html = `
+            <form class="modifyReview_form modify_${chk}">                
+                <textarea name="reviewContent" class="modifyArea modifyarea_${chk}"></textarea>
+                <button type="button" class="modifyReviewBtn" value="${chk}">댓글 수정</button>
+            </form>
+        `;
+            $("#" + chk).after(html);
+        } else {
+            $(".modify_"+chk).remove();
+            $(this).text("수정");
+        }
+        let page = $(this).text() - 1;
+    });
+
+    $(document).on('click', '.modifyReviewBtn', function () {
+        const reviewId=$(this).val();
+        const reviewContent=$(".modifyarea_"+reviewId).val();
+        $.ajax({
+            url: "/boards/review",
+            method: "PUT",
+            data: {
+                reviewId: reviewId,
+                reviewContent: reviewContent
+            },
+            success: function (data) {
+                if(data!=0){
+                    alert("댓글 수정 완료~~!!");
+                    location.reload();
+                }else{
+                    alert("댓글 수정 이상발생");
+                }
+
+            },
+            error: function () {
+                alert("내부 서버에서 이상이 발생했어요@!!!");
+            }
+        });
+    });
 
 
     function findReview(list, nowPage, endPage) {
@@ -226,7 +268,8 @@ $(function () {
                     `;
 
                 if(item.reviewName==loginId){
-                    html+=`<button type="button" class="review_delete" value="${item.reviewId}">삭제</button>`;
+                    html+=`<button type="button" class="review_delete" value="${item.reviewId}">삭제</button>
+                           <button type="button" class="modifyReview" value="${item.reviewId}">수정</button>`;
                 }
                 if (item.reviewGroupNo != 0) {
                     html += `<button class="re_reviewList" value="${item.reviewId}">댓글 더 보기...(${item.reviewGroupNo})</button>`;

@@ -13,7 +13,7 @@ public enum ErrorCode {
     FORBIDDEN_ACCESS(HttpStatus.FORBIDDEN,"권한이 없는 사용자의 요청이에요!!"),
 
     NOT_FOUND(HttpStatus.NOT_FOUND,"리소스를 찾을수 없는 정보입니다..."),
-
+    NOT_FOUND_REVIEW_NAME(HttpStatus.NOT_FOUND,"리뷰를 등록하려는 사람의 아이디값을 찾을수가 없습니다."),
 
     METHOD_NOT_ALLOWED(HttpStatus.METHOD_NOT_ALLOWED,"허용되지 않은 메소드에 대한 호출이에요!"),
 
