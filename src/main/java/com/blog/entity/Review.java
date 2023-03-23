@@ -34,7 +34,7 @@ public class Review {
     @Column(name = "review_content")
     private String reviewContent;
 
-    @Column(name = "review_groupno")
+    @Column(name = "review_group_no")
     private int reviewGroupNo;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -120,7 +120,7 @@ $(function () {
                                 <button type="button" class="re_review" value="${item.reviewId}">대댓글</button>                   
                     `;
                         if(item.reviewName==loginId){
-                            html+=`<button type="button" className="review_delete" value="${item.reviewId}">삭제</button>`;
+                            html+=`<button type="button" class="review_delete" value="${item.reviewId}">삭제</button>`;
                         }
                         if (item.reviewGroupNo != 0) {
                             html += `<button class="re_reviewList" value="${item.reviewId}">댓글 더 보기...(${item.reviewGroupNo})</button>`;
@@ -202,7 +202,7 @@ $(function () {
                     `;
 
                 if(item.reviewName==loginId){
-                    html+=`<button type="button" className="review_delete" value="${item.reviewId}">삭제</button>`;
+                    html+=`<button type="button" class="review_delete" value="${item.reviewId}">삭제</button>`;
                 }
                 if (item.reviewGroupNo != 0) {
                     html += `<button class="re_reviewList" value="${item.reviewId}">댓글 더 보기...(${item.reviewGroupNo})</button>`;

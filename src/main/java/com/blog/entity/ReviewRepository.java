@@ -24,8 +24,12 @@ public interface ReviewRepository extends JpaRepository<Review,Long> {
      Review findByReviewId(Long reviewId);
 
     @Modifying(clearAutomatically = true) // Update가 실행된후에 영속성 컨텍스트를 Clear, 지워버려서 기존의 Find한 객체의 값을 리셋 시킨다.
-    @Query(value = "UPDATE Review re SET re.reviewGroupNo = :reviewGroupNo WHERE re.reviewId = :reviewId")
-    int modifyReviewGroupNo(@Param("reviewId") Long reviewId,@Param("reviewGroupNo")int reviewGroupNo);
+    @Query(value = "UPDATE Review re SET re.reviewGroupNo = re.reviewGroupNo+1  WHERE re.reviewId = :parent")
+    int modifyReviewGroupNoPlus(@Param("parent") Long parent);
+
+    @Modifying(clearAutomatically = true) // Update가 실행된후에 영속성 컨텍스트를 Clear, 지워버려서 기존의 Find한 객체의 값을 리셋 시킨다.
+    @Query(value = "UPDATE Review re SET re.reviewGroupNo =re.reviewGroupNo-1 WHERE re.reviewId = :parent")
+    int modifyReviewGroupNoMinor(@Param("parent") Long parent);
 
     List<Review> findByReviewParent(Long reviewParent);
 
