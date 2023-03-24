@@ -70,4 +70,7 @@ public class Board {
         this.boardCategory=boardCategory;
         this.boardThumbnail=boardThumbnail;
     }
+    public void modifyBoardHit(int boardHit){
+        this.boardHit=boardHit+1;
+    }
 }
