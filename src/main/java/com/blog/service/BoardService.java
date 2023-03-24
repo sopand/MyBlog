@@ -66,7 +66,7 @@ public class BoardService {
         Board board = boardRepository.save(boardRequest.toEntity());
         if (boardRequest.getImgList() != null) {
             List<String> imgList = List.of(boardRequest.getImgList().split(","));
-            imgList.stream().forEach(entity->{
+            imgList.stream().forEach(entity -> {
                 Img img = imgRepository.findByImgDirectory(entity);
                 img.modifyImgBoard(board);
             });
@@ -93,7 +93,6 @@ public class BoardService {
     public void modifyBoard(BoardRequest boardRequest) {
         Board board = boardRepository.findByBoardId(boardRequest.getBoardId()); // 더티체킹방식으로 업데이트를 진행하기위해 기존의 Board의 정보를 찾아온다.
         List<Img> beforeImgList = imgRepository.findByBoard_BoardId(boardRequest.getBoardId()); // 기존의 Board에 존재하던 이미지의 정보와 새롭게 수정한 Board의 이미지 정도를 비교하기 위해 기존 이미지 정보를 저장
-        System.out.println("보드 리퀘스트"+boardRequest.getImgList());
         if (!boardRequest.getImgList().equals("")) { // Request된 board에서 이미지가 존재 할 경우 발동
             List<String> imgList = List.of(boardRequest.getImgList().split(",")); // JS 처리하여 넘긴 Img파일의 Direcotry를 포함한 주소값을 , 단위로 잘라서 반복하기 위함
             System.out.println("imgsplit " + imgList);
@@ -107,16 +106,14 @@ public class BoardService {
                 img.modifyImgBoard(board); // boardId를 UPDATE
             });
 
-            beforeImgList.stream().forEach(entity -> {
-                String deletePath = path + entity.getImgNew();
-                File file = new File(deletePath);
-                file.delete();
-                imgRepository.delete(entity);
-            }); // 수정된 이미지 파일과equals하여 존재하지 않던 파일의 리스트 ( 현재 HTML 상에는 존재하지 않는 다는 뜻 ) 삭제
-        } else {
-            beforeImgList.stream().filter(entity -> beforeImgList.size() != 0).forEach(entity -> imgRepository.delete(entity));
+            // 수정된 이미지 파일과equals하여 존재하지 않던 파일의 리스트 ( 현재 HTML 상에는 존재하지 않는 다는 뜻 ) 삭제
         }
-
+        beforeImgList.stream().filter(entity -> beforeImgList.size() != 0).forEach(entity -> {
+            String deletePath = path + entity.getImgNew();
+            File file = new File(deletePath);
+            file.delete();
+            imgRepository.delete(entity);
+        });
         if (boardRequest.getBoardThumbnail() != "") {
             board.modifyBoardAndImg(boardRequest.getBoardName(), boardRequest.getBoardContent(), boardRequest.getBoardCategory(), boardRequest.getBoardThumbnail());
         } else {
