@@ -26,7 +26,6 @@ public class Img {
 
     @Column(name = "img_date")
     private Date imgDate;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "board_id")
     private Board board;

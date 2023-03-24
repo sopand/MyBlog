@@ -29,6 +29,7 @@
     <form class="boardadd_main_box" th:action="|/boards/repost|" th:method="PUT">
       <input type="hidden" name="boardThumbnail">
       <input type="hidden" name="boardId" th:value="${board.boardId}">
+      <input type="hidden" name="imgList">
       <label class="add_tag1">
         <span>제목</span>
         <input name="boardName" placeholder="게시글 제목입력" th:value="${board.boardName}">

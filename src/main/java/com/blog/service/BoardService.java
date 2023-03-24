@@ -12,12 +12,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @Service
 @RequiredArgsConstructor
@@ -26,7 +23,7 @@ public class BoardService {
     private final BoardRepository boardRepository;
     private final ImgRepository imgRepository;
 
-    public static Map<String,Object> findPaging(Page<Board> pagingBoards){
+    public static Map<String, Object> findPaging(Page<Board> pagingBoards) {
         Map<String, Object> pagingMap = new HashMap<>();
         int nowPage = pagingBoards.getPageable().getPageNumber() + 1;
         int startPage = Math.max(nowPage - 4, 1);
@@ -38,65 +35,73 @@ public class BoardService {
     }
 
     @Transactional(readOnly = true)
-    public Map<String,Object> findBoardAll(Pageable page){
-        Page<Board> pagingBoards=boardRepository.findAll(page);
-        List<BoardResponse> findBoards=pagingBoards.stream().map(BoardResponse::new).toList();
+    public Map<String, Object> findBoardAll(Pageable page) {
+        Page<Board> pagingBoards = boardRepository.findAll(page);
+        List<BoardResponse> findBoards = pagingBoards.stream().map(BoardResponse::new).toList();
         Map<String, Object> pagingMap = findPaging(pagingBoards);
-        pagingMap.put("findBoards",findBoards);
+        pagingMap.put("findBoards", findBoards);
         return pagingMap;
     }
+
     @Transactional(readOnly = true)
-    public Map<String,Object> findBoardByCateogry(Pageable page , String boardCateogry){
-        Page<Board> pagingBoards=boardRepository.findByBoardCategory(boardCateogry,page);
-        List<BoardResponse> findBoards=pagingBoards.stream().map(BoardResponse::new).toList();
+    public Map<String, Object> findBoardByCateogry(Pageable page, String boardCateogry) {
+        Page<Board> pagingBoards = boardRepository.findByBoardCategory(boardCateogry, page);
+        List<BoardResponse> findBoards = pagingBoards.stream().map(BoardResponse::new).toList();
         Map<String, Object> pagingMap = findPaging(pagingBoards);
-        pagingMap.put("findBoards",findBoards);
+        pagingMap.put("findBoards", findBoards);
         return pagingMap;
     }
-
-
 
 
     @Transactional
-    public BoardResponse createBoard(BoardRequest boardRequest){
-        Board board=boardRepository.save(boardRequest.toEntity());
-        String[] imgList=boardRequest.getImgList().split(",");
-        for(String list:imgList){
-            Img img=imgRepository.findByImgDirectory(list);
-            img.modifyImgBoard(board);
+    public BoardResponse createBoard(BoardRequest boardRequest) {
+        Board board = boardRepository.save(boardRequest.toEntity());
+        if (boardRequest.getImgList() != null) {
+            String[] imgList = boardRequest.getImgList().split(",");
+            for (String list : imgList) {
+                Img img = imgRepository.findByImgDirectory(list);
+                img.modifyImgBoard(board);
+            }
         }
         return new BoardResponse(board);
     }
+
     @Transactional
-    public BoardResponse findBoard(Long boardId){
-        int hit=modifyBoardHit(boardId);
-        if(hit ==1) {
+    public BoardResponse findBoard(Long boardId) {
+        int hit = modifyBoardHit(boardId);
+        if (hit == 1) {
             Board boardPS = boardRepository.findByBoardId(boardId);
             return new BoardResponse(boardPS);
-        }else{
+        } else {
             throw new IllegalStateException("찾는 게시글이 존재하지 않아요");
         }
     }
 
     @Transactional
-    public int modifyBoardHit(Long boardId){
+    public int modifyBoardHit(Long boardId) {
         return boardRepository.modifyBoardHit(boardId);
     }
 
     @Transactional
-    public void deleteBoard(Long boardId){
+    public void deleteBoard(Long boardId) {
         boardRepository.deleteByBoardId(boardId);
     }
 
 
     @Transactional
-    public void modifyBoard(BoardRequest boardRequest){
-        Board board=boardRepository.findByBoardId(boardRequest.getBoardId());
-        if(boardRequest.getBoardThumbnail()!=""){
-            board.modifyBoardAndImg(boardRequest.getBoardName(),boardRequest.getBoardContent(),boardRequest.getBoardCategory(),boardRequest.getBoardThumbnail());
-        }else{
-            board.modifyBoard(boardRequest.getBoardName(),boardRequest.getBoardContent(),boardRequest.getBoardCategory());
-
+    public void modifyBoard(BoardRequest boardRequest) {
+        Board board = boardRepository.findByBoardId(boardRequest.getBoardId());
+        if (boardRequest.getImgList() != null) {
+            String[] imgList = boardRequest.getImgList().split(",");
+            for (String list : imgList) {
+                Img img = imgRepository.findByImgDirectory(list);
+                img.modifyImgBoard(board);
+            }
+        }
+        if (boardRequest.getBoardThumbnail() != "") {
+            board.modifyBoardAndImg(boardRequest.getBoardName(), boardRequest.getBoardContent(), boardRequest.getBoardCategory(), boardRequest.getBoardThumbnail());
+        } else {
+            board.modifyBoard(boardRequest.getBoardName(), boardRequest.getBoardContent(), boardRequest.getBoardCategory());
         }
     }
 
