@@ -57,9 +57,10 @@ public class ReviewService {
     }
 
     @Transactional
-    public int modifyReviewContent(ReviewRequest reviewRequest){
-
-        return reviewRepository.modifyReviewContent(reviewRequest.getReviewId(),reviewRequest.getReviewContent());
+    public ReviewResponse modifyReviewContent(ReviewRequest reviewRequest){
+        Review review=reviewRepository.findByReviewId(reviewRequest.getReviewId());
+        review.modifyReview(reviewRequest.getReviewContent());
+        return new ReviewResponse(review);
     }
 
 

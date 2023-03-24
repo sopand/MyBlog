@@ -54,5 +54,9 @@ public class Review {
 
     }
 
+    public void modifyReview(String reviewContent){
+        this.reviewContent=reviewContent;
+    }
+
 
 }

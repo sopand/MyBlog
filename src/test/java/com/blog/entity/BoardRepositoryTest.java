@@ -37,15 +37,7 @@ class BoardRepositoryTest {
         assertThat(board).isNotNull();
     }
 
-    @Test
-    void modifyBoardHit(){
-        //given
-        Long boardId=3L;
-        //when
-        int chk=repository.modifyBoardHit(boardId);
-        //then
-        assertThat(chk).isEqualTo(1);
-    }
+
 
     @Test
     void deleteByBoardId(){

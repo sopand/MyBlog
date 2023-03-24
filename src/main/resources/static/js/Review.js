@@ -175,8 +175,9 @@ $(function () {
     $(document).on('click', '.modifyReviewBtn', function () {
         const reviewId = $(this).val();
         const reviewContent = $(".modifyarea_" + reviewId).val();
-        ajaxCall("/boards/review", "PUT", {reviewId: reviewId, reviewContent: reviewContent}, function (data) {
-            if (data != 0) {
+        ajaxCall("/boards/review", "PUT", {reviewId: reviewId, reviewContent: reviewContent},
+            function (data) {
+            if (data != null) {
                 alert("댓글 수정 완료~~!!");
                 location.reload();
             } else {

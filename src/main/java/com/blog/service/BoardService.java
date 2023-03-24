@@ -77,10 +77,6 @@ public class BoardService {
             //throw new IllegalStateException("찾는 게시글이 존재하지 않아요");
     }
 
-    @Transactional
-    public int modifyBoardHit(Long boardId) {
-        return boardRepository.modifyBoardHit(boardId);
-    }
 
     @Transactional
     public void deleteBoard(Long boardId) {
