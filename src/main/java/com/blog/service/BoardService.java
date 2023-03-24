@@ -55,18 +55,18 @@ public class BoardService {
     }
 
 
+
+
     @Transactional
     public BoardResponse createBoard(BoardRequest boardRequest){
         Board board=boardRepository.save(boardRequest.toEntity());
         String[] imgList=boardRequest.getImgList().split(",");
         for(String list:imgList){
             Img img=imgRepository.findByImgDirectory(list);
-
+            img.modifyImgBoard(board);
         }
         return new BoardResponse(board);
     }
-
-
     @Transactional
     public BoardResponse findBoard(Long boardId){
         int hit=modifyBoardHit(boardId);

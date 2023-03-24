@@ -41,6 +41,10 @@ public class Img {
         this.board=board;
     }
 
+    public void modifyImgBoard(Board board){
+        this.board=board;
+    }
+
 
 
 }
