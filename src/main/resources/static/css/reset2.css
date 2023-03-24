@@ -4,8 +4,8 @@ html, body, div, span, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 abbr, address, cite, code,
 del, dfn, em, img, ins, kbd, q, samp,
-small, strong, sub, sup, var,
-b, i,
+small, sub, sup, var,
+b,
 dl, dt, dd, ol, ul, li,
 fieldset, form, label, legend,
 table, caption, tbody, tfoot, thead, tr, th, td,
@@ -21,6 +21,9 @@ time, mark, audio, video {
     background:transparent;
     font-weight:normal;
 }
+/*strong, 내가 위에서 뻇음!!! CKeditor5 Bold체가 안먹어서
+   i 도 마찬가지 italic이 안되서
+*/
 
 body {
     line-height:1;

@@ -2,7 +2,11 @@ let UploadURL = "";
 let simpleEdit;
 $(function () {
     $(".boardAddbtn").click(function () {
+        const data=simpleEdit.getData();
+        let chk=[];
+        chk.push(data.match(/(?<=\<img src\=\")(.*?)(?=\"\>)/g));
         $("input[name=boardThumbnail]").val(UploadURL);
+        $("input[name=imgList]").val(chk);
         $(".boardadd_main_box").submit();
     });
 });
@@ -49,6 +53,7 @@ class MyUploadAdapter {
             if (!response || response.error) {
                 return reject(response && response.error ? response.error.message : genericErrorText);
             }
+            console.log(response);
 
             // 만약 업로드가 성공했다면, 업로드 프로미스를 적어도 default URL을 담은 객체와 함께 resolve하라.
             // 이 URL은 서버에 업로드된 이미지를 가리키며, 컨텐츠에 이미지를 표시하기 위해 사용된다.

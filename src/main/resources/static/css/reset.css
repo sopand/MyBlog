@@ -2,12 +2,14 @@
    v2.0 | 20110126
    License: none (public domain)
 */
+
+
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
 del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
+small, strike, sub, sup, tt, var,
+b, u, center,
 dl, dt, dd, ol, ul, li,
 fieldset, form, label, legend,
 table, caption, tbody, tfoot, thead, tr, th, td,
@@ -23,6 +25,11 @@ time, mark, audio, video {
     vertical-align: baseline;
     box-sizing: border-box;
 }
+/*strong, 내가 위에서 뻇음!!! CKeditor5 Bold체가 안먹어서
+   i 도 마찬가지 italic이 안되서
+*/
+
+
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display: block;}
 /* a 링크 초기화 */

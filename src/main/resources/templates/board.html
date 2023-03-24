@@ -41,6 +41,7 @@
             </div>
         </div>
         <a sec:authorize="hasRole('ROLE_ADMIN')" href="/boards/newpost" class="boardadd_btn" th:text="#{board.addbtn}"></a>
+        <a href="/boards/newpost" class="comunityadd_btn" th:text="#{comunity.addbtn}" th:if="${boardCategory=='Comunity'}"></a>
         <div class="btnbox">
             <div></div>
             <th:block th:each="page : ${#numbers.sequence(boardMap['startPage'], boardMap['endPage'])}" th:if="${boardMap['findBoards'].size()}!=0">

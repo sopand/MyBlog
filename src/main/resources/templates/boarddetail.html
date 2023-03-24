@@ -38,7 +38,7 @@
                 <div class="text_tag2" th:utext="${board.boardContent}"></div>
             </div>
 
-            <a th:href="|/boards/repost/${board.boardId}|">게시글 수정</a>
+            <a th:href="|/boards/repost/${board.boardId}|" th:if="${#authentication.name}==${board.boardWriter}"  class="modifyform">게시글 수정</a>
 
 
         </div>

@@ -4,6 +4,8 @@ import com.blog.entity.Board;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 public class BoardRequest {
@@ -16,6 +18,8 @@ public class BoardRequest {
     private String boardCategory;
 
     private String boardThumbnail;
+
+    private String imgList;
     public Board toEntity(){
         return Board.builder().boardWriter(boardWriter).boardThumbnail(boardThumbnail).boardName(boardName).boardThumbnail(boardThumbnail).boardCategory(boardCategory).boardContent(boardContent).build();
     }

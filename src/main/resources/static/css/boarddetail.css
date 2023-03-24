@@ -33,6 +33,8 @@
     align-items: center;
     justify-content: center;
     border: 1px solid #e2e2e2;
+    border-radius: 10px;
+    margin: 5px;
 }
 
 .tag1 {
@@ -63,6 +65,8 @@
     align-items: center;
     justify-content: space-around;
     border: 1px solid #e2e2e2;
+    border-radius: 10px;
+    margin: 10px;
 }
 
 .detail_tag2 span {
@@ -93,8 +97,6 @@
     padding-left: 30px;
     padding-top: 30px;
     padding-bottom: 30px;
-
-
 }
 
 /*-------------------------------------------------------*/
@@ -229,7 +231,7 @@
 
 /*-------------------------------------------*/
 
-.review_form, .re_review_form,.modifyReview_form{
+.review_form, .re_review_form, .modifyReview_form {
     padding-top: 50px;
     padding-bottom: 50px;
     width: 900px;
@@ -257,14 +259,14 @@
 }
 
 .modifyArea {
-    border:2px solid #ff783d;
+    border: 2px solid #ff783d;
 }
 
 .review_add_btn {
     background-color: darkslateblue;
 }
 
-.review_add_btn, .re_review_add_btn,.modifyReviewBtn {
+.review_add_btn, .re_review_add_btn, .modifyReviewBtn {
     width: 150px;
     display: flex;
     align-items: center;
@@ -319,4 +321,19 @@
 .re_reviewList:hover {
     color: #4949ff;
     font-size: 14px;
+}
+
+.modifyform {
+    width: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    background-color: #ff783d;
+    margin-top: 50px;
+    margin-left: 600px;
+    border-radius: 5px;
+    height: 50px;
 }

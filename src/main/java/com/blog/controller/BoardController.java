@@ -55,6 +55,7 @@ public class BoardController {
 
     @PostMapping("/newpost")
     public String createBoard(BoardRequest boardRequest) {
+
         BoardResponse board = boardService.createBoard(boardRequest);
         if (board != null) {
             return "redirect:/index";

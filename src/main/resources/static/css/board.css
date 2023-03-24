@@ -103,7 +103,7 @@
     color: gray;
 }
 
-.boardadd_btn{
+.boardadd_btn ,.comunityadd_btn{
     width:200px;
     height: 50px;
     color:white;

@@ -4,6 +4,8 @@ import com.blog.dto.BoardRequest;
 import com.blog.dto.BoardResponse;
 import com.blog.entity.Board;
 import com.blog.entity.BoardRepository;
+import com.blog.entity.Img;
+import com.blog.entity.ImgRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,6 +24,7 @@ import java.util.regex.Pattern;
 public class BoardService {
 
     private final BoardRepository boardRepository;
+    private final ImgRepository imgRepository;
 
     public static Map<String,Object> findPaging(Page<Board> pagingBoards){
         Map<String, Object> pagingMap = new HashMap<>();
@@ -55,6 +58,11 @@ public class BoardService {
     @Transactional
     public BoardResponse createBoard(BoardRequest boardRequest){
         Board board=boardRepository.save(boardRequest.toEntity());
+        String[] imgList=boardRequest.getImgList().split(",");
+        for(String list:imgList){
+            Img img=imgRepository.findByImgDirectory(list);
+
+        }
         return new BoardResponse(board);
     }
 
@@ -84,7 +92,7 @@ public class BoardService {
     @Transactional
     public void modifyBoard(BoardRequest boardRequest){
         Board board=boardRepository.findByBoardId(boardRequest.getBoardId());
-        if(boardRequest.getBoardThumbnail()!=null){
+        if(boardRequest.getBoardThumbnail()!=""){
             board.modifyBoardAndImg(boardRequest.getBoardName(),boardRequest.getBoardContent(),boardRequest.getBoardCategory(),boardRequest.getBoardThumbnail());
         }else{
             board.modifyBoard(boardRequest.getBoardName(),boardRequest.getBoardContent(),boardRequest.getBoardCategory());

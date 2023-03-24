@@ -1,5 +1,7 @@
 package com.blog.service;
 
+import com.blog.entity.Img;
+import com.blog.entity.ImgRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -13,7 +15,7 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class ImgService {
-
+    private final ImgRepository imgRepository;
     @Value("${file.Upimg}")
     private String path;
     public ModelAndView createBoardImg(MultipartFile file) throws IOException {
@@ -27,9 +29,11 @@ public class ImgService {
             converFile.mkdirs();
         }
         file.transferTo(converFile);
-        mv.addObject("uploaded",true);
         String imgView="/myblog/"+savedName;
+        mv.addObject("uploaded",true);
         mv.addObject("url",imgView);
+        Img img=Img.builder().imgOrigin(imgOriginalName).imgNew(savedName).imgDirectory(imgView).build();
+        imgRepository.save(img);
         return mv;
     }
 }
