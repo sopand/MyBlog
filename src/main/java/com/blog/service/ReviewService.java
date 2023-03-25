@@ -20,10 +20,13 @@ public class ReviewService {
 
     private final ReviewRepository reviewRepository;
 
+    /**
+     * 리뷰를 등록하는 기능을 담당하는 로직,
+     * @param reviewRequest = DB에 Insert하려는 리뷰의 정보를 가지고있는 객체,
+     *
+     */
     @Transactional
     public void createReview(ReviewRequest reviewRequest) {
-        Board boardId = Board.builder().boardId(reviewRequest.getBoardId()).build();  // 댓글을 저장할 게시글의 고유번호
-        reviewRequest.setBoard(boardId); // ReviewEntity로 변경하기위해 Board를 set
         if (reviewRequest.getReviewParent() != null) { //ReviewParent가 존재한다면 상위의 댓글이 있다는 뜻.
             Review review = reviewRepository.findByReviewId(reviewRequest.getReviewParent()); //상위에 있는 부모 댓글의 정보를 찾아옴
             reviewRequest.setReviewDeep(review.getReviewDeep() + 1); // 대댓글의 대댓글인지 그냥 대댓글인지 확인

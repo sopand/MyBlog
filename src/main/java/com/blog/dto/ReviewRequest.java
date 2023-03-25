@@ -19,9 +19,11 @@ public class ReviewRequest {
     private Board board;
 
     public Review onParent(){
+        this.board=Board.builder().boardId(boardId).build();
         return Review.builder().reviewDeep(reviewDeep).reviewParent(reviewParent).board(board).reviewName(reviewName).reviewContent(reviewContent).build();
     }
     public Review unParent(){
+        this.board=Board.builder().boardId(boardId).build();
         return Review.builder().board(board).reviewName(reviewName).reviewContent(reviewContent).build();
     }
 }
