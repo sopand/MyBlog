@@ -73,6 +73,7 @@ spring:
       driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
       jdbc-url: jdbc:log4jdbc:mysql://localhost:3306/blog?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true
       connection-test-query: SELECT NOW() FROM dual
+
 ---
 spring:
   config:
@@ -85,5 +86,6 @@ spring:
       driver-class-name: com.mysql.cj.jdbc.Driver
       jdbc-url: jdbc:mysql://localhost:3306/blog?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true
       connection-test-query: SELECT NOW() FROM dual
+
 ---
 

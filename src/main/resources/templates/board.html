@@ -19,13 +19,28 @@
         <span class="main_tag" th:if="${boardCategory==null}" th:text="#{board.head}">전체 게시물 조회</span>
         <span class="main_tag" th:if="${boardCategory!=null}" th:text="${boardCategory}"></span>
 
+        <form action="/boards/filter" method="GET">
+            <input type="hidden"  th:if="${boardCategory!=null}" th:value="${boardCategory}" name="boardCategory">
+            <select name="boardSort">
+                <option value="boardDate">작성날자 순</option>
+                <option value="boardHit">조회수 순</option>
+                <option value="boardName">제목 순</option>
+            </select>
+            <select name="boardDirection">
+                <option value="ASC">순서대로</option>
+                <option value="DESC">역순으로</option>
+            </select>
+            <button type="submit">정렬</button>
+
 
         </form>
         <div class="board_main_box">
             <div class="board_content" th:each="board :${boardMap['findBoards']}">
-                <div class="board_con_left">
 
-                    <a th:href="|/boards/detail/${board.boardId}|" class="textname_href"><span class="context_textname" th:text="|#{board.name}${board.boardName}|"></span></a>
+                <div class="board_con_left">
+                    <a th:href="|/boards/detail/${board.boardId}|" class="textname_href">
+                        <span class="context_textname" th:text="|#{board.name}${board.boardName}|"></span>
+                    </a>
                     <div class="board_content_text">
                         <div class="board_context_hit">
                             <span th:text="|#{board.date}${board.boardDate}|"></span>
@@ -41,7 +56,7 @@
             </div>
         </div>
         <a sec:authorize="hasRole('ROLE_ADMIN')" href="/boards/newpost" class="boardadd_btn" th:text="#{board.addbtn}"></a>
-        <a sec:authorize="hasRole('ROLE_USER')"href="/boards/newpost" class="comunityadd_btn" th:text="#{comunity.addbtn}" th:if="${boardCategory=='Comunity'}"></a>
+        <a sec:authorize="hasRole('ROLE_USER')" href="/boards/newpost" class="comunityadd_btn" th:text="#{comunity.addbtn}" th:if="${boardCategory=='Comunity'}"></a>
         <div class="btnbox">
             <div></div>
             <th:block th:each="page : ${#numbers.sequence(boardMap['startPage'], boardMap['endPage'])}" th:if="${boardMap['findBoards'].size()}!=0">

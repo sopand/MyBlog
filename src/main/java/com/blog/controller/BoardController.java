@@ -6,6 +6,7 @@ import com.blog.dto.BoardResponse;
 import com.blog.service.BoardService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -16,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Map;
 
 @Controller
@@ -35,9 +37,24 @@ public class BoardController {
 
     @GetMapping("/{boardCategory}")
     public String findBoardByCateogry(Model model, @PageableDefault(page = 0, size = 10, sort = "boardId", direction = Sort.Direction.DESC) Pageable pageable, @PathVariable String boardCategory) {
+
         Map<String, Object> boardMap = boardService.findBoardByCateogry(pageable, boardCategory);
         model.addAttribute("boardMap", boardMap);
-        model.addAttribute("boardCategory",boardCategory);
+        model.addAttribute("boardCategory", boardCategory);
+        return "board";
+    }
+
+    @GetMapping("/filter")
+    public String findBoardFilter(Model model, BoardRequest boardRequest) {
+        PageRequest pageRequest = PageRequest.of(0, 10, Sort.by(Sort.Direction.fromString(boardRequest.getBoardDirection()), boardRequest.getBoardSort()));
+        Map<String, Object> boardMap = new HashMap<>();
+        if (boardRequest.getBoardCategory() != null) {
+            boardMap = boardService.findBoardByCateogry(pageRequest, boardRequest.getBoardCategory());
+        } else {
+            boardMap = boardService.findBoardAll(pageRequest);
+        }
+        model.addAttribute("boardMap", boardMap);
+        model.addAttribute("boardCategory", boardRequest.getBoardCategory());
         return "board";
     }
 
@@ -65,20 +82,20 @@ public class BoardController {
     }
 
     @DeleteMapping
-    public String deleteBoard(Long boardId){
+    public String deleteBoard(Long boardId) {
         boardService.deleteBoard(boardId);
         return "redirect:/boards";
     }
 
     @GetMapping("/repost/{boardId}")
-    public String modifyBoardForm(@PathVariable("boardId")Long boardId,Model model){
-        BoardResponse board=boardService.findBoard(boardId);
-        model.addAttribute("board",board);
+    public String modifyBoardForm(@PathVariable("boardId") Long boardId, Model model) {
+        BoardResponse board = boardService.findBoard(boardId);
+        model.addAttribute("board", board);
         return "boardmodify";
     }
 
     @PutMapping("/repost")
-    public String modifyBoard(BoardRequest boardRequest){
+    public String modifyBoard(BoardRequest boardRequest) {
         boardService.modifyBoard(boardRequest);
         return "redirect:/boards";
     }

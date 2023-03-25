@@ -2,23 +2,18 @@ package com.blog.entity;
 
 import com.blog.config.DataBaseConfig;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 
 @DataJpaTest
@@ -44,11 +39,37 @@ class BoardRepositoryTest {
     @Test
     void deleteByBoardId(){
         //given
-        Long boardId=3L;
+        List<Board> boardList=repository.findAll();
+        Long boardId=boardList.get(0).getBoardId();
         //when
         repository.deleteByBoardId(boardId);
+
+        //then
+        Board board=repository.findByBoardId(boardId);
+        assertThat(board).isNull();
+    }
+
+    @Test
+    void findByBoardCategory(){
+        //given
+        PageRequest pageRequest=PageRequest.of(0,5, Sort.by(Sort.DEFAULT_DIRECTION.DESC,"boardId"));
+        String boardCategory="Project";
+        //when
+        Page<Board>boardList=repository.findByBoardCategory(boardCategory,pageRequest);
+        //then
+        assertThat(boardList).isNotEmpty();
+
+
+    }
+
+    @Test
+    void findByBoardId(){
+        //given
+        List<Board> boardList=repository.findAll();
+        Long boardId=boardList.get(0).getBoardId();
+        //when
         Board board=repository.findByBoardId(boardId);
         //then
-        assertThat(board).isNull();
+        assertThat(boardId).isEqualTo(board.getBoardId());
     }
 }

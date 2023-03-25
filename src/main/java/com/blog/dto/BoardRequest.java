@@ -17,6 +17,9 @@ public class BoardRequest {
     private String boardWriter;
     private String boardCategory;
 
+    private String boardSort;
+    private String boardDirection;
+
     private String boardThumbnail;
 
     private String imgList;
