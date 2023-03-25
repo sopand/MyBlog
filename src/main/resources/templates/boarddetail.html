@@ -1,3 +1,8 @@
+<!--
+ 게시글의 상세페이지  ( 게시글 보기 )를  담당하는 HTML
+
+
+-->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
@@ -38,13 +43,15 @@
             <div class="detail_tag3">
                 <div class="text_tag2" th:utext="${board.boardContent}"></div>
             </div>
-
-            <a th:href="|/boards/repost/${board.boardId}|" th:if="${#authentication.name}==${board.boardWriter}"  class="modifyform">게시글 수정</a>
-
+            <form class="detail_btnbox" th:if="${#authentication.name}==${board.boardWriter}" action="/boards" th:method="DELETE">
+                <a th:href="|/boards/repost/${board.boardId}|"  class="modifyform">게시글 수정</a>
+                <input type="hidden" th:value="${board.boardId}" name="boardId">
+                <button th:href="|/boards/repost/${board.boardId}|"  class="deletebtn">게시글 삭제</button>
+            </form>
 
         </div>
         <form class="review_form">
-            <input type="hidden" th:value="${board.boardId}" name="boardId">
+
             <input type="hidden" th:value="${#authentication.name}" name="boardName">
             <input type="hidden" th:value="${#authentication.name}" name="reviewName" sec:authorize="isAuthenticated()">
 

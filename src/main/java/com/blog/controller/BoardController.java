@@ -82,4 +82,6 @@ public class BoardController {
         boardService.modifyBoard(boardRequest);
         return "redirect:/boards";
     }
+
+
 }

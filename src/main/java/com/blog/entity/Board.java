@@ -44,7 +44,7 @@ public class Board {
     @Column(name="board_writer")
     private String boardWriter;
 
-    @OneToMany(mappedBy = "board")
+    @OneToMany(mappedBy = "board" ,cascade = CascadeType.ALL)
     private List<Review> review=new ArrayList<>();
 
     @Builder

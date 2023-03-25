@@ -323,17 +323,37 @@
     font-size: 14px;
 }
 
+.detail_btnbox{
+    width: 900px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-top: 50px;
+}
 .modifyform {
-    width: 300px;
+    width: 250px;
     display: flex;
     align-items: center;
     justify-content: center;
     color: white;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: bold;
     background-color: #ff783d;
-    margin-top: 50px;
-    margin-left: 600px;
     border-radius: 5px;
     height: 50px;
+    margin:10px;
 }
+.deletebtn{
+    width: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    background-color: #ff001e;
+    border-radius: 5px;
+    height: 50px;
+    margin:10px;
+}
+
