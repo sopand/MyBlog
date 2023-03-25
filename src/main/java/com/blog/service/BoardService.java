@@ -64,7 +64,7 @@ public class BoardService {
     @Transactional
     public BoardResponse createBoard(BoardRequest boardRequest) {
         Board board = boardRepository.save(boardRequest.toEntity());
-        if (boardRequest.getImgList() != null) {
+        if (!boardRequest.getImgList().equals("")) {
             List<String> imgList = List.of(boardRequest.getImgList().split(","));
             imgList.stream().forEach(entity -> {
                 Img img = imgRepository.findByImgDirectory(entity);
@@ -95,7 +95,6 @@ public class BoardService {
         List<Img> beforeImgList = imgRepository.findByBoard_BoardId(boardRequest.getBoardId()); // 기존의 Board에 존재하던 이미지의 정보와 새롭게 수정한 Board의 이미지 정도를 비교하기 위해 기존 이미지 정보를 저장
         if (!boardRequest.getImgList().equals("")) { // Request된 board에서 이미지가 존재 할 경우 발동
             List<String> imgList = List.of(boardRequest.getImgList().split(",")); // JS 처리하여 넘긴 Img파일의 Direcotry를 포함한 주소값을 , 단위로 잘라서 반복하기 위함
-            System.out.println("imgsplit " + imgList);
             imgList.stream().forEach(entity -> {
                 beforeImgList.stream().filter(before -> entity.equals(before.getImgDirectory()))
                         .collect(Collectors.toList())
@@ -108,16 +107,22 @@ public class BoardService {
 
             // 수정된 이미지 파일과equals하여 존재하지 않던 파일의 리스트 ( 현재 HTML 상에는 존재하지 않는 다는 뜻 ) 삭제
         }
-        beforeImgList.stream().filter(entity -> beforeImgList.size() != 0).forEach(entity -> {
+        beforeImgList.stream().filter(entity -> beforeImgList.size() != 0).forEach(entity -> { // 기존 이미지에서 바뀌어진 이미지는 remove처리하기 위한 For문대신 Stream, ( 가동 속도에 이점이있다. )
             String deletePath = path + entity.getImgNew();
             File file = new File(deletePath);
             file.delete();
             imgRepository.delete(entity);
         });
-        if (boardRequest.getBoardThumbnail() != "") {
+
+        if (!boardRequest.getBoardThumbnail().equals("")) { // Request되어 넘어온 썸네일 이미지의 데이터가 있다면, ( 게시글의 첫번째 사진이 변경 되었을 경우 )
             board.modifyBoardAndImg(boardRequest.getBoardName(), boardRequest.getBoardContent(), boardRequest.getBoardCategory(), boardRequest.getBoardThumbnail());
+            //넘어온 썸네일 이미지 데이터가 있다면 썸네일 까지 포함해서 UPDATE
         } else {
+            // 넘어온 썸네일 데이터가 없다면 기본적인 게시글 관련 데이터로 업데이트
             board.modifyBoard(boardRequest.getBoardName(), boardRequest.getBoardContent(), boardRequest.getBoardCategory());
+        }
+        if(boardRequest.getImgList().equals("")){ // 게시글에 이미지 파일 자체가 존재하지 않을경우 썸네일 데이터를 공란으로 비워버린다.
+            board.isNullBoardThumnail();
         }
     }
 

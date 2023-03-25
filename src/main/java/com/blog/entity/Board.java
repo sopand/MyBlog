@@ -73,4 +73,8 @@ public class Board {
     public void modifyBoardHit(int boardHit){
         this.boardHit=boardHit+1;
     }
+
+    public void isNullBoardThumnail(){
+        this.boardThumbnail="";
+    }
 }
