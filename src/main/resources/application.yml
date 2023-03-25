@@ -1,7 +1,8 @@
 spring:
-  
   profiles:
     include: config
+    active: dev
+    default: dev
   test:
     database:
       replace: NONE
@@ -20,21 +21,27 @@ spring:
     database: mysql
     show-sql: 'true'
     open-in-view: 'true'
+    defer-datasource-initialization: true
+
+    #Method Put,Delete 사용을 위한 설정
   mvc:
     hiddenmethod:
       filter:
         enabled: 'true'
+    #타임리프 설정
   thymeleaf:
     cache: 'false'
     prefix: classpath:/templates/
     mode: HTML
     encoding: UTF-8
     enabled: 'true'
+    #Devtools설정
   devtools:
     restart:
       enabled: 'true'
     livereload:
       enabled: 'true'
+
   servlet:
     multipart:
       enabled: 'true'
@@ -51,9 +58,32 @@ logging:
       springframework:
         web: DEBUG
       hibernate: DEBUG
-      #com:
-      # zaxxer:
-      #  hikari: DEBUG
 file:
   Upfolder: file:///ImgList/MyBlog/
   Upimg: C:/ImgList/MyBlog/
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    hikari:
+      password: '1111'
+      username: root
+      driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+      jdbc-url: jdbc:log4jdbc:mysql://localhost:3306/blog?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true
+      connection-test-query: SELECT NOW() FROM dual
+---
+spring:
+  config:
+    activate:
+      on-profile: test
+  datasource:
+    hikari:
+      password: '1111'
+      username: root
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      jdbc-url: jdbc:mysql://localhost:3306/blog?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true
+      connection-test-query: SELECT NOW() FROM dual
+---
+

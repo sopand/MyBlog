@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +24,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ImportAutoConfiguration(DataBaseConfig.class)
+@ActiveProfiles("test")
 class BoardRepositoryTest {
 
     @Autowired
@@ -34,7 +36,7 @@ class BoardRepositoryTest {
         //when
         Page<Board> board=repository.findAll(pageRequest);
         //then
-        assertThat(board).isNotNull();
+        assertThat(board).isNotEmpty();
     }
 
 
