@@ -1,6 +1,7 @@
 package com.blog.entity;
 
 
+import com.blog.dto.BoardResponse;
 import jakarta.persistence.*;
 import jdk.jfr.Timestamp;
 import lombok.AccessLevel;
@@ -77,4 +78,6 @@ public class Board {
     public void isNullBoardThumnail(){
         this.boardThumbnail="";
     }
+
+
 }

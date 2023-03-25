@@ -11,7 +11,7 @@ import org.springframework.data.repository.query.Param;
 
 public interface BoardRepository extends JpaRepository<Board,Long> {
 
-    Page<Board> findAll(Pageable pageable);
+    Page<Board> findAllBoardList(Pageable pageable);
 
     Board findByBoardId(Long boardId);
 

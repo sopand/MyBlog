@@ -148,4 +148,25 @@
 
 
 }
+.filter_form{
+    width:900px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.filter_form select{
+    border:2px solid #e2e2e2;
+    width: 200px;
+    height: 30px;
+    font-weight: bold;
+    margin:10px;
+}
+.filter_form button{
+    width:50px;
+    height: 30px;
+    font-weight: bold;
+    color: white;
+    background-color: #4949ff;
+    border-radius: 5px;
+}
 

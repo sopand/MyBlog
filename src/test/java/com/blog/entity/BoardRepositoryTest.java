@@ -25,7 +25,7 @@ class BoardRepositoryTest {
     @Autowired
     private BoardRepository repository;
     @Test
-    void findAll() {
+    void 전체_게시글찾기() {
         //given
         PageRequest pageRequest=PageRequest.of(0,5, Sort.by(Sort.DEFAULT_DIRECTION.DESC,"boardId"));
         //when
@@ -33,8 +33,6 @@ class BoardRepositoryTest {
         //then
         assertThat(board).isNotEmpty();
     }
-
-
 
     @Test
     void deleteByBoardId(){

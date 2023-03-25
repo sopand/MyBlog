@@ -4,7 +4,6 @@ package com.blog.controller;
 import com.blog.dto.BoardRequest;
 import com.blog.dto.BoardResponse;
 import com.blog.service.BoardService;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -13,10 +12,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,7 +26,7 @@ public class BoardController {
 
     @GetMapping("")
     public String findBoardAll(Model model, @PageableDefault(page = 0, size = 10, sort = "boardId", direction = Sort.Direction.DESC) Pageable pageable) {
-        Map<String, Object> boardMap = boardService.findBoardAll(pageable);
+        Map<String, Object> boardMap = boardService.findAllBoards(pageable);
         model.addAttribute("boardMap", boardMap);
         return "board";
     }
@@ -51,7 +47,7 @@ public class BoardController {
         if (boardRequest.getBoardCategory() != null) {
             boardMap = boardService.findBoardByCateogry(pageRequest, boardRequest.getBoardCategory());
         } else {
-            boardMap = boardService.findBoardAll(pageRequest);
+            boardMap = boardService.findAllBoards(pageRequest);
         }
         model.addAttribute("boardMap", boardMap);
         model.addAttribute("boardCategory", boardRequest.getBoardCategory());
