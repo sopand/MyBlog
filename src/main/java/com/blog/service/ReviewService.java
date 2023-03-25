@@ -28,9 +28,9 @@ public class ReviewService {
             Review review = reviewRepository.findByReviewId(reviewRequest.getReviewParent()); //상위에 있는 부모 댓글의 정보를 찾아옴
             reviewRequest.setReviewDeep(review.getReviewDeep() + 1); // 대댓글의 대댓글인지 그냥 대댓글인지 확인
             reviewRepository.save(reviewRequest.onParent()); // Parent가 존재할때의 Review Entity변환 메서드
-            reviewRepository.modifyReviewGroupNoPlus(review.getReviewId()); //저장시 부모의 대댓글 그룹의 숫자를 +1
+            review.modifyReviewGroupNoUp(review.getReviewGroupNo());
         }else{
-            reviewRepository.save(reviewRequest.noParent()); //Parent가 존재하지 않을때 Review Entity 변환 메서드
+            reviewRepository.save(reviewRequest.unParent()); //Parent가 존재하지 않을때 Review Entity 변환 메서드
         }
     }
     @Transactional(readOnly = true)
@@ -48,12 +48,13 @@ public class ReviewService {
     public void deleteReview(Long reviewId) {
         Review review = reviewRepository.findByReviewId(reviewId); //review가 대댓글인지 댓글인지 여부를 확인하기 위함
         if (review.getReviewParent() != null) { // 상위의 댓글이 존재하고 하위에는 없을 경우 ( 그냥 대댓글일 경우 )
-            reviewRepository.modifyReviewGroupNoMinor(review.getReviewParent());
+            Review parentReview=reviewRepository.findByReviewId(review.getReviewParent());
+            parentReview.modifyReviewGroupNoDown(review.getReviewGroupNo());
         }
         if (review.getReviewGroupNo() != 0) {
-            reviewRepository.findByReviewParent(review.getReviewId()).forEach(entity -> reviewRepository.deleteByReviewId(entity.getReviewId()));
+            reviewRepository.findByReviewParent(review.getReviewId()).forEach(entity -> reviewRepository.delete(entity));
         }
-        reviewRepository.deleteByReviewId(review.getReviewId());
+        reviewRepository.delete(review);
     }
 
     @Transactional

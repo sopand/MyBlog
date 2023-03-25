@@ -21,7 +21,7 @@ public class ReviewRequest {
     public Review onParent(){
         return Review.builder().reviewDeep(reviewDeep).reviewParent(reviewParent).board(board).reviewName(reviewName).reviewContent(reviewContent).build();
     }
-    public Review noParent(){
+    public Review unParent(){
         return Review.builder().board(board).reviewName(reviewName).reviewContent(reviewContent).build();
     }
 }

@@ -17,16 +17,6 @@ class ReviewRepositoryTest {
     @Autowired
     private ReviewRepository repository;
 
-    @Test
-    public void 리뷰삭제_테스트(){
-        //given
-        Long reviewId=1L;
-        //when
-        repository.deleteByReviewId(reviewId);
-        //then
-
-
-    }
 
 
 

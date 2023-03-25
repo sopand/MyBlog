@@ -57,6 +57,12 @@ public class Review {
     public void modifyReview(String reviewContent){
         this.reviewContent=reviewContent;
     }
+    public void modifyReviewGroupNoUp(int reviewGroupNo){
+        this.reviewGroupNo=reviewGroupNo+1;
+    }
+    public void modifyReviewGroupNoDown(int reviewGroupNo){
+        this.reviewGroupNo=reviewGroupNo-1;
+    }
 
 
 }
