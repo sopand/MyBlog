@@ -59,7 +59,7 @@ public class BoardService {
      */
     @Transactional(readOnly = true)
     public Map<String, Object> findAllBoards(Pageable page) {
-        Page<Board> pagingBoardList = boardRepository.findAllBoardList(page);
+        Page<Board> pagingBoardList = boardRepository.findAll(page);
         List<BoardResponse> pagingBoardResponse = pagingBoardList.stream().map(BoardResponse::new).toList();
         Map<String, Object> pagingContent = setPagingData(pagingBoardList);
         pagingContent.put("pagingBoardResponse", pagingBoardResponse);

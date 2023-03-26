@@ -11,11 +11,15 @@ import org.springframework.data.repository.query.Param;
 
 public interface BoardRepository extends JpaRepository<Board,Long> {
 
-    Page<Board> findAllBoardList(Pageable pageable);
+    Page<Board> findAll(Pageable pageable);
+
+    @Query(value = "select bo from Board bo WHERE bo.boardContent LIKE %:searchText% or bo.boardName LIKE %:searchText%",
+            countQuery = "select count(bo.boardId) from Board bo WHERE bo.boardContent LIKE %:searchText% or bo.boardName LIKE %:searchText%")
+    Page<Board> findSearchBoard(@Param("searchText")String searchText, Pageable pageable);
 
     Board findByBoardId(Long boardId);
 
-    Page<Board> findByBoardCategory (String boardCategory,Pageable pageable);
+    Page<Board> findByBoardCategory(String boardCategory,Pageable pageable);
 
 
     void deleteByBoardId(Long boardId);
