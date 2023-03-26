@@ -13,9 +13,11 @@ public interface BoardRepository extends JpaRepository<Board,Long> {
 
     Page<Board> findAll(Pageable pageable);
 
-    @Query(value = "select bo from Board bo WHERE bo.boardContent LIKE %:searchText% or bo.boardName LIKE %:searchText%",
+    @Query( value = "select bo from Board bo WHERE ( bo.boardCategory = :#{#dto.boardCategory} and bo.boardContent LIKE %:#{dto.searchText}% )or ( bo.boardCategory = :#{#dto.boardCategory} and bo.boardName LIKE %:#{dto.searchText}% )",
             countQuery = "select count(bo.boardId) from Board bo WHERE bo.boardContent LIKE %:searchText% or bo.boardName LIKE %:searchText%")
-    Page<Board> findSearchBoard(@Param("searchText")String searchText, Pageable pageable);
+    Page<Board> findSearchBoard(@Param("dto")BoardRequest dto, Pageable pageable);
+
+
 
     Board findByBoardId(Long boardId);
 
@@ -23,4 +25,6 @@ public interface BoardRepository extends JpaRepository<Board,Long> {
 
 
     void deleteByBoardId(Long boardId);
+
+
 }

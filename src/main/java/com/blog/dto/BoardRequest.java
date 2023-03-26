@@ -15,6 +15,7 @@ public class BoardRequest {
     private String boardContent;
 
     private String boardWriter;
+
     private String boardCategory;
 
     private String boardSort;
@@ -23,6 +24,8 @@ public class BoardRequest {
     private String boardThumbnail;
 
     private String imgList;
+
+    private String searchText;
     public Board toEntity(){
         return Board.builder().boardWriter(boardWriter).boardThumbnail(boardThumbnail).boardName(boardName).boardThumbnail(boardThumbnail).boardCategory(boardCategory).boardContent(boardContent).build();
     }

@@ -36,8 +36,9 @@ public class BoardService {
 
     /**
      * setPagingData  = 중복적으로 사용되는 페이징처리 관련 로직을 분할시켜 하나로 돌려 쓰기위해 제작.
+     *
      * @param pagingBoards = 페이징처리된 DB의 데이터로 View에 출력시켜줄 데이터를 만들기 위해서, 받아오는 인자값,
-     * @return  View에 필요한 페이징 관련 데이터를 가공시켜 ,Map에 담아서 리턴시켜준다.
+     * @return View에 필요한 페이징 관련 데이터를 가공시켜 ,Map에 담아서 리턴시켜준다.
      */
     public static Map<String, Object> setPagingData(Page<Board> pagingBoards) {
         Map<String, Object> pagingContent = new HashMap<>();
@@ -53,6 +54,7 @@ public class BoardService {
 
     /**
      * findAllBoars = 전체 게시글을 보여주기 위한 로직,
+     *
      * @param page = Paging관련 데이터가 들어있는 객체,
      * @return // 위의 페이징 관련 데이터 처리를 마친 Map 과 BoardResponse객체를 합쳐
      * Map으로 데이터를 리턴시켜준다. ( 여러 자료형의 데이터가 있기때문에 한번에 반환하기 위해 Map으로 선언)
@@ -68,7 +70,8 @@ public class BoardService {
 
     /**
      * findBoardByCateogry = 카테고리를 선택해서 게시판 접근시 카테고리별 데이터를 찾아주는 로직,
-     * @param page = 페이징 처리와 관련된 데이터를 가지고 있는 객체,
+     *
+     * @param page          = 페이징 처리와 관련된 데이터를 가지고 있는 객체,
      * @param boardCateogry = 클라이언트가 선택한 Category의 정보를 가져온다.
      * @return = 해당 클라이언트가 선택한 카테고리와 페이징 정보로 찾아온 DB데이터를 setPagingData로 가공시킨 값과 게시글정보를 Map에 담아서 리턴
      */
@@ -84,8 +87,9 @@ public class BoardService {
 
     /**
      * createBoard = 클라이언트의 게시글 입력 데이터를 받아와 DB에 게시글 생성을 해주는 로직,
+     *
      * @param boardRequest = 클라이언트가 입력한 BOARD의 데이터가 들어있는 Request객체,
-     * @return  = INSERT가 성공적으로 이루어졌다면, 저장된 데이터를 다시 반환시켜 성공 여부를 확인한다.
+     * @return = INSERT가 성공적으로 이루어졌다면, 저장된 데이터를 다시 반환시켜 성공 여부를 확인한다.
      */
     @Transactional
     public BoardResponse createBoard(BoardRequest boardRequest) {
@@ -102,6 +106,7 @@ public class BoardService {
 
     /**
      * findBoard = 게시판 리스트에서 게시글 클릭시 게시글의 상세내용을 보여주기 위한 로직,
+     *
      * @param boardId = 클라이언트가 보기위해 클릭한 게시글의 고유번호 PK를 받아옴.
      * @return = 고유번호를 기반으로 찾아온 Board에 DB데이터를 Entity객체에서 DTO 객체로 변환시킨 값,
      */
@@ -114,6 +119,7 @@ public class BoardService {
 
     /**
      * deleteBoard = 게시글을 삭제처리하기 위한 로직,
+     *
      * @param boardId = 게시글 삭제처리를 하려는 게시글의 고유번호 PK를 받아온다.
      */
     @Transactional
@@ -124,6 +130,7 @@ public class BoardService {
 
     /**
      * modifyBoard = 게시글을 수정처리하기 위한 로직,
+     *
      * @param boardRequest = 게시글 수정페이지에서 입력한 변경된 데이터들의 정보가 담겨있는 객체,
      */
     @Transactional
@@ -158,9 +165,23 @@ public class BoardService {
             // 넘어온 썸네일 데이터가 없다면 기본적인 게시글 관련 데이터로 업데이트
             getBoard.modifyBoard(boardRequest.getBoardName(), boardRequest.getBoardContent(), boardRequest.getBoardCategory());
         }
-        if(boardRequest.getImgList().equals("")){ // 게시글에 이미지 파일 자체가 존재하지 않을경우 썸네일 데이터를 공란으로 비워버린다.
+        if (boardRequest.getImgList().equals("")) { // 게시글에 이미지 파일 자체가 존재하지 않을경우 썸네일 데이터를 공란으로 비워버린다.
             getBoard.isNullBoardThumnail();
         }
+    }
+
+    /**
+     *
+     * @param boardRequest  // 사용자가 찾기위해 검색한 검색어와 해당 카테고리 정보가 들어있다..
+     * @param pageable  // 페이징 처리와 관련된 데이터들의 집합.
+     * @return  // 페이징 관련 View의 필요한 데이터들과, 게시글의 정보가 합쳐져있는 Map을 리턴한다.
+     */
+    public Map<String, Object> findSearchBoard(BoardRequest boardRequest,Pageable pageable) {
+        Page<Board> getSearchBoardList = boardRepository.findSearchBoard(boardRequest,pageable);
+        List<BoardResponse> pagingBoardResponse = getSearchBoardList.stream().map(BoardResponse::new).toList();
+        Map<String, Object> pagingContent = setPagingData(getSearchBoardList);
+        pagingContent.put("pagingBoardResponse", pagingBoardResponse);
+        return pagingContent;
     }
 
 }

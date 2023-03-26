@@ -1,6 +1,7 @@
 package com.blog.entity;
 
 import com.blog.config.DataBaseConfig;
+import com.blog.dto.BoardRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,10 +77,12 @@ class BoardRepositoryTest {
     @Test
     void 게시글_검색하기(){
         //given
-        String searchText="as";
+        BoardRequest board=new BoardRequest();
+        board.setBoardCategory("Junit");
+        board.setSearchText("as");
         PageRequest pageRequest=PageRequest.of(0,5, Sort.by(Sort.DEFAULT_DIRECTION.DESC,"boardId"));
         //when
-        Page<Board> getBoardList=repository.findSearchBoard(searchText,pageRequest);
+        Page<Board> getBoardList=repository.findSearchBoard(board,pageRequest);
         //then
 
         log.info("정보 확인 ->{}", getBoardList.getContent());
