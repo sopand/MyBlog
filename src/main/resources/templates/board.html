@@ -18,14 +18,11 @@
     <main class="board_main_con">
         <span class="main_tag" th:if="${boardCategory==null}" th:text="#{board.head}">전체 게시물 조회</span>
         <span class="main_tag" th:if="${boardCategory!=null}" th:text="${boardCategory}"></span>
-        <form action="/boards/search" method="GET" class="search_form">
-        <input type="hidden"  th:if="${boardCategory!=null}" th:value="${boardCategory}" name="boardCategory">
+
+        <form action="/boards/search" method="GET" class="filter_form">
+            <input type="hidden" th:if="${boardCategory!=null}" th:value="${boardCategory}" name="boardCategory">
             <input type="search" name="searchText">
             <button type="submit">검색</button>
-
-        </form>
-        <form action="/boards/filter" method="GET" class="filter_form">
-            <input type="hidden"  th:if="${boardCategory!=null}" th:value="${boardCategory}" name="boardCategory">
             <select name="boardSort">
                 <option value="boardDate">작성날자 순</option>
                 <option value="boardHit">조회수 순</option>

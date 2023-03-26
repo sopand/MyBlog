@@ -18,14 +18,17 @@ public class BoardRequest {
 
     private String boardCategory;
 
-    private String boardSort;
-    private String boardDirection;
+
 
     private String boardThumbnail;
+
+    private String boardSort;
+    private String boardDirection;
 
     private String imgList;
 
     private String searchText;
+
     public Board toEntity(){
         return Board.builder().boardWriter(boardWriter).boardThumbnail(boardThumbnail).boardName(boardName).boardThumbnail(boardThumbnail).boardCategory(boardCategory).boardContent(boardContent).build();
     }

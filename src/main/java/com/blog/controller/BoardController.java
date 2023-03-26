@@ -40,19 +40,7 @@ public class BoardController {
         return "board";
     }
 
-    @GetMapping("/filter")
-    public String findBoardFilter(Model model, BoardRequest boardRequest) {
-        PageRequest pageRequest = PageRequest.of(0, 10, Sort.by(Sort.Direction.fromString(boardRequest.getBoardDirection()), boardRequest.getBoardSort()));
-        Map<String, Object> boardMap = new HashMap<>();
-        if (boardRequest.getBoardCategory() != null) {
-            boardMap = boardService.findBoardByCateogry(pageRequest, boardRequest.getBoardCategory());
-        } else {
-            boardMap = boardService.findAllBoards(pageRequest);
-        }
-        model.addAttribute("boardMap", boardMap);
-        model.addAttribute("boardCategory", boardRequest.getBoardCategory());
-        return "board";
-    }
+
 
     @GetMapping("/detail/{boardId}")
     public String findBoard(Model model, @PathVariable Long boardId) {
@@ -97,8 +85,14 @@ public class BoardController {
     }
 
     @GetMapping("/search")
-    public String findSearchBoard(Model model, BoardRequest boardRequest, @PageableDefault(page = 0, size = 10, sort = "boardId", direction = Sort.Direction.DESC) Pageable pageable) {
-        Map<String, Object> boardMap = boardService.findSearchBoard(boardRequest, pageable);
+    public String findSearchBoard(Model model, BoardRequest boardRequest) {
+        PageRequest pageRequest = PageRequest.of(0, 10, Sort.by(Sort.Direction.fromString(boardRequest.getBoardDirection()), boardRequest.getBoardSort()));
+        Map<String, Object> boardMap;
+        if (boardRequest.getBoardCategory() != null) {
+            boardMap = boardService.findBoardByCateogry(pageRequest, boardRequest.getBoardCategory());
+        } else {
+            boardMap = boardService.findAllBoards(pageRequest);
+        }
         model.addAttribute("boardMap", boardMap);
         model.addAttribute("boardCategory", boardRequest.getBoardCategory());
         return "board";
