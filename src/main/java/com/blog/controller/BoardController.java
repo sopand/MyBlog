@@ -100,6 +100,7 @@ public class BoardController {
     public String findSearchBoard(Model model, BoardRequest boardRequest, @PageableDefault(page = 0, size = 10, sort = "boardId", direction = Sort.Direction.DESC) Pageable pageable) {
         Map<String, Object> boardMap = boardService.findSearchBoard(boardRequest, pageable);
         model.addAttribute("boardMap", boardMap);
+        model.addAttribute("boardCategory", boardRequest.getBoardCategory());
         return "board";
     }
 

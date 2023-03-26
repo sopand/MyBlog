@@ -177,7 +177,12 @@ public class BoardService {
      * @return  // 페이징 관련 View의 필요한 데이터들과, 게시글의 정보가 합쳐져있는 Map을 리턴한다.
      */
     public Map<String, Object> findSearchBoard(BoardRequest boardRequest,Pageable pageable) {
-        Page<Board> getSearchBoardList = boardRepository.findSearchBoard(boardRequest,pageable);
+        Page<Board> getSearchBoardList;
+        if(boardRequest.getBoardCategory()!=null){
+            getSearchBoardList = boardRepository.findSearchBoard(boardRequest,pageable);
+        }else{
+            getSearchBoardList = boardRepository.findSearchBoardNoBoardCateogry(boardRequest,pageable);
+        }
         List<BoardResponse> pagingBoardResponse = getSearchBoardList.stream().map(BoardResponse::new).toList();
         Map<String, Object> pagingContent = setPagingData(getSearchBoardList);
         pagingContent.put("pagingBoardResponse", pagingBoardResponse);
