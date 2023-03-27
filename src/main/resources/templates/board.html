@@ -21,7 +21,8 @@
 
         <form action="/boards/search" method="GET" class="filter_form">
             <input type="hidden" th:if="${boardCategory!=null}" th:value="${boardCategory}" name="boardCategory">
-            <input type="search" name="searchText">
+            <input type="search" name="searchText" class="searchTag" th:value="${boardMap['nowSearchText']}" th:if="${boardMap['nowSearchText']}!=null">
+            <input type="search" placeholder="검색어 입력" name="searchText" class="searchTag" th:if="${boardMap['nowSearchText']}==null">
             <button type="submit">검색</button>
             <select name="boardSort">
                 <option value="boardDate">작성날자 순</option>

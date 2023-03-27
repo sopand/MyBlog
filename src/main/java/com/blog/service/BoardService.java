@@ -166,6 +166,12 @@ public class BoardService {
         return pagingContent;
     }
 
+    /**
+     *  카테고리가 없는 ( 전체보기에서 검색 or 정렬 선택 ) 정렬 or 검색시 작동하는 로직,
+     * @param page = 페이징할 기준이 되는 데이터들이 들어있는 객체,
+     * @param boardRequest = 사용자가 입력한 search 데이터나 , 선택한 정렬의 기준이 들어있는 곳,
+     * @return
+     */
 
     @Transactional(readOnly = true)
     public Map<String, Object> findAllBoardByNoCategorySearch(Pageable page, BoardRequest boardRequest) {
@@ -180,6 +186,12 @@ public class BoardService {
         return pagingContent;
     }
 
+    /**
+     * 페이징 처리에 필요한 DB데이터를 가져온뒤 가공하는 부분, 중복되는 코드가 많아 하나의 로직으로 분리시킴.
+     *
+     * @param pagingBoardList = 페이징에 관련된 정보와 페이징 처리된 SELECT 데이터를 가지고 있는 객체,
+     * @return // 여러 자료형의 데이터가 한곳에 담겨서 return되어야 하기 때문에 Map으로 리턴,
+     */
     public static Map<String, Object> setPagingData(Page<Board> pagingBoardList) {
         Map<String, Object> pagingContent = new HashMap<>();
         List<BoardResponse> pagingBoardResponse = pagingBoardList.stream().filter(entity -> pagingBoardList != null).map(BoardResponse::new).toList();
