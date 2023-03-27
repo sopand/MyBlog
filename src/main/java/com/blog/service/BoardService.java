@@ -40,16 +40,7 @@ public class BoardService {
      * @param pagingBoards = 페이징처리된 DB의 데이터로 View에 출력시켜줄 데이터를 만들기 위해서, 받아오는 인자값,
      * @return View에 필요한 페이징 관련 데이터를 가공시켜 ,Map에 담아서 리턴시켜준다.
      */
-    public static Map<String, Object> setPagingData(Page<Board> pagingBoards) {
-        Map<String, Object> pagingContent = new HashMap<>();
-        int nowPage = pagingBoards.getPageable().getPageNumber() + 1; // 현재 페이지에 대한 값으로 pageable의 시작페이지가 0이기 때문에 +1 시켜 1부터 시작하게 만든다.
-        int startPage = Math.max(nowPage - 4, 1); // View에 출력될 최소페이지설정, 최소 값은 1이고 Now(현재 페이지)값 - 4한값이 더 크다면 시작 페이지 값이 변경된다.
-        int endPage = Math.min(nowPage + 5, pagingBoards.getTotalPages());  // View에 보이게 될 최대 페이지 사이즈,
-        pagingContent.put("startPage", startPage);
-        pagingContent.put("nowPage", nowPage);
-        pagingContent.put("endPage", endPage);
-        return pagingContent;
-    }
+
 
 
     /**
@@ -59,14 +50,6 @@ public class BoardService {
      * @return // 위의 페이징 관련 데이터 처리를 마친 Map 과 BoardResponse객체를 합쳐
      * Map으로 데이터를 리턴시켜준다. ( 여러 자료형의 데이터가 있기때문에 한번에 반환하기 위해 Map으로 선언)
      */
-    @Transactional(readOnly = true)
-    public Map<String, Object> findAllBoards(Pageable page) {
-        Page<Board> pagingBoardList = boardRepository.findAll(page);
-        List<BoardResponse> pagingBoardResponse = pagingBoardList.stream().map(BoardResponse::new).toList();
-        Map<String, Object> pagingContent = setPagingData(pagingBoardList);
-        pagingContent.put("pagingBoardResponse", pagingBoardResponse);
-        return pagingContent;
-    }
 
     /**
      * findBoardByCateogry = 카테고리를 선택해서 게시판 접근시 카테고리별 데이터를 찾아주는 로직,
@@ -76,14 +59,6 @@ public class BoardService {
      * @return = 해당 클라이언트가 선택한 카테고리와 페이징 정보로 찾아온 DB데이터를 setPagingData로 가공시킨 값과 게시글정보를 Map에 담아서 리턴
      */
 
-    @Transactional(readOnly = true)
-    public Map<String, Object> findBoardByCateogry(Pageable page, String boardCateogry) {
-        Page<Board> pagingBoardList = boardRepository.findByBoardCategory(boardCateogry, page);
-        List<BoardResponse> pagingBoardResponse = pagingBoardList.stream().map(BoardResponse::new).toList();
-        Map<String, Object> pagingContent = setPagingData(pagingBoardList);
-        pagingContent.put("pagingBoardResponse", pagingBoardResponse);
-        return pagingContent;
-    }
 
     /**
      * createBoard = 클라이언트의 게시글 입력 데이터를 받아와 DB에 게시글 생성을 해주는 로직,
@@ -170,21 +145,50 @@ public class BoardService {
         }
     }
 
-    /**
-     *
-     * @param boardRequest  // 사용자가 찾기위해 검색한 검색어와 해당 카테고리 정보가 들어있다..
-     * @param pageable  // 페이징 처리와 관련된 데이터들의 집합.
-     * @return  // 페이징 관련 View의 필요한 데이터들과, 게시글의 정보가 합쳐져있는 Map을 리턴한다.
-     */
-    public Map<String, Object> findSearchBoard(BoardRequest boardRequest,Pageable pageable) {
-        Page<Board> getSearchBoardList;
-        if(boardRequest.getBoardCategory()!=null){
-            getSearchBoardList = boardRepository.findSearchBoard(boardRequest,pageable);
-        }else{
-            getSearchBoardList = boardRepository.findSearchBoardNoBoardCateogry(boardRequest,pageable);
+    @Transactional(readOnly = true)
+    public Map<String, Object> findAllBoards(Pageable page) {
+        Page<Board> pagingBoardList = boardRepository.findAll(page);
+
+        return setPagingData(pagingBoardList);
+    }
+
+
+    @Transactional(readOnly = true)
+    public Map<String, Object> findAllBoardByCateogrySearch(Pageable page, BoardRequest boardRequest) {
+        Page<Board> pagingBoardList;
+        if (boardRequest.getSearchText() == null) {
+            pagingBoardList = boardRepository.findByBoardCategory(boardRequest.getBoardCategory(), page);
+        } else {
+            pagingBoardList = boardRepository.findSearchBoard(boardRequest, page);
         }
-        List<BoardResponse> pagingBoardResponse = getSearchBoardList.stream().map(BoardResponse::new).toList();
-        Map<String, Object> pagingContent = setPagingData(getSearchBoardList);
+        Map<String, Object> pagingContent = setPagingData(pagingBoardList);
+        pagingContent.put("nowSearchText", boardRequest.getSearchText());
+        return pagingContent;
+    }
+
+
+    @Transactional(readOnly = true)
+    public Map<String, Object> findAllBoardByNoCategorySearch(Pageable page, BoardRequest boardRequest) {
+        Page<Board> pagingBoardList ;
+        if (boardRequest.getSearchText() != null) {
+            pagingBoardList = boardRepository.findSearchBoardNoBoardCateogry(boardRequest,page);
+        } else {
+            pagingBoardList = boardRepository.findAll(page);
+        }
+        Map<String, Object> pagingContent = setPagingData(pagingBoardList);
+        pagingContent.put("nowSearchText", boardRequest.getSearchText());
+        return pagingContent;
+    }
+
+    public static Map<String, Object> setPagingData(Page<Board> pagingBoardList) {
+        Map<String, Object> pagingContent = new HashMap<>();
+        List<BoardResponse> pagingBoardResponse = pagingBoardList.stream().filter(entity -> pagingBoardList != null).map(BoardResponse::new).toList();
+        int nowPage = pagingBoardList.getPageable().getPageNumber() + 1; // 현재 페이지에 대한 값으로 pageable의 시작페이지가 0이기 때문에 +1 시켜 1부터 시작하게 만든다.
+        int startPage = Math.max(nowPage - 4, 1); // View에 출력될 최소페이지설정, 최소 값은 1이고 Now(현재 페이지)값 - 4한값이 더 크다면 시작 페이지 값이 변경된다.
+        int endPage = Math.min(nowPage + 5, pagingBoardList.getTotalPages());  // View에 보이게 될 최대 페이지 사이즈,
+        pagingContent.put("startPage", startPage);
+        pagingContent.put("nowPage", nowPage);
+        pagingContent.put("endPage", endPage);
         pagingContent.put("pagingBoardResponse", pagingBoardResponse);
         return pagingContent;
     }

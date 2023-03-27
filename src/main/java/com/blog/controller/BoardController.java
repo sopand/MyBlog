@@ -24,7 +24,7 @@ public class BoardController {
 
     private final BoardService boardService;
 
-    @GetMapping("")
+    @GetMapping
     public String findBoardAll(Model model, @PageableDefault(page = 0, size = 10, sort = "boardId", direction = Sort.Direction.DESC) Pageable pageable) {
         Map<String, Object> boardMap = boardService.findAllBoards(pageable);
         model.addAttribute("boardMap", boardMap);
@@ -33,8 +33,9 @@ public class BoardController {
 
     @GetMapping("/{boardCategory}")
     public String findBoardByCateogry(Model model, @PageableDefault(page = 0, size = 10, sort = "boardId", direction = Sort.Direction.DESC) Pageable pageable, @PathVariable String boardCategory) {
-
-        Map<String, Object> boardMap = boardService.findBoardByCateogry(pageable, boardCategory);
+        BoardRequest boardRequest= new BoardRequest();
+        boardRequest.setBoardCategory(boardCategory);
+        Map<String, Object> boardMap = boardService.findAllBoardByCateogrySearch(pageable,boardRequest);
         model.addAttribute("boardMap", boardMap);
         model.addAttribute("boardCategory", boardCategory);
         return "board";
@@ -88,10 +89,10 @@ public class BoardController {
     public String findSearchBoard(Model model, BoardRequest boardRequest) {
         PageRequest pageRequest = PageRequest.of(0, 10, Sort.by(Sort.Direction.fromString(boardRequest.getBoardDirection()), boardRequest.getBoardSort()));
         Map<String, Object> boardMap;
-        if (boardRequest.getBoardCategory() != null) {
-            boardMap = boardService.findBoardByCateogry(pageRequest, boardRequest.getBoardCategory());
-        } else {
-            boardMap = boardService.findAllBoards(pageRequest);
+        if (boardRequest.getBoardCategory() != null) { // 카테고리가 선택되어 있는 경우,
+            boardMap = boardService.findAllBoardByCateogrySearch(pageRequest, boardRequest);
+        } else {  // 카테고리 선택이 없는 경우
+            boardMap = boardService.findAllBoardByNoCategorySearch(pageRequest,boardRequest);
         }
         model.addAttribute("boardMap", boardMap);
         model.addAttribute("boardCategory", boardRequest.getBoardCategory());
