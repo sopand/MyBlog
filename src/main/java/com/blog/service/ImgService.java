@@ -18,6 +18,13 @@ public class ImgService {
     private final ImgRepository imgRepository;
     @Value("${file.Upimg}")
     private String path;
+
+    /**
+     * 이미지를 등록해주는 로직,
+     * @param file = 사용자가 입력한 이미지의 데이터가 들어있는 객체,
+     * @return 
+     * @throws IOException
+     */
     public ModelAndView createBoardImg(MultipartFile file) throws IOException {
         ModelAndView mv=new ModelAndView("jsonView");
         String imgOriginalName = file.getOriginalFilename(); // 입력한 원본 파일의 이름

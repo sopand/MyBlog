@@ -34,31 +34,6 @@ public class BoardService {
     private final BoardRepository boardRepository;
     private final ImgRepository imgRepository;
 
-    /**
-     * setPagingData  = 중복적으로 사용되는 페이징처리 관련 로직을 분할시켜 하나로 돌려 쓰기위해 제작.
-     *
-     * @param pagingBoards = 페이징처리된 DB의 데이터로 View에 출력시켜줄 데이터를 만들기 위해서, 받아오는 인자값,
-     * @return View에 필요한 페이징 관련 데이터를 가공시켜 ,Map에 담아서 리턴시켜준다.
-     */
-
-
-
-    /**
-     * findAllBoars = 전체 게시글을 보여주기 위한 로직,
-     *
-     * @param page = Paging관련 데이터가 들어있는 객체,
-     * @return // 위의 페이징 관련 데이터 처리를 마친 Map 과 BoardResponse객체를 합쳐
-     * Map으로 데이터를 리턴시켜준다. ( 여러 자료형의 데이터가 있기때문에 한번에 반환하기 위해 Map으로 선언)
-     */
-
-    /**
-     * findBoardByCateogry = 카테고리를 선택해서 게시판 접근시 카테고리별 데이터를 찾아주는 로직,
-     *
-     * @param page          = 페이징 처리와 관련된 데이터를 가지고 있는 객체,
-     * @param boardCateogry = 클라이언트가 선택한 Category의 정보를 가져온다.
-     * @return = 해당 클라이언트가 선택한 카테고리와 페이징 정보로 찾아온 DB데이터를 setPagingData로 가공시킨 값과 게시글정보를 Map에 담아서 리턴
-     */
-
 
     /**
      * createBoard = 클라이언트의 게시글 입력 데이터를 받아와 DB에 게시글 생성을 해주는 로직,
@@ -145,6 +120,15 @@ public class BoardService {
         }
     }
 
+    /**
+     * findAllBoars = 전체 게시글을 보여주기 위한 로직,
+     *
+     * @param page = Paging관련 데이터가 들어있는 객체,
+     * @return // 위의 페이징 관련 데이터 처리를 마친 Map 과 BoardResponse객체를 합쳐
+     * Map으로 데이터를 리턴시켜준다. ( 여러 자료형의 데이터가 있기때문에 한번에 반환하기 위해 Map으로 선언)
+     */
+
+
     @Transactional(readOnly = true)
     public Map<String, Object> findAllBoards(Pageable page) {
         Page<Board> pagingBoardList = boardRepository.findAll(page);
@@ -152,7 +136,12 @@ public class BoardService {
         return setPagingData(pagingBoardList);
     }
 
-
+    /**
+     *
+     * @param page = 페이징 처리에 관련된 데이터들이 있는 객체
+     * @param boardRequest = 사용자가 검색하기 위해 입력한 검색어와, Category정보가 들어있다.
+     * @return
+     */
     @Transactional(readOnly = true)
     public Map<String, Object> findAllBoardByCateogrySearch(Pageable page, BoardRequest boardRequest) {
         Page<Board> pagingBoardList;
@@ -167,17 +156,18 @@ public class BoardService {
     }
 
     /**
-     *  카테고리가 없는 ( 전체보기에서 검색 or 정렬 선택 ) 정렬 or 검색시 작동하는 로직,
-     * @param page = 페이징할 기준이 되는 데이터들이 들어있는 객체,
-     * @param boardRequest = 사용자가 입력한 search 데이터나 , 선택한 정렬의 기준이 들어있는 곳,
+     * 카테고리가 없는 ( 전체보기에서 검색 or 정렬 선택 ) 정렬 or 검색시 작동하는 로직,
+     *
+     * @param page         = 페이징할 기준이 되는 데이터들이 들어있는 객체,
+     * @param boardRequest = 사용자가 입력한 검색어의 정보가 들어있다. ( 이 로직은 Category가 없을때만 작동하기에 Category정보는 없다. )
      * @return
      */
 
     @Transactional(readOnly = true)
     public Map<String, Object> findAllBoardByNoCategorySearch(Pageable page, BoardRequest boardRequest) {
-        Page<Board> pagingBoardList ;
+        Page<Board> pagingBoardList;
         if (boardRequest.getSearchText() != null) {
-            pagingBoardList = boardRepository.findSearchBoardNoBoardCateogry(boardRequest,page);
+            pagingBoardList = boardRepository.findSearchBoardNoBoardCateogry(boardRequest, page);
         } else {
             pagingBoardList = boardRepository.findAll(page);
         }

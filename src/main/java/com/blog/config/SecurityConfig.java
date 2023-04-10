@@ -42,6 +42,14 @@ public class SecurityConfig {
                 .defaultSuccessUrl("/index", true)
                 .userInfoEndpoint()
                 .userService(customOAuth2UserService);
+
+        http.logout()
+                .logoutUrl("/users/logout") // 로그아웃 처리 URL, default: /logout, 원칙적으로 post 방식만 지원
+                .logoutSuccessUrl("/index") // 로그아웃 성공 후 이동페이지
+                .invalidateHttpSession(true)
+                .clearAuthentication(true)
+                .deleteCookies("JSESSIONID", "remember-me")
+                .permitAll();
         return http.build();
     }
 

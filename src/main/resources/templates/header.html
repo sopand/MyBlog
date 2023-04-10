@@ -7,25 +7,33 @@
 </head>
 <body>
 <header class="index_hed_con" th:fragment="header">
-  <div class="index_hed_text">
-    <a href="/index" class="logo_href">붓싼의 <span class="text_1">T</span>ech <span class="text_2">B</span>log</a>
-    <div class="hed_login_box">
-      <a href="/users" class="login_href">Login</a>
-      <span sec:authorize="isAuthenticated()" th:text="|${#authentication.name}님 입장|" class="login_id"></span>
+    <div class="index_hed_text">
+        <a href="/index" class="logo_href">붓싼의
+            <span class="text_1">T</span>
+            ech
+            <span class="text_2">B</span>
+            log
+        </a>
+        <div class="hed_login_box">
+            <a sec:authorize="!isAuthenticated()" href="/users" class="login_href">Login</a>
+            <span sec:authorize="isAuthenticated()" th:text="|${#authentication.name}님 입장|" class="login_id"></span>
+            <form action="/users/logout" th:method="POST" class="logoutForm" sec:authorize="isAuthenticated()">
+                <button>로그아웃</button>
+            </form>
+        </div>
     </div>
-  </div>
-  <div class="index_hed_box">
-    <span><a href="/boards/Comunity">자유게시판</a></span>
-    <span><a href="/boards">ALL Board</a></span>
-    <span><a href="/boards/Spring">Spring</a></span>
-    <span><a href="/boards/Java">Java</a></span>
-    <span><a href="/boards/Portfolio">Portfolio</a></span>
-    <span><a href="/boards/Project">Project</a></span>
-    <span><a href="/boards/Junit">Junit</a></span>
-    <span><a href="/boards/CS">CS</a></span>
-    <span><a href="/boards/JPA">JPA</a></span>
-    <span><a href="/boards/MyBatis">MyBatis</a></span>
-  </div>
+    <div class="index_hed_box">
+        <span><a href="/boards/Comunity">자유게시판</a></span>
+        <span><a href="/boards">ALL Board</a></span>
+        <span><a href="/boards/Spring">Spring</a></span>
+        <span><a href="/boards/Java">Java</a></span>
+        <span><a href="/boards/Portfolio">Portfolio</a></span>
+        <span><a href="/boards/Project">Project</a></span>
+        <span><a href="/boards/Junit">Junit</a></span>
+        <span><a href="/boards/CS">CS</a></span>
+        <span><a href="/boards/JPA">JPA</a></span>
+        <span><a href="/boards/MyBatis">MyBatis</a></span>
+    </div>
 
 
 </header>

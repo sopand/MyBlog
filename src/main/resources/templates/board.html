@@ -63,7 +63,7 @@
         <div class="btnbox">
             <div></div>
             <th:block th:each="page : ${#numbers.sequence(boardMap['startPage'], boardMap['endPage'])}" th:if="${boardMap['pagingBoardResponse'].size()}!=0">
-                <a th:if="${page != boardMap['nowPage']}" th:href="@{/boards(page = ${page - 1})}" th:text="${page}"></a>
+                <a th:if="${page != boardMap['nowPage']} and ${page}!=0" th:href="@{/boards(page = ${page - 1})}" th:text="${page}"></a>
                 <strong th:if="${page == boardMap['nowPage']}" th:text="${page}" style="color : red;font-weight:bold;font-size: 18px"></strong>
             </th:block>
         </div>

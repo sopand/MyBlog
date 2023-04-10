@@ -46,12 +46,13 @@
             <form class="detail_btnbox" th:if="${#authentication.name}==${board.boardWriter}" action="/boards" th:method="DELETE">
                 <a th:href="|/boards/repost/${board.boardId}|"  class="modifyform">게시글 수정</a>
                 <input type="hidden" th:value="${board.boardId}" name="boardId">
+
                 <button th:href="|/boards/repost/${board.boardId}|"  class="deletebtn">게시글 삭제</button>
             </form>
 
         </div>
         <form class="review_form">
-
+            <input type="hidden" th:value="${board.boardId}" name="boardId">
             <input type="hidden" th:value="${#authentication.name}" name="boardName">
             <input type="hidden" th:value="${#authentication.name}" name="reviewName" sec:authorize="isAuthenticated()">
 
