@@ -20,7 +20,7 @@
 
     <header th:replace="header :: header"></header>
     <main class="boardadd_main_con">
-        <span class="main_tag"> 태그 이름</span>
+        <span class="main_tag" th:text="#{board.addbtn}"> 태그 이름</span>
 
         <form class="boardadd_main_box" action="/boards/newpost" method="post">
             <input type="hidden" name="boardThumbnail">

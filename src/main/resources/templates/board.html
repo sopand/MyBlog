@@ -58,8 +58,8 @@
 
             </div>
         </div>
-        <a sec:authorize="hasRole('ROLE_ADMIN')" href="/boards/newpost" class="boardadd_btn" th:text="#{board.addbtn}"></a>
-        <a sec:authorize="hasRole('ROLE_USER')" href="/boards/newpost" class="comunityadd_btn" th:text="#{comunity.addbtn}" th:if="${boardCategory=='Comunity'}"></a>
+        <a sec:authorize="hasRole('ROLE_ADMIN')" href="/boards/newpost" class="boardadd_btn" th:text="#{board.addbtn}">게시글 생성</a>
+        <a sec:authorize="hasRole('ROLE_USER')" href="/boards/newpost" class="comunityadd_btn" th:text="#{comunity.addbtn}" th:if="${boardCategory=='Comunity'}">커뮤니티 글올리기</a>
         <div class="btnbox">
             <div></div>
             <th:block th:each="page : ${#numbers.sequence(boardMap['startPage'], boardMap['endPage'])}" th:if="${boardMap['pagingBoardResponse'].size()}!=0">

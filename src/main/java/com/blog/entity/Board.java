@@ -1,6 +1,7 @@
 package com.blog.entity;
 
 
+import com.blog.dto.BoardRequest;
 import com.blog.dto.BoardResponse;
 import jakarta.persistence.*;
 import jdk.jfr.Timestamp;
@@ -60,16 +61,14 @@ public class Board {
         this.boardContent=boardContent;
     }
 
-    public void modifyBoard(String boardName,String boardContent,String boardCategory){
-        this.boardName=boardName;
-        this.boardContent=boardContent;
-        this.boardCategory=boardCategory;
-    }
-    public void modifyBoardAndImg(String boardName,String boardContent,String boardCategory,String boardThumbnail){
-        this.boardName=boardName;
-        this.boardContent=boardContent;
-        this.boardCategory=boardCategory;
-        this.boardThumbnail=boardThumbnail;
+
+    public void modifyBoardAndImg(BoardRequest boardRequest){
+        this.boardName=boardRequest.getBoardName();
+        this.boardContent=boardRequest.getBoardContent();
+        this.boardCategory=boardRequest.getBoardCategory();
+        if(!boardRequest.getBoardThumbnail().equals("")){
+            this.boardThumbnail=boardRequest.getBoardThumbnail();
+        }
     }
     public void modifyBoardHit(int boardHit){
         this.boardHit=boardHit+1;

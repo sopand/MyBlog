@@ -3,7 +3,7 @@ $(function () {
     let loginId = $("input[name=boardName]").val();
     let boardId = $("input[name=boardId]").val();
     ajaxCall("/boards/review", "GET", {boardId: boardId}, function (data) {
-        const list = data.review;
+        const list = data.pagingList;
         const nowPage = data.nowPage;
         const endPage = data.endPage;
         let html = findReview(list, nowPage, endPage);
@@ -21,9 +21,9 @@ $(function () {
         let boardId = $("input[name=boardId]").val();
         let reviewContent = $(".review_area").val();
         ajaxCall("/boards/review", "POST", {
-            boardId: boardId, reviewName: reviewName, reviewContent: reviewContent
-        }, function (data) {
-            alert(data);
+           boardId,reviewName,reviewContent
+        }, function () {
+            alert("리뷰생성 완료");
             location.reload();
         }, function () {
             alert("리뷰 생성 실패");
@@ -77,7 +77,6 @@ $(function () {
                 let html = "";
                 $(list).each(function (index, item) {
                     if (item.reviewDeep < 2) {
-                        console.log(item.reviewDeep);
                         html += `
                         <div class="review_content2 ${reviewParent}re" id="${item.reviewId}">
                             <div class="review_top2">

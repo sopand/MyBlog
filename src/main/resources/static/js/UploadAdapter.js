@@ -103,9 +103,12 @@ function MyCustomUploadAdapterPlugin(editor) {
         return new MyUploadAdapter(loader);
     }
 }
-
+ClassicEditor.editorConfig=function (config){
+    config.endterMode=ClassicEditor.ENTER_BR
+};
 ClassicEditor
     .create(document.querySelector('#editor'), {
+        language: "ko",
         extraPlugins: [MyCustomUploadAdapterPlugin],   // 커스텀 플러그인 클래스 추가
         // 미디어 기능
         mediaEmbed: {

@@ -7,9 +7,9 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @Builder
-public class ReviewList {
+public class PagingList {
 
-    private List<ReviewResponse> review;
+    private List<?> pagingList;
     private int nowPage;
     private int endPage;
     private int startPage;

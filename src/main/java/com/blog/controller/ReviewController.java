@@ -1,6 +1,6 @@
 package com.blog.controller;
 
-import com.blog.dto.ReviewList;
+import com.blog.dto.PagingList;
 import com.blog.dto.ReviewRequest;
 import com.blog.dto.ReviewResponse;
 import com.blog.exception.ErrorCode;
@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,15 +21,16 @@ public class ReviewController {
 
     @PostMapping("/boards/review")
     public String createReview(ReviewRequest reviewRequest){
-        if(reviewRequest.getReviewName()!=null){
-            reviewService.createReview(reviewRequest);
-            return "리뷰 등록 완료";
-        }else{
+        if(reviewRequest.getReviewName()==null){
             throw new CustomException(ErrorCode.NOT_FOUND_REVIEW_NAME);
         }
+            reviewService.createReview(reviewRequest);
+            return "리뷰 등록 완료";
+
     }
     @GetMapping("/boards/review")
-    public ReviewList findReview(Long boardId, @PageableDefault(page = 0, size = 7, sort = "reviewId", direction = Sort.Direction.ASC) Pageable pageable){
+    public PagingList findReview(Long boardId, @PageableDefault(page = 0, size = 7, sort = "reviewId", direction = Sort.Direction.ASC) Pageable pageable){
+
         return reviewService.findReviewList(boardId,pageable);
     }
     @DeleteMapping("/boards/review")

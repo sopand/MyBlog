@@ -1,9 +1,8 @@
 package com.blog.service;
 
-import com.blog.dto.ReviewList;
+import com.blog.dto.PagingList;
 import com.blog.dto.ReviewRequest;
 import com.blog.dto.ReviewResponse;
-import com.blog.entity.Board;
 import com.blog.entity.Review;
 import com.blog.entity.ReviewRepository;
 import lombok.RequiredArgsConstructor;
@@ -44,13 +43,13 @@ public class ReviewService {
      * @return = 찾아온 데이터 데이터들을 저장하기 위한 객체, ReviewResponse객체와 뷰에 출력해줄 페이지의 갯수,현재 페이지정보 등을 가지고 있는 데이터를 함께 모아서 return 해준다.
      */
     @Transactional(readOnly = true)
-    public ReviewList findReviewList(Long boardId, Pageable pageable) {
+    public PagingList findReviewList(Long boardId, Pageable pageable) {
         Page<Review> getPagingReviewList = reviewRepository.findReviewList(boardId, pageable);
         int nowPage = getPagingReviewList.getPageable().getPageNumber() + 1;
         int startPage = Math.max(nowPage - 4, 1);
         int endPage = Math.min(nowPage + 5, getPagingReviewList.getTotalPages());
         List<ReviewResponse> review = getPagingReviewList.getContent().stream().map(ReviewResponse::new).toList();
-        ReviewList reviewList = ReviewList.builder().review(review).nowPage(nowPage).startPage(startPage).endPage(endPage).build();
+        PagingList reviewList = PagingList.builder().pagingList(review).nowPage(nowPage).startPage(startPage).endPage(endPage).build();
         return reviewList;
     }
 
