@@ -3,6 +3,7 @@ $(function () {
     let loginId = $("input[name=boardName]").val();
     let boardId = $("input[name=boardId]").val();
     ajaxCall("/boards/review/list", "GET", {boardId: boardId}, function (data) {
+
         const list = data.pagingList;
         const nowPage = data.nowPage;
         const endPage = data.endPage;
@@ -18,6 +19,7 @@ $(function () {
             alert("로그인을 하셔야 작성할수 있어용!!");
             return false;
         }
+
         let boardId = $("input[name=boardId]").val();
         let reviewContent = $(".review_area").val();
         ajaxCall("/boards/review", "POST", {

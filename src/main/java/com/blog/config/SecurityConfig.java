@@ -33,11 +33,11 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain StudentFilterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable();
-        http.authorizeHttpRequests()
+        http.csrf().disable()
+                .authorizeHttpRequests()
                 .requestMatchers("/boards","/boards/menu/**","/boards/detail/**","/index","/users","/boards/review/list","/boards/review/parent")
                 .permitAll()
-                .requestMatchers("/boards/review").hasRole("USER")
+                .requestMatchers("/boards/review","users/**").hasAnyRole("USER","ADMIN")
                 .requestMatchers("/**").hasRole("ADMIN").anyRequest().authenticated();
         http.formLogin().disable()
                 .oauth2Login().loginPage("/users")
