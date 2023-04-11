@@ -2,7 +2,7 @@ $(function () {
     let reviewName = $("input[name=reviewName]").val();
     let loginId = $("input[name=boardName]").val();
     let boardId = $("input[name=boardId]").val();
-    ajaxCall("/boards/review", "GET", {boardId: boardId}, function (data) {
+    ajaxCall("/boards/review/list", "GET", {boardId: boardId}, function (data) {
         const list = data.pagingList;
         const nowPage = data.nowPage;
         const endPage = data.endPage;
@@ -142,7 +142,7 @@ $(function () {
     });
     $(document).on('click', '.nextPage', function () {
         let page = $(this).text() - 1;
-        ajaxCall("/boards/review", "GET", {boardId: boardId, page: page},
+        ajaxCall("/boards/review/list", "GET", {boardId: boardId, page: page},
             function (data) {
                 const list = data.review;
                 const nowPage = data.nowPage;

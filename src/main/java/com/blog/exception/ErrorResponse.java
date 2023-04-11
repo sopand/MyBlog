@@ -4,7 +4,10 @@ import lombok.Getter;
 
 import java.time.LocalDateTime;
 
-@Getter // 실제 사용자에게 JSON 형식으로 보여주기 위한 에러 응답형식을 지정.
+/**
+ * 실제 사용자에게 JSON 형식으로 보여주기 위한 에러 응답형식을 지정.
+ */
+@Getter
 public class ErrorResponse {
     private final LocalDateTime timestamp=LocalDateTime.now();
     private final int statusCode;

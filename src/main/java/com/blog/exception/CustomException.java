@@ -7,6 +7,9 @@ import lombok.RequiredArgsConstructor;
 // RuntimeException을 상속받아 언체크 예외로 활용한다.
 @Getter
 @RequiredArgsConstructor
+/**
+ *  런타임에러가 발생하면 이곳으로 반환
+ */
 public class CustomException extends RuntimeException{
     private final ErrorCode errorCode;
 }

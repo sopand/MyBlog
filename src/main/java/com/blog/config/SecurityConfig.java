@@ -18,8 +18,8 @@ public class SecurityConfig {
 
     private final CustomOAuth2UserService customOAuth2UserService;
     public static final String[] SECURITY_EXCLUDE_PATTERN_ARR = {
-            "/css/**", "/font/**", "/cmsimg/**", "/favicon.ico",
-            "/error", "/css/js/**"};
+            "/css/**", "/font/**", "/myblog/**", "/favicon.ico",
+            "/error", "/js/**","/img/**"};
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -35,14 +35,15 @@ public class SecurityConfig {
     public SecurityFilterChain StudentFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable();
         http.authorizeHttpRequests()
-                .requestMatchers("/**")
-                .permitAll();
+                .requestMatchers("/boards","/boards/menu/**","/boards/detail/**","/index","/users","/boards/review/list","/boards/review/parent")
+                .permitAll()
+                .requestMatchers("/boards/review").hasRole("USER")
+                .requestMatchers("/**").hasRole("ADMIN").anyRequest().authenticated();
         http.formLogin().disable()
                 .oauth2Login().loginPage("/users")
                 .defaultSuccessUrl("/index", true)
                 .userInfoEndpoint()
                 .userService(customOAuth2UserService);
-
         http.logout()
                 .logoutUrl("/users/logout") // 로그아웃 처리 URL, default: /logout, 원칙적으로 post 방식만 지원
                 .logoutSuccessUrl("/index") // 로그아웃 성공 후 이동페이지

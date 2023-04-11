@@ -40,6 +40,11 @@ public class AspectJPA {
             log.info("Controller 실행 메서드: {},실행 소요시간 {}ms",joinPoint.toString(),timeMs);
         }
     }
+
+    /**
+     *
+     * @param joinPoint
+     */
     @Before("pointCut()")
     public void before(JoinPoint joinPoint){
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
@@ -52,6 +57,11 @@ public class AspectJPA {
     }
 
 
+    /**
+     * 메서드가 실행된 후에 작동될 AOP
+     * @param joinPoint
+     * @param returnValue
+     */
     @AfterReturning(value = "serviceCut()",returning = "returnValue")
     public void afterReturning(JoinPoint joinPoint,Object returnValue){
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();

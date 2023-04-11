@@ -15,10 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * 게시글 관련된 비즈니스 로직을 담당하는 클래스,
@@ -127,7 +124,7 @@ public class BoardService {
      *
      * @param page = Paging관련 데이터가 들어있는 객체,
      * @return // 위의 페이징 관련 데이터 처리를 마친 Map 과 BoardResponse객체를 합쳐
-     * Map으로 데이터를 리턴시켜준다. ( 여러 자료형의 데이터가 있기때문에 한번에 반환하기 위해 Map으로 선언)
+     * Map을 리턴값으로 하려다가 PagingList라는 하나의페이징 전용 객체를 만들어 페이징처리 데이터를 리턴.
      */
 
 
@@ -141,7 +138,7 @@ public class BoardService {
     /**
      * @param page         = 페이징 처리에 관련된 데이터들이 있는 객체
      * @param boardRequest = 사용자가 검색하기 위해 입력한 검색어와, Category정보가 들어있다.
-     * @return
+     * @return = 페이징 처리가된 데이터들을 저장해놓은 객체를 리턴해준다.
      */
     @Transactional(readOnly = true)
     public PagingList findAllBoardByCateogrySearch(Pageable page, BoardRequest boardRequest) {
@@ -183,7 +180,7 @@ public class BoardService {
      *
      * @param pagingEntity   = 페이징에 관련된 정보와 페이징 처리된 SELECT 데이터를 가지고 있는 객체,
      * @param pagingResponse = 실제 페이징된 데이터들을 가지고 있는 객체
-     * @return // 여러 자료형의 데이터가 한곳에 담겨서 return되어야 하기 때문에 Map으로 리턴,
+     * @return = 페이징처리를 위해 생성한 PagingList객체에 데이터를 담아서 한번에 리턴해준다.
      */
     public static PagingList setPagingData(Page<?> pagingEntity, List<?> pagingResponse) {
         int nowPage = pagingEntity.getPageable().getPageNumber() + 1; // 현재 페이지에 대한 값으로 pageable의 시작페이지가 0이기 때문에 +1 시켜 1부터 시작하게 만든다.
@@ -192,6 +189,11 @@ public class BoardService {
         return PagingList.builder().pagingList(pagingResponse).nowPage(nowPage).startPage(startPage).endPage(endPage).build();
     }
 
+    /**
+     * 페이징 처리된 Page객체에서 응답을 위한 객체 Response로 변환시켜 추출하는 작업을 하는 메서드
+     * @param pagingBoardList = 페이징된 데이터를 가진 객체
+     * @return = Page<Board>에서 Board를 추출 -> Response객체로 변환 하여 리턴
+     */
     public List<BoardResponse> setPagingBoardResponse(Page<Board> pagingBoardList){
         return pagingBoardList.stream().filter(entity -> pagingBoardList != null).map(BoardResponse::new).toList();
     }
