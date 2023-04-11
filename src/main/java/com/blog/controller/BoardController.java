@@ -3,6 +3,7 @@ package com.blog.controller;
 
 import com.blog.dto.BoardRequest;
 import com.blog.dto.BoardResponse;
+import com.blog.dto.PagingList;
 import com.blog.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -26,17 +27,18 @@ public class BoardController {
 
     @GetMapping
     public String findBoardAll(Model model, @PageableDefault(page = 0, size = 10, sort = "boardId", direction = Sort.Direction.DESC) Pageable pageable) {
-        Map<String, Object> boardMap = boardService.findAllBoards(pageable);
-        model.addAttribute("boardMap", boardMap);
+        PagingList getPagingResponse= boardService.findAllBoards(pageable);
+        System.out.println("리스트 값"+getPagingResponse.getPagingList());
+        model.addAttribute("getPagingResponse", getPagingResponse);
         return "board";
     }
 
     @GetMapping("/{boardCategory}")
     public String findBoardByCateogry(Model model, @PageableDefault(page = 0, size = 10, sort = "boardId", direction = Sort.Direction.DESC) Pageable pageable, @PathVariable String boardCategory) {
-        BoardRequest boardRequest= new BoardRequest();
-        boardRequest.setBoardCategory(boardCategory);
-        Map<String, Object> boardMap = boardService.findAllBoardByCateogrySearch(pageable,boardRequest);
-        model.addAttribute("boardMap", boardMap);
+        BoardRequest boardRequest=BoardRequest.builder().requestBoardCategory(boardCategory).build();
+        PagingList getPagingResponse = boardService.findAllBoardByCateogrySearch(pageable,boardRequest);
+
+        model.addAttribute("getPagingResponse", getPagingResponse);
         model.addAttribute("boardCategory", boardCategory);
         return "board";
     }
@@ -88,13 +90,13 @@ public class BoardController {
     @GetMapping("/search")
     public String findSearchBoard(Model model, BoardRequest boardRequest) {
         PageRequest pageRequest = PageRequest.of(0, 10, Sort.by(Sort.Direction.fromString(boardRequest.getBoardDirection()), boardRequest.getBoardSort()));
-        Map<String, Object> boardMap;
+        PagingList getPagingResponse;
         if (boardRequest.getBoardCategory() != null) { // 카테고리가 선택되어 있는 경우,
-            boardMap = boardService.findAllBoardByCateogrySearch(pageRequest, boardRequest);
+            getPagingResponse = boardService.findAllBoardByCateogrySearch(pageRequest, boardRequest);
         } else {  // 카테고리 선택이 없는 경우
-            boardMap = boardService.findAllBoardByNoCategorySearch(pageRequest,boardRequest);
+            getPagingResponse = boardService.findAllBoardByNoCategorySearch(pageRequest,boardRequest);
         }
-        model.addAttribute("boardMap", boardMap);
+        model.addAttribute("getPagingResponse", getPagingResponse);
         model.addAttribute("boardCategory", boardRequest.getBoardCategory());
         return "board";
     }

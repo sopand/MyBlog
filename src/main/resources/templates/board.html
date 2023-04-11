@@ -21,8 +21,8 @@
 
         <form action="/boards/search" method="GET" class="filter_form">
             <input type="hidden" th:if="${boardCategory!=null}" th:value="${boardCategory}" name="boardCategory">
-            <input type="search" name="searchText" class="searchTag" th:value="${boardMap['nowSearchText']}" th:if="${boardMap['nowSearchText']}!=null">
-            <input type="search" placeholder="검색어 입력" name="searchText" class="searchTag" th:if="${boardMap['nowSearchText']}==null">
+            <input type="search" name="searchText" class="searchTag" th:value="${getPagingResponse['nowSearchText']}" th:if="${getPagingResponse['nowSearchText']}!=null">
+            <input type="search" placeholder="검색어 입력" name="searchText" class="searchTag" th:if="${getPagingResponse['nowSearchText']}==null">
             <button type="submit">검색</button>
             <select name="boardSort">
                 <option value="boardDate">작성날자 순</option>
@@ -38,7 +38,7 @@
 
         </form>
         <div class="board_main_box">
-            <div class="board_content" th:each="board :${boardMap['pagingBoardResponse']}">
+            <div class="board_content" th:each="board :${getPagingResponse['pagingList']}">
 
                 <div class="board_con_left">
                     <a th:href="|/boards/detail/${board.boardId}|" class="textname_href">
@@ -62,9 +62,9 @@
         <a sec:authorize="hasRole('ROLE_USER')" href="/boards/newpost" class="comunityadd_btn" th:text="#{comunity.addbtn}" th:if="${boardCategory=='Comunity'}">커뮤니티 글올리기</a>
         <div class="btnbox">
             <div></div>
-            <th:block th:each="page : ${#numbers.sequence(boardMap['startPage'], boardMap['endPage'])}" th:if="${boardMap['pagingBoardResponse'].size()}!=0">
-                <a th:if="${page != boardMap['nowPage']} and ${page}!=0" th:href="@{/boards(page = ${page - 1})}" th:text="${page}"></a>
-                <strong th:if="${page == boardMap['nowPage']}" th:text="${page}" style="color : red;font-weight:bold;font-size: 18px"></strong>
+            <th:block th:each="page : ${#numbers.sequence(getPagingResponse['startPage'], getPagingResponse['endPage'])}" th:if="${getPagingResponse['pagingList'].size()}!=0">
+                <a th:if="${page != getPagingResponse['nowPage']} and ${page}!=0" th:href="@{/boards(page = ${page - 1})}" th:text="${page}"></a>
+                <strong th:if="${page == getPagingResponse['nowPage']}" th:text="${page}" style="color : red;font-weight:bold;font-size: 18px"></strong>
             </th:block>
         </div>
     </main>

@@ -1,6 +1,7 @@
 package com.blog.dto;
 
 import com.blog.entity.Board;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -33,6 +34,11 @@ public class BoardRequest {
         return Board.builder().boardWriter(boardWriter).boardThumbnail(boardThumbnail).boardName(boardName).boardThumbnail(boardThumbnail).boardCategory(boardCategory).boardContent(boardContent).build();
     }
 
+    @Builder
+    public BoardRequest(String requestBoardCategory){
+        this.boardCategory=requestBoardCategory;
+
+    }
 
 
 

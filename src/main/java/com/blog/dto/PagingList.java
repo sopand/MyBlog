@@ -14,6 +14,12 @@ public class PagingList {
     private int endPage;
     private int startPage;
 
+    private String nowSearchText;
+
+    public void setSearchText(String nowSearchTextRequest){
+        this.nowSearchText=nowSearchTextRequest;
+    }
+
 
 
 

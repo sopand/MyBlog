@@ -30,7 +30,6 @@ public class ReviewController {
     }
     @GetMapping("/boards/review")
     public PagingList findReview(Long boardId, @PageableDefault(page = 0, size = 7, sort = "reviewId", direction = Sort.Direction.ASC) Pageable pageable){
-
         return reviewService.findReviewList(boardId,pageable);
     }
     @DeleteMapping("/boards/review")

@@ -13,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static com.blog.service.BoardService.setPagingData;
+
 @Service
 @RequiredArgsConstructor
 public class ReviewService {
@@ -45,12 +47,8 @@ public class ReviewService {
     @Transactional(readOnly = true)
     public PagingList findReviewList(Long boardId, Pageable pageable) {
         Page<Review> getPagingReviewList = reviewRepository.findReviewList(boardId, pageable);
-        int nowPage = getPagingReviewList.getPageable().getPageNumber() + 1;
-        int startPage = Math.max(nowPage - 4, 1);
-        int endPage = Math.min(nowPage + 5, getPagingReviewList.getTotalPages());
         List<ReviewResponse> review = getPagingReviewList.getContent().stream().map(ReviewResponse::new).toList();
-        PagingList reviewList = PagingList.builder().pagingList(review).nowPage(nowPage).startPage(startPage).endPage(endPage).build();
-        return reviewList;
+        return setPagingData(getPagingReviewList,review);  //BoardService에서 생성한 페이징 처리를 위한 static 메서드
     }
 
     /**

@@ -4,10 +4,9 @@ $(function () {
     $(".boardModifyBtn").click(function () {
         const data = simpleEdit.getData();
         const str = (data.match(/(?<=\<img src\=\")(.*?)(?=\"\>)/g));
+
         if (str != null) {
-            if (str[0] == UploadURL) {
-                $("input[name=boardThumbnail]").val(UploadURL);
-            }
+                $("input[name=boardThumbnail]").val(str[0]);
         }else{
             $("input[name=boardThumbnail]").val("");
         }

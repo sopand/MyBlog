@@ -1,6 +1,7 @@
 package com.blog.service;
 
 import com.blog.dto.BoardResponse;
+import com.blog.dto.PagingList;
 import com.blog.entity.BoardRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -33,9 +34,9 @@ class BoardServiceTest {
         //given
         PageRequest pageRequest=PageRequest.of(0,5, Sort.by(Sort.DEFAULT_DIRECTION.DESC,"boardId"));
         //when
-        Map<String,Object> boardMap=service.findAllBoards(pageRequest);
+        PagingList getPagingResponse=service.findAllBoards(pageRequest);
         //then
-        List<BoardResponse> board= (List<BoardResponse>) boardMap.get("findBoards");
+        List<BoardResponse> board= (List<BoardResponse>) getPagingResponse.getPagingList();
         assertThat(board).isNotNull();
     }
 
