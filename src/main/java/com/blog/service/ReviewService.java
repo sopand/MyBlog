@@ -33,9 +33,9 @@ public class ReviewService {
             reviewRequest.setReviewDeep(getReviewEntity.getReviewDeep() + 1); // 대댓글의 대댓글인지 그냥 대댓글인지 확인
             reviewRepository.save(reviewRequest.onParent()); // Parent가 존재할때의 Review Entity변환 메서드
             getReviewEntity.modifyReviewGroupNoUp(getReviewEntity.getReviewGroupNo());
-        }else{
-            reviewRepository.save(reviewRequest.unParent()); //Parent가 존재하지 않을때 Review Entity 변환 메서드
+            return;
         }
+            reviewRepository.save(reviewRequest.unParent()); //Parent가 존재하지 않을때 Review Entity 변환 메서드
     }
 
     /**

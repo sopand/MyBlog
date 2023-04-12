@@ -44,7 +44,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests()
                 .requestMatchers("/boards","/boards/menu/**","/boards/detail/**","/index","/users","/boards/review/list","/boards/review/parent")
                 .permitAll()
-                .requestMatchers("/boards/review","/users/**").hasAnyRole("USER") //유저라면 리뷰작성과 로그인/아웃에 제약이 없도록 설정
+                .requestMatchers("/boards/review","/users/**").hasAnyRole("USER","ADMIN") //유저라면 리뷰작성과 로그인/아웃에 제약이 없도록 설정
                 .requestMatchers("/**").hasRole("ADMIN").anyRequest().authenticated(); // 어드민은 모든 기능에대한 권한이 있도록
         http.formLogin().disable()
                 .oauth2Login().loginPage("/users")

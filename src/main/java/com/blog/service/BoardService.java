@@ -44,13 +44,14 @@ public class BoardService {
         Board getInsertBoardData = boardRepository.save(boardRequest.toEntity());
         if (!boardRequest.getImgList().equals("")) {
             List<String> imgList = List.of(boardRequest.getImgList().split(","));
-            imgList.stream().forEach(entity -> {
-                Img img = imgRepository.findByImgDirectory(entity);
-                img.modifyImgBoard(getInsertBoardData);
+            imgList.stream().forEach(nowImg -> {
+                updateImgDirectoryAndBoardId(nowImg,getInsertBoardData);
             });
         }
         return new BoardResponse(getInsertBoardData);
     }
+
+
 
     /**
      * findBoard = 게시판 리스트에서 게시글 클릭시 게시글의 상세내용을 보여주기 위한 로직,
@@ -77,8 +78,38 @@ public class BoardService {
 
 
     /**
+     * 게시글 수정파트의 복잡도를 낮추기위해 기존 이미지의 삭제처리를 담당하는 기능을 분리
+     * 해당 로직은 기존 이미지와 현재 이미지정보를 매개변수로 받아 기존이미지가 남아 있다면 배열에서 remove처리를 하고 없어진 이미지라면 remove하지않고 남겨둔다.
+     * 그리고 modifyBoard 하단의 로직에서 남아있는 배열에 대한 삭제처리를 진행한다.
+     * @param nowImgList = 현재의 이미지 리스트
+     * @param beforeImgList = 기존에 존재하던 이미지리스트
+     * @param getBoard = 새롭게 추가된 현재의 이미지에 board FK를 입력
+     */
+    @Transactional
+    public void deleteBeforeImgList(List<String> nowImgList,List<Img> beforeImgList,Board getBoard){
+        nowImgList.stream().forEach(nowImg -> {
+            beforeImgList.stream().filter(beforeImg -> beforeImg.getImgDirectory().equals(nowImg)) // 기존 이미지 파일과 현재 이미지파일에서 같은 이미지가 존재한다면
+                    .toList()
+                    .forEach(beforeImg -> {
+                        beforeImgList.remove(beforeImg);// 기존의 이미지 리스트에 있던 이미지와 수정된 HTML 의 이미지 파일이 동일하면 before에서 remove처리 ( 남아 있는 리스트의 값들을 delete시킬 예정 )
+                    });
+            updateImgDirectoryAndBoardId(nowImg,getBoard);
+        });
+    }
+
+    /**
+     * 게시글 생성과 수정에서 중복으로 사용되는 이미지의데이터와 BoardId 데이터 수정파트를 분할
+     * @param imgDirectoryPath = DB에 넣을 이미지의 경로
+     * @param getBoardIdEntity = BoardId를 넣기위한 BoardEntity
+     */
+    @Transactional
+    public void updateImgDirectoryAndBoardId(String imgDirectoryPath,Board getBoardIdEntity){
+        Img img = imgRepository.findByImgDirectory(imgDirectoryPath);
+        img.modifyImgBoard(getBoardIdEntity);
+    }
+
+    /**
      * modifyBoard = 게시글을 수정처리하기 위한 로직,
-     *
      * @param boardRequest = 게시글 수정페이지에서 입력한 변경된 데이터들의 정보가 담겨있는 객체,
      */
     @Transactional
@@ -87,23 +118,15 @@ public class BoardService {
         List<Img> beforeImgList = imgRepository.findByBoard_BoardId(boardRequest.getBoardId()); // 기존의 Board에 존재하던 이미지의 정보와 새롭게 수정한 Board의 이미지 정도를 비교하기 위해 기존 이미지 정보를 저장
         if (!boardRequest.getImgList().equals("")) { // Request된 board에서 이미지가 존재 할 경우 발동
             List<String> nowImgList = List.of(boardRequest.getImgList().split(",")); // JS 처리하여 넘긴 Img파일의 Direcotry를 포함한 주소값을 , 단위로 잘라서 반복하기 위함
-            nowImgList.stream().forEach(entity -> {
-                beforeImgList.stream().filter(before -> before.getImgDirectory().equals(entity)) // 기존 이미지 파일과 현재 이미지파일에서 같은 이미지가 존재한다면
-                        .toList()
-                        .forEach(before -> {
-                            beforeImgList.remove(before);// 기존의 이미지 리스트에 있던 이미지와 수정된 HTML 의 이미지 파일이 동일하면 before에서 remove처리 ( 남아 있는 리스트의 값들을 delete시킬 예정 )
-                        });
-                Img img = imgRepository.findByImgDirectory(entity); //더티 체킹으로 이미지의 BoardId를 넣어주기 위해 이미지파일명으로 DB에서 찾아옴
-                img.modifyImgBoard(getBoard); // boardId를 UPDATE
-            });
-        }
-        beforeImgList.stream().filter(entity -> beforeImgList.size() != 0).forEach(entity -> { // 기존 이미지에서 바뀌어진 이미지는 remove처리하기 위한 For문대신 Stream, ( 가동 속도에 이점이있다. )
-            deleteImg(entity); //코드의 복잡도를 낮추기위해 delete 파트를 메서드로 분할
-        });
-        getBoard.modifyBoardAndThubmnail(boardRequest);  // 해당 메서드 안에서 썸네일 사진의 유무를 판단하여 썸네일까지 업데이트를 할지 아니면 일반 board에 대한 정보만 업데이트할지 결정.
-        if (boardRequest.getImgList().equals("")) {
+            deleteBeforeImgList(nowImgList,beforeImgList,getBoard);
+            getBoard.modifyBoardAndThubmnail(boardRequest);  // 해당 메서드 안에서 썸네일 사진의 유무를 판단하여 썸네일까지 업데이트를 할지 아니면 일반 board에 대한 정보만 업데이트할지 결정.
+        }else{
             getBoard.isNullBoardThumnail(); // 게시글에 이미지 파일 자체가 존재하지 않을경우 썸네일 데이터를 공란으로 비워버린다.
         }
+        beforeImgList.stream().filter(deleteEntity -> beforeImgList.size() != 0).forEach(deleteEntity -> { // 기존 이미지에서 바뀌어진 이미지는 remove처리하기 위한 For문대신 Stream, ( 가동 속도에 이점이있다. )
+            deleteImg(deleteEntity); //코드의 복잡도를 낮추기위해 delete 파트를 메서드로 분할
+        });
+
     }
 
     /**
@@ -171,8 +194,7 @@ public class BoardService {
             pagingBoardList = boardRepository.findAll(page);
         }
         List<BoardResponse> pagingBoardResponse = setPagingBoardResponse(pagingBoardList);
-        PagingList getPagingContent = setPagingData(pagingBoardList, pagingBoardResponse);
-        return getPagingContent;
+        return setPagingData(pagingBoardList, pagingBoardResponse);
     }
 
     /**
@@ -195,6 +217,7 @@ public class BoardService {
      * @return = Page<Board>에서 Board를 추출 -> Response객체로 변환 하여 리턴
      */
     public List<BoardResponse> setPagingBoardResponse(Page<Board> pagingBoardList){
+
         return pagingBoardList.stream().filter(entity -> pagingBoardList != null).map(BoardResponse::new).toList();
     }
 
