@@ -14,6 +14,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+
+/**
+ * 게시글관련 Entity
+ */
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -62,7 +66,12 @@ public class Board {
     }
 
 
-    public void modifyBoardAndImg(BoardRequest boardRequest){
+    /**
+     * 게시글의 수정시 UPDATE를 해줄 더티체킹용 메서드.
+     * 사진의 변경 여부에 따라서 썸네일 이미지 변경을 체크한다.
+     * @param boardRequest
+     */
+    public void modifyBoardAndThubmnail(BoardRequest boardRequest){
         this.boardName=boardRequest.getBoardName();
         this.boardContent=boardRequest.getBoardContent();
         this.boardCategory=boardRequest.getBoardCategory();
@@ -70,10 +79,17 @@ public class Board {
             this.boardThumbnail=boardRequest.getBoardThumbnail();
         }
     }
-    public void modifyBoardHit(int boardHit){
+
+    /**
+     * 게시글의 조회수를 올리기 위한 더티체킹에 필요한 메서드
+     */
+    public void modifyBoardHit(){
         this.boardHit=boardHit+1;
     }
 
+    /**
+     * 게시글의 사진이 존재하지 않을경우 썸네일 컬럼의 값을 지우기 위한 메서드
+     */
     public void isNullBoardThumnail(){
         this.boardThumbnail="";
     }

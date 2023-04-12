@@ -4,6 +4,10 @@ import lombok.Getter;
 
 import java.util.Date;
 
+
+/**
+ * 리뷰의 응답데이터를 보내기 위한 객체
+ */
 @Getter
 public class ReviewResponse {
     private Long reviewId;

@@ -61,7 +61,7 @@ public class BoardService {
     @Transactional
     public BoardResponse findBoard(Long boardId) {
         Board getBoard = boardRepository.findByBoardId(boardId);
-        getBoard.modifyBoardHit(getBoard.getBoardHit());
+        getBoard.modifyBoardHit();
         return new BoardResponse(getBoard);
     }
 
@@ -100,7 +100,7 @@ public class BoardService {
         beforeImgList.stream().filter(entity -> beforeImgList.size() != 0).forEach(entity -> { // 기존 이미지에서 바뀌어진 이미지는 remove처리하기 위한 For문대신 Stream, ( 가동 속도에 이점이있다. )
             deleteImg(entity); //코드의 복잡도를 낮추기위해 delete 파트를 메서드로 분할
         });
-        getBoard.modifyBoardAndImg(boardRequest);  // 해당 메서드 안에서 썸네일 사진의 유무를 판단하여 썸네일까지 업데이트를 할지 아니면 일반 board에 대한 정보만 업데이트할지 결정.
+        getBoard.modifyBoardAndThubmnail(boardRequest);  // 해당 메서드 안에서 썸네일 사진의 유무를 판단하여 썸네일까지 업데이트를 할지 아니면 일반 board에 대한 정보만 업데이트할지 결정.
         if (boardRequest.getImgList().equals("")) {
             getBoard.isNullBoardThumnail(); // 게시글에 이미지 파일 자체가 존재하지 않을경우 썸네일 데이터를 공란으로 비워버린다.
         }

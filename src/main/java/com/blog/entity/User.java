@@ -4,6 +4,9 @@ import com.blog.oAuth.Role;
 import jakarta.persistence.*;
 import lombok.*;
 
+/**
+ * 유저관련 데이터처리를하는 Entity
+ */
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

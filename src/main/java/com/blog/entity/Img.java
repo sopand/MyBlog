@@ -5,6 +5,9 @@ import lombok.*;
 
 import java.util.Date;
 
+/**
+ * 주로 이미지관련 데이터의 삭제,추가를 담당하는 Entity
+ */
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
