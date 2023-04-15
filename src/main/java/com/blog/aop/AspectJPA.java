@@ -29,7 +29,13 @@ public class AspectJPA {
     @Pointcut("execution(* com.blog.service.*.*(..)))")
     public void serviceCut(){}
 
-    @Around("execution(* com.blog.controller.*.*(..)))")
+    /**
+     * 컨트롤러의 기능이 실행되는데 소요한 시간과 실행된 메소드를 출력시켜주는 AOP
+     * @param joinPoint
+     * @return
+     * @throws Throwable
+     */
+    @Around("pointCut()")
     public Object execute(ProceedingJoinPoint joinPoint) throws Throwable {
         long start = System.currentTimeMillis();
         try {
@@ -37,24 +43,10 @@ public class AspectJPA {
         } finally {
             long finish = System.currentTimeMillis();
             long timeMs = finish - start;
-            log.info("Controller 실행 메서드: {},실행 소요시간 {}ms",joinPoint.toString(),timeMs);
+            log.info("Controller 실행 메소드: {},실행 소요시간 {}ms",joinPoint.toString(),timeMs);
         }
     }
 
-    /**
-     *
-     * @param joinPoint
-     */
-    @Before("pointCut()")
-    public void before(JoinPoint joinPoint){
-        MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
-        Method method = methodSignature.getMethod();
-
-        Object[] objects = joinPoint.getArgs();
-
-        Arrays.stream(objects).forEach(obj -> log.info("들어온 파라미터 : "+obj));
-        log.info("Controller 실행 메서드: {}",method.getName());
-    }
 
 
     /**
