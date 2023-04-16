@@ -24,9 +24,6 @@ public class PagingList {
 
     private String nowSearchText;
 
-    public void setSearchText(String nowSearchTextRequest){
-        this.nowSearchText=nowSearchTextRequest;
-    }
 
 
 

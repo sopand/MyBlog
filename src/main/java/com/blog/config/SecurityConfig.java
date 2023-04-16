@@ -42,7 +42,7 @@ public class SecurityConfig {
     public SecurityFilterChain StudentFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/boards","/boards/menu/**","/boards/detail/**","/index","/users","/boards/review/list","/boards/review/parent")
+                .requestMatchers("/boards","/boards/menu/**","/boards/detail/**","/index","/users","/boards/review/list","/boards/review/parent","/boards/search**")
                 .permitAll()
                 .requestMatchers("/boards/review","/users/**").hasAnyRole("USER","ADMIN") //유저라면 리뷰작성과 로그인/아웃에 제약이 없도록 설정
                 .requestMatchers("/**").hasRole("ADMIN").anyRequest().authenticated(); // 어드민은 모든 기능에대한 권한이 있도록

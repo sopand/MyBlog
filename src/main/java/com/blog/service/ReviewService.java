@@ -48,7 +48,7 @@ public class ReviewService {
     public PagingList findReviewList(Long boardId, Pageable pageable) {
         Page<Review> getPagingReviewList = reviewRepository.findReviewList(boardId, pageable);
         List<ReviewResponse> review = getPagingReviewList.getContent().stream().map(ReviewResponse::new).toList();
-        return setPagingData(getPagingReviewList,review);  //BoardService에서 생성한 페이징 처리를 위한 static 메서드
+        return setPagingData(getPagingReviewList,review,"");  //BoardService에서 생성한 페이징 처리를 위한 static 메서드
     }
 
     /**

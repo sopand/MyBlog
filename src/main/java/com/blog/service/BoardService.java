@@ -155,7 +155,7 @@ public class BoardService {
     public PagingList findAllBoards(Pageable page) {
         Page<Board> pagingBoardList = boardRepository.findAll(page);
         List<BoardResponse> pagingBoardResponse = setPagingBoardResponse(pagingBoardList);
-        return setPagingData(pagingBoardList,pagingBoardResponse);
+        return setPagingData(pagingBoardList,pagingBoardResponse,null);
     }
 
     /**
@@ -172,9 +172,7 @@ public class BoardService {
             pagingBoardList = boardRepository.findSearchBoard(boardRequest, page);
         }
         List<BoardResponse> pagingBoardResponse = setPagingBoardResponse(pagingBoardList);
-        PagingList getPagingContent = setPagingData(pagingBoardList, pagingBoardResponse);
-        getPagingContent.setSearchText(boardRequest.getSearchText());
-        return getPagingContent;
+        return setPagingData(pagingBoardList, pagingBoardResponse,boardRequest.getSearchText());
     }
 
     /**
@@ -194,7 +192,7 @@ public class BoardService {
             pagingBoardList = boardRepository.findAll(page);
         }
         List<BoardResponse> pagingBoardResponse = setPagingBoardResponse(pagingBoardList);
-        return setPagingData(pagingBoardList, pagingBoardResponse);
+        return setPagingData(pagingBoardList, pagingBoardResponse,boardRequest.getSearchText());
     }
 
     /**
@@ -204,10 +202,13 @@ public class BoardService {
      * @param pagingResponse = 실제 페이징된 데이터들을 가지고 있는 객체
      * @return = 페이징처리를 위해 생성한 PagingList객체에 데이터를 담아서 한번에 리턴해준다.
      */
-    public static PagingList setPagingData(Page<?> pagingEntity, List<?> pagingResponse) {
+    public static PagingList setPagingData(Page<?> pagingEntity, List<?> pagingResponse,String searchText) {
         int nowPage = pagingEntity.getPageable().getPageNumber() + 1; // 현재 페이지에 대한 값으로 pageable의 시작페이지가 0이기 때문에 +1 시켜 1부터 시작하게 만든다.
         int startPage = Math.max(nowPage - 4, 1); // View에 출력될 최소페이지설정, 최소 값은 1이고 Now(현재 페이지)값 - 4한값이 더 크다면 시작 페이지 값이 변경된다.
         int endPage = Math.min(nowPage + 5, pagingEntity.getTotalPages());  // View에 보이게 될 최대 페이지 사이즈,
+        if(searchText!=null){
+            return PagingList.builder().pagingList(pagingResponse).nowPage(nowPage).startPage(startPage).endPage(endPage).nowSearchText(searchText).build();
+        }
         return PagingList.builder().pagingList(pagingResponse).nowPage(nowPage).startPage(startPage).endPage(endPage).build();
     }
 
