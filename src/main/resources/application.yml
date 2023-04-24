@@ -101,6 +101,6 @@ spring:
     url: jdbc:mysql://servertestdb.cwietplcfpm4.ap-northeast-2.rds.amazonaws.com:3306/blog?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true
     connection-test-query: SELECT NOW() FROM dual
 server:
-  port: '8091'
+  port: '8080'
 
 ---
