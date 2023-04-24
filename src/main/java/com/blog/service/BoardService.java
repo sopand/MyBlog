@@ -150,7 +150,6 @@ public class BoardService {
      * Map을 리턴값으로 하려다가 PagingList라는 하나의페이징 전용 객체를 만들어 페이징처리 데이터를 리턴.
      */
 
-
     @Transactional(readOnly = true)
     public PagingList findAllBoards(Pageable page) {
         Page<Board> pagingBoardList = boardRepository.findAll(page);
@@ -186,10 +185,10 @@ public class BoardService {
     @Transactional(readOnly = true)
     public PagingList findAllBoardByNoCategorySearch(Pageable page, BoardRequest boardRequest) {
         Page<Board> pagingBoardList;
-        if (boardRequest.getSearchText() != null) {
-            pagingBoardList = boardRepository.findSearchBoardNoBoardCateogry(boardRequest, page);
-        } else {
+        if (boardRequest.getSearchText() == null) {
             pagingBoardList = boardRepository.findAll(page);
+        } else {
+            pagingBoardList = boardRepository.findSearchBoardNoBoardCateogry(boardRequest, page);
         }
         List<BoardResponse> pagingBoardResponse = setPagingBoardResponse(pagingBoardList);
         return setPagingData(pagingBoardList, pagingBoardResponse,boardRequest.getSearchText());

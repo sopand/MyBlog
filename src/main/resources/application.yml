@@ -1,8 +1,8 @@
 spring:
   profiles:
     include: config
-    active: dev
-    default: dev
+    active: upload
+    default: upload
   test:
     database:
       replace: NONE
@@ -91,4 +91,3 @@ spring:
 server:
   port: '8091'
 ---
-

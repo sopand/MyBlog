@@ -21,8 +21,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DataJpaTest
 @Slf4j
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@ImportAutoConfiguration(DataBaseConfig.class)
 @ActiveProfiles("test")
+@ImportAutoConfiguration(DataBaseConfig.class)
 class BoardRepositoryTest {
 
     @Autowired
